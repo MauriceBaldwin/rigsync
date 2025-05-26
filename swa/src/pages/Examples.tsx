@@ -2,7 +2,6 @@ import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { Link } from "react-router";
 
-import { API_BASE_URL } from '../api/axiosInstance';
 import { postGreeting } from '../api/greeting';
 import type StandardError from '../api/standardError';
 
@@ -43,9 +42,6 @@ const Examples = () => {
 
       {greeting && <p>Greeting: {greeting}</p>}
       {error && <p>Error: {error}</p>}
-
-      <h2>Blob Storage</h2>
-      <img src={`${API_BASE_URL}/image/takeoff.png`} />
 
       <div className='footer-link'>
         <Link to="/">Home</Link>
