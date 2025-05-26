@@ -5,7 +5,7 @@
 Prerequisites:
 - [Node.js v22](https://nodejs.org/en/download)
 
-Create `.env` file with the following contents:
+Create `.env.local` file with the following contents:
 ```
 VITE_API_BASE_URL=http://localhost:7071/api
 ```
@@ -18,6 +18,4 @@ npm run dev
 
 ## Deployment
 
-[Set environment variables](https://learn.microsoft.com/en-us/azure/static-web-apps/application-settings#use-the-azure-portal) of the Static Web App.
-Required environment variables:
-- VITE_API_BASE_URL
+There is no special configuration required.
