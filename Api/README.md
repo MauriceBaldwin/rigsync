@@ -29,6 +29,6 @@ func start
 ## Deployment
 
 [Set environment variables](https://learn.microsoft.com/en-gb/azure/azure-functions/functions-how-to-use-azure-function-app-settings#get-started-in-the-azure-portal) of the Functions App. Required environment variables:
-- AzureWebJobsStorage
+- AzureWebJobsStorage (Not being used in this project at the moment, can ignore)
 
 [Configure the Allowed Origins](https://learn.microsoft.com/en-gb/azure/azure-functions/functions-how-to-use-azure-function-app-settings#cors) of the Functions App to allow Cross-origin resource sharing (CORS) with the frontend.

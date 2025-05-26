@@ -15,3 +15,9 @@ Install dependencies and run the app
 npm install
 npm run dev
 ```
+
+## Deployment
+
+[Set environment variables](https://learn.microsoft.com/en-us/azure/static-web-apps/application-settings#use-the-azure-portal) of the Static Web App.
+Required environment variables:
+- VITE_API_BASE_URL
