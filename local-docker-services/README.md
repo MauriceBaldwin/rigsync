@@ -7,7 +7,8 @@ Docker can be used to run the database for local development.
 2. Run `docker compose up`
 
 ## Connecting to the local database
-1. Using a db query tool of your choice, connect to the db using the following configuration:
-  - hostname: localhost,1433 (confirm port in docker-compose file)
-  - username: sa
-  - password: (see docker-compose file)
+A connection string can be used to connect to the database. The connection string for this database is as follows:
+
+`Server=localhost,1433;Database=master;User=sa;Password=Admin@123;TrustServerCertificate=True`
+
+Note that you will need to replace `{port}` and `{password}` with the values used in [docker-compose.yml](./docker-compose.yml)

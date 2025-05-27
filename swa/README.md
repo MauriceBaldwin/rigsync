@@ -6,8 +6,8 @@ Prerequisites:
 - [Node.js v22](https://nodejs.org/en/download)
 
 Create `.env.local` file with the following contents:
-```
-VITE_API_BASE_URL=http://localhost:7071/api
+```properties
+VITE_API_BASE_URL=http://localhost:7071/api # Backend url
 ```
 
 Install dependencies and run the app
