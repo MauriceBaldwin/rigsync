@@ -42,6 +42,6 @@ public class Context : DbContext
       connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
     }
 
-    optionsBuilder.UseSqlServer(connectionString);
+    optionsBuilder.UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
   }
 }
