@@ -39,8 +39,12 @@ func start
 ```
 
 ## Deployment
+Set the following GitHub Actions secrets:
+- SQL_CONNECTION_STRING
 
-Set the following environment variables:
-- RIG_SYNC_SQL_CONNECTION_STRING
+Set the following environment variables on the Azure Functions resource:
+- SqlConnectionString
+
+Run the [Manual migration](../.github/workflows/manual-migrate.yml) workflow to apply migrations to the production database.
 
 [Configure the Allowed Origins](https://learn.microsoft.com/en-gb/azure/azure-functions/functions-how-to-use-azure-function-app-settings#cors) of the Functions App to allow Cross-origin resource sharing (CORS) with the frontend.
