@@ -14,13 +14,12 @@ jobs:
         shell: pwsh
         run: curl https://jsonip.com/
 
-      - name: Wait 120 seconds
+      - name: Wait 90 seconds
         shell: pwsh
         run: |
-          echo "Waiting 120 seconds."
           echo "Please update the SQL server firewall rules to allow connections from this IP."
-          echo "120s remaining"
-          Start-Sleep -s 60
+          echo "90s remaining"
+          Start-Sleep -s 30
           echo "60s remaining"
           Start-Sleep -s 30
           echo "30s remaining"
@@ -34,7 +33,9 @@ jobs:
       - name: Apply migration
         shell: pwsh
         run: |
+          pushd './Api'
           dotnet tool install --global dotnet-ef
           dotnet tool restore
           dotnet ef migrations bundle
           ./efbundle.exe --connection ${{ secrets.SQL_CONNECTION_STRING }}
+          popd
