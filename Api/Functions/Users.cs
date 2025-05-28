@@ -3,6 +3,7 @@
 namespace Api.Functions;
 
 using System.Collections.Generic;
+using Api.Responses.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
@@ -29,6 +30,6 @@ public class User(ILogger<Greeting> logger)
   {
     this.logger.LogInformation("GET /api/users");
 
-    return new OkObjectResult(users);
+    return new OkObjectResult(new UsersResponse(users));
   }
 }
