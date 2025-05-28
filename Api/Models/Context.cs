@@ -21,11 +21,26 @@ public class Context : DbContext
   /// <param name="optionsBuilder">Configure the context options.</param>
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    var localConfig = new ConfigurationBuilder().AddJsonFile("local.settings.json").Build();
+    string? connectionString;
 
-    var connectionString =
-      localConfig.GetSection("Values").GetValue<string>("SqlConnectionString") ??
-      Environment.GetEnvironmentVariable("SqlConnectionString");
+    /*
+      This is super hardcoded, but it allows use of the local.settings.json file
+      to configure connection to the database for local development.
+      The configuration should look like: {Values: {SqlConnectionString: xxx}}
+    */
+    const string configFilePath = "local.settings.json";
+    if (File.Exists(configFilePath))
+    {
+      var config = new ConfigurationBuilder().AddJsonFile(configFilePath).Build();
+      connectionString = config.GetSection("Values").GetValue<string>("SqlConnectionString");
+    }
+
+    /* If the above config file is not found, it will take the connection string
+      from an environment variable called 'SqlConnectionString' */
+    else
+    {
+      connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
+    }
 
     optionsBuilder.UseSqlServer(connectionString);
   }

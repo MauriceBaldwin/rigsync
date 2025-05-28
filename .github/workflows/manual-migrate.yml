@@ -32,6 +32,8 @@ jobs:
       
       - name: Apply migration
         shell: pwsh
+        env:
+          SqlConnectionString: ${{ secrets.SQL_CONNECTION_STRING }}
         run: |
           pushd './Api'
           dotnet tool install --global dotnet-ef
