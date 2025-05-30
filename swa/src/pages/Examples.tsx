@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 import { postGreeting } from '../api/greeting';
 import type StandardError from '../api/standardError';
-import { getUsers, type User } from '../api/users';
+import { getMainCanopies, type MainCanopy } from '../api/mainCanopy';
 
 import '../styles/pages/Examples.css';
 
@@ -12,8 +12,8 @@ const Examples = () => {
   const [name, setName] = useState('');
   const [greeting, setGreeting] = useState<string>();
   const [greetingError, setGreetingError] = useState<string>();
-  const [users, setUsers] = useState<User[]>();
-  const [usersError, setUsersError] = useState<string>();
+  const [mainCanopies, setMainCanopies] = useState<MainCanopy[]>();
+  const [mainCanopiesError, setMainCanopiesError] = useState<string>();
 
   const onSubmit = async () => {
     setGreeting(undefined);
@@ -30,18 +30,18 @@ const Examples = () => {
       });
   };
 
-  const loadUsers = () => {
-    setUsers(undefined);
-    setUsersError(undefined);
+  const loadMainCanopies = () => {
+    setMainCanopies(undefined);
+    setMainCanopiesError(undefined);
 
     void (async () => {
-      await getUsers()
+      await getMainCanopies()
         .then((response) => {
-          setUsers(response.data.users);
+          setMainCanopies(response.data.mainCanopies);
         })
         .catch((err: unknown) => {
           if (isAxiosError<StandardError>(err)) {
-            setUsersError(err.response?.data.message);
+            setMainCanopiesError(err.response?.data.message);
           }
         });
     })();
@@ -65,15 +65,17 @@ const Examples = () => {
       {greetingError && <p>Error: {greetingError}</p>}
 
       <h2>DB Query</h2>
-      <button onClick={loadUsers}>Load users</button>
-      {users &&
+      <button onClick={loadMainCanopies}>Load main canopies</button>
+      {mainCanopies &&
         <ul>
-          {users.map(user => (
-            <li key={user.id}>{user.name}</li>
+          {mainCanopies.map(mainCanopy => (
+            <li key={mainCanopy.id}>
+              {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
+            </li>
           ))}
         </ul>
       }
-      {usersError && <p>Error: {usersError}</p>}
+      {mainCanopiesError && <p>Error: {mainCanopiesError}</p>}
 
 
 

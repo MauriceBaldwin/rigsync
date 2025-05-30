@@ -4,10 +4,10 @@ namespace Api.Functions;
 
 using System.Text.Json;
 using System.Threading.Tasks;
+using Api.Functions.Utilities;
 using Api.Requests.Greeting;
 using Api.Responses.Error;
 using Api.Responses.Greeting;
-using Api.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;

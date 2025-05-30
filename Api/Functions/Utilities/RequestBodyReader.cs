@@ -1,6 +1,6 @@
 // RigSync | RequestBodyReader.cs
 
-namespace Api.Utilities;
+namespace Api.Functions.Utilities;
 
 using System.Text.Json;
 
