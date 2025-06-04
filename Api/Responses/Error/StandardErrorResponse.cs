@@ -1,16 +1,13 @@
-// RigSync | StandardError.cs
+// RigSync | StandardErrorResponse.cs
 
 namespace Api.Responses.Error;
 
 /// <summary>
 /// A standardised format for error responses returned by the application.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="StandardError"/> class.
-/// </remarks>
 /// <param name="errorCode">The error code.</param>
 /// <param name="message">The error message.</param>
-public class StandardError(ErrorCode errorCode, string message)
+public class StandardErrorResponse(ErrorCode errorCode, string message)
 {
   /// <summary>
   /// Gets: A code that identifies the type of error that occurred.

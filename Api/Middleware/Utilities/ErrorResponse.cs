@@ -12,6 +12,9 @@ using Microsoft.Azure.Functions.Worker.Http;
 /// </summary>
 public static class ErrorResponse
 {
+  private const string ContentTypeHeader = "Content-Type";
+  private const string JsonContentType = "application/json; charset=utf-8";
+
   private static readonly JsonSerializerOptions JsonSerializerOptions =
     new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
@@ -22,18 +25,25 @@ public static class ErrorResponse
   /// <returns>The HTTP response.</returns>
   public static async Task<HttpResponseData> NotFound(HttpRequestData req)
   {
-    var res = req.CreateResponse(HttpStatusCode.NotFound);
-    res.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-    var body = new StandardError(
+    return await BuildJsonResponse(
+      req,
+      HttpStatusCode.NotFound,
       ErrorCode.NotFound,
       "The requested resource could not be found.");
+  }
 
-    await res.WriteStringAsync(JsonSerializer.Serialize(
-      body,
-      JsonSerializerOptions));
-
-    return res;
+  /// <summary>
+  /// Build response body for 501 Not Implemented error.
+  /// </summary>
+  /// <param name="req">The HTTP request.</param>
+  /// <returns>The HTTP response.</returns>
+  public static async Task<HttpResponseData> NotImplemented(HttpRequestData req)
+  {
+    return await BuildJsonResponse(
+      req,
+      HttpStatusCode.NotImplemented,
+      ErrorCode.NotImplemented,
+      "The requested function is not implemented.");
   }
 
   /// <summary>
@@ -43,17 +53,23 @@ public static class ErrorResponse
   /// <returns>The HTTP response.</returns>
   public static async Task<HttpResponseData> UnhandledException(HttpRequestData req)
   {
-    var res = req.CreateResponse(HttpStatusCode.InternalServerError);
-    res.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-    var body = new StandardError(
+    return await BuildJsonResponse(
+      req,
+      HttpStatusCode.InternalServerError,
       ErrorCode.UnhandledException,
       "An unhandled exception occurred.");
+  }
 
-    await res.WriteStringAsync(JsonSerializer.Serialize(
-      body,
-      JsonSerializerOptions));
-
+  private static async Task<HttpResponseData> BuildJsonResponse(
+    HttpRequestData req,
+    HttpStatusCode statusCode,
+    ErrorCode errorCode,
+    string message)
+  {
+    var res = req.CreateResponse(statusCode);
+    res.Headers.Add(ContentTypeHeader, JsonContentType);
+    var body = new StandardErrorResponse(errorCode, message);
+    await res.WriteStringAsync(JsonSerializer.Serialize(body, JsonSerializerOptions));
     return res;
   }
 }

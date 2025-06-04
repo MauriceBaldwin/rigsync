@@ -25,6 +25,15 @@ public class ErrorCode(string value)
   }
 
   /// <summary>
+  /// Gets: An ErrorCode to represent an error caused by the function not being
+  /// implemented.
+  /// </summary>
+  public static ErrorCode NotImplemented
+  {
+    get { return new ErrorCode("NOT_IMPLEMENTED"); }
+  }
+
+  /// <summary>
   /// Gets: An ErrorCode to represent an error caused by an unhandled exception.
   /// </summary>
   public static ErrorCode UnhandledException

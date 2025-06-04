@@ -6,6 +6,7 @@ using Api.Middleware.Utilities;
 using Microsoft.Azure.Functions.Worker.Middleware;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using Api.Domains.Exceptions;
 
 /// <summary>
 /// Handles any uncaught exceptions thrown by the application.
@@ -30,15 +31,15 @@ public class ExceptionHandlerMiddleware : IFunctionsWorkerMiddleware
     {
       await next.Invoke(context);
     }
-    catch (FileNotFoundException exception)
+    catch (NotFoundByIdException exception)
     {
       logger.LogWarning(exception.Message);
       context.GetInvocationResult().Value = ErrorResponse.NotFound(req!);
     }
-    catch (KeyNotFoundException exception)
+    catch (FunctionNotImplementedException exception)
     {
       logger.LogWarning(exception.Message);
-      context.GetInvocationResult().Value = ErrorResponse.NotFound(req!);
+      context.GetInvocationResult().Value = ErrorResponse.NotImplemented(req!);
     }
     catch (Exception exception)
     {

@@ -57,7 +57,7 @@ public class Greeting(ILogger<Greeting> logger)
           {
             this.logger.LogWarning("Failed to parse request body.");
 
-            return new BadRequestObjectResult(new StandardError(
+            return new BadRequestObjectResult(new StandardErrorResponse(
               ErrorCode.InvalidRequestBody, "Failed to parse request body."));
           }
 
