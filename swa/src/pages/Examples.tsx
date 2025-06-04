@@ -37,7 +37,7 @@ const Examples = () => {
     void (async () => {
       await getMainCanopies()
         .then((response) => {
-          setMainCanopies(response.data.mainCanopies);
+          setMainCanopies(response.data.items);
         })
         .catch((err: unknown) => {
           if (isAxiosError<StandardError>(err)) {

@@ -11,7 +11,10 @@ export type MainCanopy = {
 }
 
 type ListMainCanopiesResponse = {
-  mainCanopies: MainCanopy[]
+  items: MainCanopy[]
+  page: number
+  limit: number
+  count: number
 }
 
 export const getMainCanopies = () =>

@@ -2,8 +2,8 @@
 
 namespace Api.Functions.MainCanopy;
 
-using System.Collections.Generic;
 using Api.Domains.Exceptions;
+using Api.Functions.Utilities;
 using Api.Models;
 using Api.Responses;
 using Microsoft.AspNetCore.Http;
@@ -34,8 +34,17 @@ public class ListCreate(ILogger<Greeting> logger)
     {
       case "GET":
         this.logger.LogInformation("GET /api/main-canopy");
-        IEnumerable<MainCanopy> mainCanopies = await context.MainCanopies.ToListAsync();
-        return new OkObjectResult(new MainCanopiesResponse(mainCanopies));
+
+        var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
+        var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
+        var count = await context.MainCanopies.CountAsync();
+
+        var mainCanopies = await context.MainCanopies
+          .Skip((page - 1) * limit)
+          .Take(limit)
+          .ToListAsync();
+
+        return new OkObjectResult(new MainCanopiesResponse(mainCanopies, page, limit, count));
 
       default:
         throw new FunctionNotImplementedException($"{req.Method} /api/main-canopy not implemented");

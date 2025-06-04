@@ -20,11 +20,11 @@ public class MainCanopyResponse(MainCanopy mainCanopy)
 /// <summary>
 /// Response type for multiple main canopies.
 /// </summary>
-public class MainCanopiesResponse(IEnumerable<MainCanopy> mainCanopies)
+public class MainCanopiesResponse(IEnumerable<MainCanopy> mainCanopies, int page, int limit, int count)
+ : PaginatedListResponse<MainCanopyResponse>(
+    mainCanopies.Select(m => new MainCanopyResponse(m)),
+    page,
+    limit,
+    count)
 {
-  /// <summary>
-  /// Gets an array of main canopies.
-  /// </summary>
-  public IEnumerable<MainCanopyResponse> MainCanopies { get; private set; } =
-    mainCanopies.Select(u => new MainCanopyResponse(u));
 }
