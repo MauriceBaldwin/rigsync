@@ -51,15 +51,45 @@ public static class MainCanopy
   /// <summary>
   /// Creates a main canopy in the db.
   /// </summary>
-  /// <param name="mainCanopy">The main canopy to be created.</param>
+  /// <param name="toCreate">The main canopy to be created.</param>
   /// <returns>The newly created main canopy.</returns>
-  public static async Task<Models.MainCanopy> CreateAsync(CreateRequest mainCanopy)
+  public static async Task<Models.MainCanopy> CreateAsync(CreateRequest toCreate)
   {
-    var newMainCanopy = new Models.MainCanopy(mainCanopy);
+    var mainCanopy = new Models.MainCanopy(toCreate);
 
-    await Context.MainCanopies.AddAsync(newMainCanopy);
+    await Context.MainCanopies.AddAsync(mainCanopy);
     await Context.SaveChangesAsync();
 
-    return newMainCanopy;
+    return mainCanopy;
+  }
+
+  /// <summary>
+  /// Updates a main canopy in the db.
+  /// </summary>
+  /// <param name="id">The ID of the main canopy to update.</param>
+  /// <param name="toUpdate">The main canopy info to be updated.</param>
+  /// <returns>The updated main canopy.</returns>
+  public static async Task<Models.MainCanopy> UpdateAsync(Guid id, UpdateRequest toUpdate)
+  {
+    var mainCanopy = await GetAsync(id);
+
+    if (toUpdate.Manufacturer != null)
+    {
+      mainCanopy.Manufacturer = toUpdate.Manufacturer;
+    }
+
+    if (toUpdate.Model != null)
+    {
+      mainCanopy.Model = toUpdate.Model;
+    }
+
+    if (toUpdate.Size != null)
+    {
+      mainCanopy.Size = toUpdate.Size.Value;
+    }
+
+    await Context.SaveChangesAsync();
+
+    return mainCanopy;
   }
 }

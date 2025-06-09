@@ -4,6 +4,8 @@ namespace Api.Functions.MainCanopy;
 
 using Api.Domains;
 using Api.Domains.Exceptions;
+using Api.Functions.Utilities;
+using Api.Requests.MainCanopy;
 using Api.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +36,12 @@ public class ReadUpdateDelete(ILogger<ReadUpdateDelete> logger)
         this.logger.LogInformation($"GET /api/main-canopy/{id}");
         var mainCanopy = await MainCanopy.GetAsync(id);
         return new OkObjectResult(new MainCanopyResponse(mainCanopy));
+
+      case "POST":
+        this.logger.LogInformation($"POST  /api/main-canopy/{id}");
+        var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateRequest>(req.Body);
+        var updatedMainCanopy = await MainCanopy.UpdateAsync(id, mainCanopyRequest);
+        return new OkObjectResult(new MainCanopyResponse(updatedMainCanopy));
 
       default:
         throw new FunctionNotImplementedException($"{req.Method} /api/main-canopy/{id} not implemented");
