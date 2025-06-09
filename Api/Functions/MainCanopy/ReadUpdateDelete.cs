@@ -43,6 +43,11 @@ public class ReadUpdateDelete(ILogger<ReadUpdateDelete> logger)
         var updatedMainCanopy = await MainCanopy.UpdateAsync(id, mainCanopyRequest);
         return new OkObjectResult(new MainCanopyResponse(updatedMainCanopy));
 
+      case "DELETE":
+        this.logger.LogInformation($"DELETE /api/main-canopy/{id}");
+        await MainCanopy.DeleteAsync(id);
+        return new NoContentResult();
+
       default:
         throw new FunctionNotImplementedException($"{req.Method} /api/main-canopy/{id} not implemented");
     }

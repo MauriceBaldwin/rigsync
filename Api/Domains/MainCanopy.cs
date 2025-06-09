@@ -92,4 +92,16 @@ public static class MainCanopy
 
     return mainCanopy;
   }
+
+  /// <summary>
+  /// Deletes a main canopy from the db using its ID.
+  /// </summary>
+  /// <param name="id">The ID of the main canopy to delete.</param>
+  /// <returns>Nothing.</returns>
+  public static async Task DeleteAsync(Guid id)
+  {
+    var mainCanopy = await GetAsync(id);
+    Context.MainCanopies.Remove(mainCanopy);
+    await Context.SaveChangesAsync();
+  }
 }
