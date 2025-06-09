@@ -33,6 +33,20 @@ public static class ErrorResponse
   }
 
   /// <summary>
+  /// Build response body for 400 Bad Request error.
+  /// </summary>
+  /// <param name="req">The HTTP request.</param>
+  /// <returns>The HTTP response.</returns>
+  public static async Task<HttpResponseData> BadRequest(HttpRequestData req)
+  {
+    return await BuildJsonResponse(
+      req,
+      HttpStatusCode.BadRequest,
+      ErrorCode.InvalidRequestBody,
+      "The request body could not be deserialized into the expected type.");
+  }
+
+  /// <summary>
   /// Build response body for 501 Not Implemented error.
   /// </summary>
   /// <param name="req">The HTTP request.</param>

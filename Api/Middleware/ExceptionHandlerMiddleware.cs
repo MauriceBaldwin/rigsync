@@ -36,6 +36,11 @@ public class ExceptionHandlerMiddleware : IFunctionsWorkerMiddleware
       logger.LogWarning(exception.Message);
       context.GetInvocationResult().Value = ErrorResponse.NotFound(req!);
     }
+    catch (InvalidRequestBodyException exception)
+    {
+      logger.LogWarning(exception.Message);
+      context.GetInvocationResult().Value = ErrorResponse.BadRequest(req!);
+    }
     catch (FunctionNotImplementedException exception)
     {
       logger.LogWarning(exception.Message);

@@ -5,6 +5,7 @@ namespace Api.Functions.MainCanopy;
 using Api.Domains.Exceptions;
 using Api.Functions.Utilities;
 using Api.Models;
+using Api.Requests.MainCanopy;
 using Api.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,17 @@ public class ListCreate(ILogger<Greeting> logger)
           .ToListAsync();
 
         return new OkObjectResult(new MainCanopiesResponse(mainCanopies, page, limit, count));
+
+      case "POST":
+        this.logger.LogInformation("POST /api/main-canopy");
+
+        var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateRequest>(req.Body);
+        var newMainCanopy = new MainCanopy(mainCanopyRequest);
+
+        await context.MainCanopies.AddAsync(newMainCanopy);
+        await context.SaveChangesAsync();
+
+        return new OkObjectResult(new MainCanopyResponse(newMainCanopy));
 
       default:
         throw new FunctionNotImplementedException($"{req.Method} /api/main-canopy not implemented");
