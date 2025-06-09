@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 
 import reactLogo from '../assets/react.svg';
-import '../styles/pages/Home.css';
 import viteLogo from '/vite.svg';
 
 const Home = () => {

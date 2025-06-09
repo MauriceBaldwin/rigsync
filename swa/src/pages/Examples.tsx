@@ -1,12 +1,19 @@
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
-import { Link } from "react-router";
+import { Link as RouterLink } from 'react-router';
+import {
+  Button,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import { postGreeting } from '../api/greeting';
 import type StandardError from '../api/standardError';
 import { getMainCanopies, type MainCanopy } from '../api/mainCanopy';
-
-import '../styles/pages/Examples.css';
 
 const Examples = () => {
   const [name, setName] = useState('');
@@ -49,39 +56,44 @@ const Examples = () => {
 
   return (
     <>
-      <h1>Examples</h1>
-      <p>
+      <Typography variant="h1">Examples</Typography>
+      <Typography variant="body1">
         Example implementations of commonly used features
-      </p>
+      </Typography>
 
-      <h2>API</h2>
+      <Typography variant="h2">API</Typography>
       <form action={onSubmit}>
-        <label>Name</label>
-        <input value={name} onChange={(e) => { setName(e.target.value); }} />
-        <button type="submit">Submit</button>
+        <TextField
+          label="Name"
+          value={name}
+          onChange={(e) => { setName(e.target.value); }}
+        />
+        <Button type="submit">Submit</Button>
       </form>
 
-      {greeting && <p>Greeting: {greeting}</p>}
-      {greetingError && <p>Error: {greetingError}</p>}
+      {greeting &&
+        <Typography variant="body1">Greeting: {greeting}</Typography>}
 
-      <h2>DB Query</h2>
-      <button onClick={loadMainCanopies}>Load main canopies</button>
+      {greetingError &&
+        <Typography variant="body1">Error: {greetingError}</Typography>}
+
+      <Typography variant="h2">DB Query</Typography>
+      <Button onClick={loadMainCanopies}>Load main canopies</Button>
       {mainCanopies &&
-        <ul>
+        <List>
           {mainCanopies.map(mainCanopy => (
-            <li key={mainCanopy.id}>
-              {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
-            </li>
+            <ListItem key={mainCanopy.id}>
+              <ListItemText>
+                {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
+              </ListItemText>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       }
-      {mainCanopiesError && <p>Error: {mainCanopiesError}</p>}
+      {mainCanopiesError &&
+        <Typography variant="body1">Error: {mainCanopiesError}</Typography>}
 
-
-
-      <div className='footer-link'>
-        <Link to="/">Home</Link>
-      </div>
+      <Link variant="body1" component={RouterLink} to="/">Home</Link>
     </>
   );
 };

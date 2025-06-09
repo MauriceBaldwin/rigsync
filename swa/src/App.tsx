@@ -4,7 +4,10 @@ import Home from './pages/Home.tsx';
 import Examples from './pages/Examples.tsx';
 import NotFound from './pages/errors/NotFound.tsx';
 
-import './styles/App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const App = () => (
   < BrowserRouter >
