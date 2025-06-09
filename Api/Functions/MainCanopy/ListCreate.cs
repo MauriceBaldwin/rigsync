@@ -2,23 +2,22 @@
 
 namespace Api.Functions.MainCanopy;
 
+using Api.Domains;
 using Api.Domains.Exceptions;
 using Api.Functions.Utilities;
-using Api.Models;
 using Api.Requests.MainCanopy;
 using Api.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// List and create main canopies.
 /// </summary>
-public class ListCreate(ILogger<Greeting> logger)
+public class ListCreate(ILogger<ListCreate> logger)
 {
-  private readonly ILogger<Greeting> logger = logger;
+  private readonly ILogger<ListCreate> logger = logger;
 
   /// <summary>
   /// List and create main canopies.
@@ -29,33 +28,20 @@ public class ListCreate(ILogger<Greeting> logger)
   public async Task<IActionResult> Run(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "main-canopy")] HttpRequest req)
   {
-    var context = new Context();
-
     switch (req.Method)
     {
       case "GET":
         this.logger.LogInformation("GET /api/main-canopy");
-
         var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
         var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
-        var count = await context.MainCanopies.CountAsync();
-
-        var mainCanopies = await context.MainCanopies
-          .Skip((page - 1) * limit)
-          .Take(limit)
-          .ToListAsync();
-
+        var count = await MainCanopy.CountAsync();
+        var mainCanopies = await MainCanopy.ListAsync(page, limit);
         return new OkObjectResult(new MainCanopiesResponse(mainCanopies, page, limit, count));
 
       case "POST":
         this.logger.LogInformation("POST /api/main-canopy");
-
         var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateRequest>(req.Body);
-        var newMainCanopy = new MainCanopy(mainCanopyRequest);
-
-        await context.MainCanopies.AddAsync(newMainCanopy);
-        await context.SaveChangesAsync();
-
+        var newMainCanopy = await MainCanopy.CreateAsync(mainCanopyRequest);
         return new OkObjectResult(new MainCanopyResponse(newMainCanopy));
 
       default:
