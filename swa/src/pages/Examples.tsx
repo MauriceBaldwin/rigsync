@@ -1,71 +1,46 @@
-import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { isAxiosError } from 'axios';
 import {
   Button,
   Link,
   List,
   ListItem,
   ListItemText,
+  Stack,
   Typography,
 } from '@mui/material';
 
-import {
-  mainCanopyList,
-  type MainCanopyResponse,
-  type StandardErrorResponse,
-} from '../api';
+import { type MainCanopiesResponse, mainCanopyList } from '../api';
+import useApi from '../api/useApi';
 
 const Examples = () => {
-  const [mainCanopies, setMainCanopies] = useState<MainCanopyResponse[]>();
-  const [isLoadingMainCanopies, setIsLoadingMainCanopies] = useState(false);
-  const [mainCanopiesError, setMainCanopiesError] = useState<string>();
+  const [response, isLoading, error, makeRequest] =
+    useApi<MainCanopiesResponse>();
 
-  const loadMainCanopies = () => {
-    setMainCanopies(undefined);
-    setMainCanopiesError(undefined);
-    setIsLoadingMainCanopies(true);
-
-    void (async () => {
-      try {
-        await mainCanopyList()
-          .then((response) => {
-            setMainCanopies(response.data.items);
-            setIsLoadingMainCanopies(false);
-          });
-      }
-      catch (error) {
-        if (isAxiosError<StandardErrorResponse>(error)) {
-          setMainCanopiesError(
-            error.response?.data.message ||
-            'An error occurred while fetching main canopies',
-          );
-        } else {
-          setMainCanopiesError('An unexpected error occurred');
-        }
-
-        setIsLoadingMainCanopies(false);
-      }
-    })();
+  const fetchMainCanopies = () => {
+    makeRequest(() => mainCanopyList());
   };
 
   return (
-    <>
+    <Stack spacing={4}>
       <Typography variant="h1">Examples</Typography>
+
       <Typography variant="body1">
         Example implementations of commonly used features
       </Typography>
 
       <Typography variant="h2">DB Query</Typography>
+
       <Button
-        onClick={loadMainCanopies}
-        loading={isLoadingMainCanopies}
+        variant="outlined"
+        onClick={fetchMainCanopies}
+        loading={isLoading}
       >
         Load main canopies
       </Button>
-      {mainCanopies &&
+
+      {response &&
         <List>
-          {mainCanopies.map(mainCanopy => (
+          {response.items?.map(mainCanopy => (
             <ListItem key={mainCanopy.id}>
               <ListItemText>
                 {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
@@ -74,11 +49,11 @@ const Examples = () => {
           ))}
         </List>
       }
-      {mainCanopiesError &&
-        <Typography variant="body1">Error: {mainCanopiesError}</Typography>}
+
+      {error && <Typography variant="body1">Error: {error}</Typography>}
 
       <Link variant="body1" component={RouterLink} to="/">Home</Link>
-    </>
+    </Stack>
   );
 };
 
