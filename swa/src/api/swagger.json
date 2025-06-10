@@ -1,0 +1,284 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "OpenAPI Document on Azure Functions",
+    "description": "This is the OpenAPI Document on Azure Functions",
+    "version": "1.0.0"
+  },
+  "host": "localhost:7071",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/main-canopy": {
+      "get": {
+        "tags": [
+          "main-canopy"
+        ],
+        "operationId": "MainCanopy_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of MainCanopiesResponse",
+            "schema": {
+              "$ref": "#/definitions/mainCanopiesResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "main-canopy"
+        ],
+        "operationId": "MainCanopy_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createMainCanopyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of MainCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/mainCanopyResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/main-canopy/{id}": {
+      "get": {
+        "tags": [
+          "main-canopy"
+        ],
+        "operationId": "MainCanopy_Read",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of MainCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/mainCanopyResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "main-canopy"
+        ],
+        "operationId": "MainCanopy_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateMainCanopyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of MainCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/mainCanopyResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "main-canopy"
+        ],
+        "operationId": "MainCanopy_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No description"
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "createMainCanopyRequest": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "mainCanopiesResponse": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/mainCanopyResponse"
+          }
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "mainCanopyResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "standardErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "updateMainCanopyRequest": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

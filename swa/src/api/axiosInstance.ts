@@ -1,12 +1,27 @@
-import axios from "axios";
+import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const axiosInstance = axios.create({
+const AXIOS_INSTANCE = Axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
-export default axiosInstance;
+export const customInstance = <T>(
+  config: AxiosRequestConfig,
+  options?: AxiosRequestConfig,
+): Promise<T> => {
+  const source = Axios.CancelToken.source();
+
+  const promise = AXIOS_INSTANCE({
+    ...config,
+    ...options,
+    cancelToken: source.token,
+  }).then(({ data }: AxiosResponse<T>) => data);
+
+  // @ts-expect-error - Adding a cancel method to the promise
+  promise.cancel = () => {
+    source.cancel('Query was cancelled');
+  };
+
+  return promise;
+};

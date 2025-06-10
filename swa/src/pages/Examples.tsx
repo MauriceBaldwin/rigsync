@@ -1,4 +1,3 @@
-import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 import {
@@ -7,49 +6,24 @@ import {
   List,
   ListItem,
   ListItemText,
-  TextField,
   Typography,
 } from '@mui/material';
 
-import { postGreeting } from '../api/greeting';
-import type StandardError from '../api/standardError';
-import { getMainCanopies, type MainCanopy } from '../api/mainCanopy';
+import { mainCanopyList } from '../api/generated/endpoints/main-canopy';
+import { MainCanopyResponse } from '../api/generated/models/mainCanopyResponse';
 
 const Examples = () => {
-  const [name, setName] = useState('');
-  const [greeting, setGreeting] = useState<string>();
-  const [greetingError, setGreetingError] = useState<string>();
-  const [mainCanopies, setMainCanopies] = useState<MainCanopy[]>();
+  const [mainCanopies, setMainCanopies] = useState<MainCanopyResponse[]>();
   const [mainCanopiesError, setMainCanopiesError] = useState<string>();
-
-  const onSubmit = async () => {
-    setGreeting(undefined);
-    setGreetingError(undefined);
-
-    await postGreeting({ name: name })
-      .then((response) => {
-        setGreeting(response.data.greeting);
-      })
-      .catch((err: unknown) => {
-        if (isAxiosError<StandardError>(err)) {
-          setGreetingError(err.response?.data.message);
-        }
-      });
-  };
 
   const loadMainCanopies = () => {
     setMainCanopies(undefined);
     setMainCanopiesError(undefined);
 
     void (async () => {
-      await getMainCanopies()
+      await mainCanopyList()
         .then((response) => {
-          setMainCanopies(response.data.items);
-        })
-        .catch((err: unknown) => {
-          if (isAxiosError<StandardError>(err)) {
-            setMainCanopiesError(err.response?.data.message);
-          }
+          setMainCanopies(response.items);
         });
     })();
   };
@@ -60,22 +34,6 @@ const Examples = () => {
       <Typography variant="body1">
         Example implementations of commonly used features
       </Typography>
-
-      <Typography variant="h2">API</Typography>
-      <form action={onSubmit}>
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => { setName(e.target.value); }}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-
-      {greeting &&
-        <Typography variant="body1">Greeting: {greeting}</Typography>}
-
-      {greetingError &&
-        <Typography variant="body1">Error: {greetingError}</Typography>}
 
       <Typography variant="h2">DB Query</Typography>
       <Button onClick={loadMainCanopies}>Load main canopies</Button>
