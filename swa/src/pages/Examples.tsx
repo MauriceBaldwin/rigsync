@@ -18,17 +18,20 @@ import {
 
 const Examples = () => {
   const [mainCanopies, setMainCanopies] = useState<MainCanopyResponse[]>();
+  const [isLoadingMainCanopies, setIsLoadingMainCanopies] = useState(false);
   const [mainCanopiesError, setMainCanopiesError] = useState<string>();
 
   const loadMainCanopies = () => {
     setMainCanopies(undefined);
     setMainCanopiesError(undefined);
+    setIsLoadingMainCanopies(true);
 
     void (async () => {
       try {
         await mainCanopyList()
           .then((response) => {
             setMainCanopies(response.data.items);
+            setIsLoadingMainCanopies(false);
           });
       }
       catch (error) {
@@ -40,6 +43,8 @@ const Examples = () => {
         } else {
           setMainCanopiesError('An unexpected error occurred');
         }
+
+        setIsLoadingMainCanopies(false);
       }
     })();
   };
@@ -52,7 +57,12 @@ const Examples = () => {
       </Typography>
 
       <Typography variant="h2">DB Query</Typography>
-      <Button onClick={loadMainCanopies}>Load main canopies</Button>
+      <Button
+        onClick={loadMainCanopies}
+        loading={isLoadingMainCanopies}
+      >
+        Load main canopies
+      </Button>
       {mainCanopies &&
         <List>
           {mainCanopies.map(mainCanopy => (
