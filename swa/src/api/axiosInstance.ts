@@ -9,14 +9,14 @@ const AXIOS_INSTANCE = Axios.create({
 export const customInstance = <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<AxiosResponse<T>> => {
   const source = Axios.CancelToken.source();
 
-  const promise = AXIOS_INSTANCE({
+  const promise = AXIOS_INSTANCE<T>({
     ...config,
     ...options,
     cancelToken: source.token,
-  }).then(({ data }: AxiosResponse<T>) => data);
+  });
 
   // @ts-expect-error - Adding a cancel method to the promise
   promise.cancel = () => {

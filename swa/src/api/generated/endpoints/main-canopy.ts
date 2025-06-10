@@ -6,24 +6,12 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
-  CreateMainCanopyRequest
-} from '../models/createMainCanopyRequest';
-
-import type {
-  MainCanopiesResponse
-} from '../models/mainCanopiesResponse';
-
-import type {
-  MainCanopyListParams
-} from '../models/mainCanopyListParams';
-
-import type {
-  MainCanopyResponse
-} from '../models/mainCanopyResponse';
-
-import type {
+  CreateMainCanopyRequest,
+  MainCanopiesResponse,
+  MainCanopyListParams,
+  MainCanopyResponse,
   UpdateMainCanopyRequest
-} from '../models/updateMainCanopyRequest';
+} from '../models';
 
 import { customInstance } from '../../axiosInstance';
 

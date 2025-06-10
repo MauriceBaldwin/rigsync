@@ -10,7 +10,6 @@ export default defineConfig({
       workspace: './src/api',
       target: 'generated/endpoints',
       schemas: 'generated/models',
-      indexFiles: false,
       clean: true,
       override: {
         mutator: {

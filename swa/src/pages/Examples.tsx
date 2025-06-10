@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
+import { isAxiosError } from 'axios';
 import {
   Button,
   Link,
@@ -9,8 +10,11 @@ import {
   Typography,
 } from '@mui/material';
 
-import { mainCanopyList } from '../api/generated/endpoints/main-canopy';
-import { MainCanopyResponse } from '../api/generated/models/mainCanopyResponse';
+import {
+  mainCanopyList,
+  type MainCanopyResponse,
+  type StandardErrorResponse,
+} from '../api';
 
 const Examples = () => {
   const [mainCanopies, setMainCanopies] = useState<MainCanopyResponse[]>();
@@ -21,10 +25,22 @@ const Examples = () => {
     setMainCanopiesError(undefined);
 
     void (async () => {
-      await mainCanopyList()
-        .then((response) => {
-          setMainCanopies(response.items);
-        });
+      try {
+        await mainCanopyList()
+          .then((response) => {
+            setMainCanopies(response.data.items);
+          });
+      }
+      catch (error) {
+        if (isAxiosError<StandardErrorResponse>(error)) {
+          setMainCanopiesError(
+            error.response?.data.message ||
+            'An error occurred while fetching main canopies',
+          );
+        } else {
+          setMainCanopiesError('An unexpected error occurred');
+        }
+      }
     })();
   };
 
