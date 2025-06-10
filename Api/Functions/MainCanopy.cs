@@ -4,7 +4,7 @@ namespace Api.Functions;
 
 using System.Net;
 using Api.Functions.Utilities;
-using Api.Requests.MainCanopy;
+using Api.Requests;
 using Api.Responses;
 using Api.Responses.Error;
 using Microsoft.AspNetCore.Http;
@@ -49,14 +49,14 @@ public class MainCanopy(ILogger<MainCanopy> logger)
   /// <returns>HTTP response.</returns>
   [Function("MainCanopy_Create")]
   [OpenApiOperation(operationId: "MainCanopy_Create", tags: new[] { "main-canopy" })]
-  [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateRequest), Required = true)]
+  [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateMainCanopyRequest), Required = true)]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MainCanopyResponse))]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   public async Task<IActionResult> Create(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "main-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/main-canopy");
-    var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateRequest>(req.Body);
+    var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateMainCanopyRequest>(req.Body);
     var newMainCanopy = await Domains.MainCanopy.CreateAsync(mainCanopyRequest);
     return new OkObjectResult(new MainCanopyResponse(newMainCanopy));
   }
@@ -90,7 +90,7 @@ public class MainCanopy(ILogger<MainCanopy> logger)
   [Function("MainCanopy_Update")]
   [OpenApiOperation(operationId: "MainCanopy_Update", tags: new[] { "main-canopy" })]
   [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(Guid))]
-  [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UpdateRequest), Required = true)]
+  [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UpdateMainCanopyRequest), Required = true)]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MainCanopyResponse))]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
@@ -99,7 +99,7 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/main-canopy/{id}");
-    var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateRequest>(req.Body);
+    var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateMainCanopyRequest>(req.Body);
     var updatedMainCanopy = await Domains.MainCanopy.UpdateAsync(id, mainCanopyRequest);
     return new OkObjectResult(new MainCanopyResponse(updatedMainCanopy));
   }

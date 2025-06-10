@@ -4,7 +4,7 @@ namespace Api.Domains;
 
 using Api.Domains.Exceptions;
 using Api.Models;
-using Api.Requests.MainCanopy;
+using Api.Requests;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
@@ -53,7 +53,7 @@ public static class MainCanopy
   /// </summary>
   /// <param name="toCreate">The main canopy to be created.</param>
   /// <returns>The newly created main canopy.</returns>
-  public static async Task<Models.MainCanopy> CreateAsync(CreateRequest toCreate)
+  public static async Task<Models.MainCanopy> CreateAsync(CreateMainCanopyRequest toCreate)
   {
     var mainCanopy = new Models.MainCanopy(toCreate);
 
@@ -69,7 +69,7 @@ public static class MainCanopy
   /// <param name="id">The ID of the main canopy to update.</param>
   /// <param name="toUpdate">The main canopy info to be updated.</param>
   /// <returns>The updated main canopy.</returns>
-  public static async Task<Models.MainCanopy> UpdateAsync(Guid id, UpdateRequest toUpdate)
+  public static async Task<Models.MainCanopy> UpdateAsync(Guid id, UpdateMainCanopyRequest toUpdate)
   {
     var mainCanopy = await GetAsync(id);
 

@@ -3,7 +3,7 @@
 namespace Api.Models;
 
 using Api.Models.Shared;
-using Api.Requests.MainCanopy;
+using Api.Requests;
 
 /// <summary>
 /// DBO for a Main Canopy.
@@ -27,7 +27,7 @@ public class MainCanopy : Canopy
   /// Initializes a new instance of the <see cref="MainCanopy"/> class.
   /// </summary>
   /// <param name="createRequest">The HTTP request body to create a new main canopy.</param>
-  public MainCanopy(CreateRequest createRequest)
+  public MainCanopy(CreateMainCanopyRequest createRequest)
     : base(createRequest.Manufacturer, createRequest.Model, createRequest.Size)
   {
   }
