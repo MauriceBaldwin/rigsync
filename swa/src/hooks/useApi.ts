@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { AxiosResponse, isAxiosError } from "axios";
-import { StandardErrorResponse } from "./generated/models";
+import { StandardErrorResponse } from "../api/generated/models";
 
 type Request<T> = () => Promise<AxiosResponse<T>>;
 
+/**
+ * Custom hook for making API requests.
+ * @returns The response data, loading state, error message, and a function to
+ * make requests.
+ */
 const useApi = <T>(): [
   T | undefined,
   boolean,

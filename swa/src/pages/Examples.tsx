@@ -1,53 +1,52 @@
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router';
 import {
-  Button,
+  CircularProgress,
   Link,
-  List,
-  ListItem,
-  ListItemText,
   Stack,
   Typography,
 } from '@mui/material';
 
 import { type MainCanopiesResponse, mainCanopyList } from '../api';
-import useApi from '../api/useApi';
+import useApi from '../hooks/useApi';
+import RigSyncTable from '../components/RigSyncTable';
+import usePagination from '../hooks/usePagination';
 
 const Examples = () => {
+  const pagination = usePagination();
+
   const [response, isLoading, error, makeRequest] =
     useApi<MainCanopiesResponse>();
 
   const fetchMainCanopies = () => {
-    makeRequest(() => mainCanopyList());
+    makeRequest(() => mainCanopyList({
+      page: pagination.page,
+      limit: pagination.limit,
+    }));
   };
+
+  const columns = [
+    { title: 'Manufacturer', fieldKey: 'manufacturer' },
+    { title: 'Model', fieldKey: 'model' },
+    { title: 'Size (ft\u00B2)', fieldKey: 'size' },
+  ];
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(fetchMainCanopies, [pagination.page, pagination.limit]);
 
   return (
     <Stack spacing={4}>
-      <Typography variant="h1">Examples</Typography>
+      <Typography variant="h1">Main canopies</Typography>
 
-      <Typography variant="body1">
-        Example implementations of commonly used features
-      </Typography>
-
-      <Typography variant="h2">DB Query</Typography>
-
-      <Button
-        variant="outlined"
-        onClick={fetchMainCanopies}
-        loading={isLoading}
-      >
-        Load main canopies
-      </Button>
+      {isLoading && <CircularProgress />}
 
       {response &&
-        <List>
-          {response.items.map(mainCanopy => (
-            <ListItem key={mainCanopy.id}>
-              <ListItemText>
-                {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
-              </ListItemText>
-            </ListItem>
-          ))}
-        </List>
+        <RigSyncTable
+          columns={columns}
+          data={response.items.map(item => ({ ...item }))}
+          count={response.count}
+          pagination={pagination}
+        />
       }
 
       {error && <Typography variant="body1">Error: {error}</Typography>}
