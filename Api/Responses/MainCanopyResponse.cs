@@ -2,6 +2,7 @@
 
 namespace Api.Responses;
 
+using System.ComponentModel.DataAnnotations;
 using Api.Models;
 using Api.Responses.Shared;
 
@@ -14,6 +15,7 @@ public class MainCanopyResponse(MainCanopy mainCanopy)
   /// <summary>
   /// Gets the ID of the main canopy.
   /// </summary>
+  [Required]
   public Guid Id { get; private set; } = mainCanopy.Id;
 }
 

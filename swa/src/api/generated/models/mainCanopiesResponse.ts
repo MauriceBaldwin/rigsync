@@ -8,8 +8,8 @@
 import type { MainCanopyResponse } from './mainCanopyResponse';
 
 export interface MainCanopiesResponse {
-  page?: number;
-  limit?: number;
-  items?: MainCanopyResponse[];
-  count?: number;
+  page: number;
+  limit: number;
+  items: MainCanopyResponse[];
+  count: number;
 }

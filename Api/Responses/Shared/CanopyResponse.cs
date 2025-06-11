@@ -2,6 +2,7 @@
 
 namespace Api.Responses.Shared;
 
+using System.ComponentModel.DataAnnotations;
 using Api.Models.Shared;
 
 /// <summary>
@@ -13,5 +14,6 @@ public class CanopyResponse(Canopy canopy)
   /// <summary>
   /// Gets the size of the canopy in square feet.
   /// </summary>
+  [Required]
   public int Size { get; private set; } = canopy.Size;
 }

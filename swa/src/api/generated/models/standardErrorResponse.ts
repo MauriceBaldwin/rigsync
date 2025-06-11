@@ -7,6 +7,8 @@
  */
 
 export interface StandardErrorResponse {
-  errorCode?: string;
-  message?: string;
+  /** @minLength 1 */
+  errorCode: string;
+  /** @minLength 1 */
+  message: string;
 }

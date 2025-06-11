@@ -195,12 +195,19 @@
   },
   "definitions": {
     "createMainCanopyRequest": {
+      "required": [
+        "manufacturer",
+        "model",
+        "size"
+      ],
       "type": "object",
       "properties": {
         "manufacturer": {
+          "minLength": 1,
           "type": "string"
         },
         "model": {
+          "minLength": 1,
           "type": "string"
         },
         "size": {
@@ -210,6 +217,12 @@
       }
     },
     "mainCanopiesResponse": {
+      "required": [
+        "page",
+        "limit",
+        "items",
+        "count"
+      ],
       "type": "object",
       "properties": {
         "page": {
@@ -233,10 +246,18 @@
       }
     },
     "mainCanopyResponse": {
+      "required": [
+        "id",
+        "size",
+        "manufacturer",
+        "model",
+        "description"
+      ],
       "type": "object",
       "properties": {
         "id": {
           "format": "uuid",
+          "minLength": 1,
           "type": "string"
         },
         "size": {
@@ -244,23 +265,32 @@
           "type": "integer"
         },
         "manufacturer": {
+          "minLength": 1,
           "type": "string"
         },
         "model": {
+          "minLength": 1,
           "type": "string"
         },
         "description": {
+          "minLength": 1,
           "type": "string"
         }
       }
     },
     "standardErrorResponse": {
+      "required": [
+        "errorCode",
+        "message"
+      ],
       "type": "object",
       "properties": {
         "errorCode": {
+          "minLength": 1,
           "type": "string"
         },
         "message": {
+          "minLength": 1,
           "type": "string"
         }
       }

@@ -7,9 +7,13 @@
  */
 
 export interface MainCanopyResponse {
-  id?: string;
-  size?: number;
-  manufacturer?: string;
-  model?: string;
-  description?: string;
+  /** @minLength 1 */
+  id: string;
+  size: number;
+  /** @minLength 1 */
+  manufacturer: string;
+  /** @minLength 1 */
+  model: string;
+  /** @minLength 1 */
+  description: string;
 }

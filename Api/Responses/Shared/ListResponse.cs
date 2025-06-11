@@ -2,6 +2,8 @@
 
 namespace Api.Responses.Shared;
 
+using System.ComponentModel.DataAnnotations;
+
 /// <summary>
 /// Response type for listing multiple resources.
 /// </summary>
@@ -32,10 +34,12 @@ public class ListResponse<T>
   /// <summary>
   /// Gets or sets the list of resources.
   /// </summary>
+  [Required]
   public IEnumerable<T> Items { get; protected set; }
 
   /// <summary>
   /// Gets or sets the total count of resources.
   /// </summary>
+  [Required]
   public int Count { get; protected set; }
 }

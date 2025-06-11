@@ -40,7 +40,7 @@ const Examples = () => {
 
       {response &&
         <List>
-          {response.items?.map(mainCanopy => (
+          {response.items.map(mainCanopy => (
             <ListItem key={mainCanopy.id}>
               <ListItemText>
                 {mainCanopy.manufacturer} {mainCanopy.model} {mainCanopy.size}
