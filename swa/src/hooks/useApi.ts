@@ -36,7 +36,7 @@ const useApi = <T>(): [
         if (isAxiosError<StandardErrorResponse>(error)) {
           setError(
             error.response?.data.message ||
-            'An error occurred.',
+            'The request failed. Check your network connection and try again.',
           );
         } else {
           setError('An unexpected error occurred.');

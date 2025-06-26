@@ -10,6 +10,7 @@ import {
   Typography,
   ToggleButtonGroup,
   ToggleButton,
+  CircularProgress,
 } from "@mui/material";
 
 interface RigSyncTableColumn {
@@ -28,9 +29,11 @@ interface RigSyncTablePagination {
 
 interface RigSyncTableProps {
   columns: RigSyncTableColumn[];
-  data: RigSyncTableData[];
-  count: number;
+  data?: RigSyncTableData[];
+  count?: number;
   pagination?: RigSyncTablePagination;
+  error?: string
+  isLoading?: boolean
 }
 
 const getItemId = (item: RigSyncTableData): string => {
@@ -62,18 +65,20 @@ const RigSyncTable = ({
   data,
   count,
   pagination,
+  error,
+  isLoading,
 }: RigSyncTableProps) => {
   const startIndex = pagination ?
     ((pagination.page - 1) * pagination.limit) + 1
     : undefined;
 
-  const endIndex = pagination ?
+  const endIndex = pagination && count ?
     Math.min(
       ((pagination.page - 1) * pagination.limit) + pagination.limit,
       count,
     ) : undefined;
 
-  const pageCount = pagination ?
+  const pageCount = pagination && count ?
     Math.ceil(count / pagination.limit)
     : undefined;
 
@@ -90,7 +95,15 @@ const RigSyncTable = ({
           </TableHead>
 
           <TableBody>
-            {data.map(item => (
+            {isLoading &&
+              <TableRow key="loading">
+                <TableCell align="center" colSpan={columns.length}>
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            }
+
+            {data?.map(item => (
               <TableRow key={getItemId(item)}>
                 {columns.map((column) => (
                   <TableCell key={`${getItemId(item)}_${column.fieldKey}`}>
@@ -99,11 +112,21 @@ const RigSyncTable = ({
                 ))}
               </TableRow>
             ))}
+
+            {error &&
+              <TableRow key="error">
+                <TableCell align="center" colSpan={columns.length}>
+                  <Typography variant="body1" color="error">
+                    Error: {error}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            }
           </TableBody>
         </Table>
       </TableContainer>
 
-      {pagination && (
+      {pagination && count && (
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           alignItems={{ xs: "stretch", sm: "center" }}

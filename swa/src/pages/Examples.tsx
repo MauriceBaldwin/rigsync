@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router';
 import {
-  CircularProgress,
   Link,
   Stack,
   Typography,
@@ -11,6 +10,7 @@ import { type MainCanopiesResponse, mainCanopyList } from '../api';
 import useApi from '../hooks/useApi';
 import RigSyncTable from '../components/RigSyncTable';
 import usePagination from '../hooks/usePagination';
+import CreateMainCanopyForm from '../components/forms/CreateMainCanopyForm';
 
 const Examples = () => {
   const pagination = usePagination();
@@ -38,20 +38,18 @@ const Examples = () => {
     <Stack spacing={4}>
       <Typography variant="h1">Main canopies</Typography>
 
-      {isLoading && <CircularProgress />}
-
-      {response &&
-        <RigSyncTable
-          columns={columns}
-          data={response.items.map(item => ({ ...item }))}
-          count={response.count}
-          pagination={pagination}
-        />
-      }
-
-      {error && <Typography variant="body1">Error: {error}</Typography>}
+      <RigSyncTable
+        columns={columns}
+        data={response?.items.map(item => ({ ...item }))}
+        count={response?.count}
+        pagination={pagination}
+        error={error}
+        isLoading={isLoading}
+      />
 
       <Link variant="body1" component={RouterLink} to="/">Home</Link>
+
+      <CreateMainCanopyForm />
     </Stack>
   );
 };
