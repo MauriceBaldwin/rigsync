@@ -6,12 +6,10 @@ import {
   TableCell,
   TableBody,
   Stack,
-  Pagination,
   Typography,
-  ToggleButtonGroup,
-  ToggleButton,
   CircularProgress,
 } from "@mui/material";
+import RigSyncPagination, { PaginationProps } from "./RigSyncPagination";
 
 interface RigSyncTableColumn {
   title: string;
@@ -20,18 +18,11 @@ interface RigSyncTableColumn {
 
 type RigSyncTableData = Record<string, unknown>;
 
-interface RigSyncTablePagination {
-  page: number;
-  limit: number;
-  setPage: (page: number) => void;
-  setLimit: (limit: number) => void;
-}
-
 interface RigSyncTableProps {
   columns: RigSyncTableColumn[];
   data?: RigSyncTableData[];
   count?: number;
-  pagination?: RigSyncTablePagination;
+  pagination?: PaginationProps;
   error?: string
   isLoading?: boolean
 }
@@ -68,20 +59,6 @@ const RigSyncTable = ({
   error,
   isLoading,
 }: RigSyncTableProps) => {
-  const startIndex = pagination ?
-    ((pagination.page - 1) * pagination.limit) + 1
-    : undefined;
-
-  const endIndex = pagination && count ?
-    Math.min(
-      ((pagination.page - 1) * pagination.limit) + pagination.limit,
-      count,
-    ) : undefined;
-
-  const pageCount = pagination && count ?
-    Math.ceil(count / pagination.limit)
-    : undefined;
-
   return (
     <Stack spacing={2}>
       <TableContainer>
@@ -127,54 +104,15 @@ const RigSyncTable = ({
       </TableContainer>
 
       {pagination && count && (
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          alignItems={{ xs: "stretch", sm: "center" }}
-          justifyContent="space-between"
-          spacing={2}
-        >
-          <Stack direction="row" spacing={2} alignItems="center">
-
-            <Typography variant="body1">
-              Items per page
-            </Typography>
-
-            <ToggleButtonGroup
-              value={pagination.limit}
-              exclusive
-              onChange={(_, value: number) => { pagination.setLimit(value); }}
-            >
-              <ToggleButton value={2}>2</ToggleButton>
-              <ToggleButton value={3}>3</ToggleButton>
-              <ToggleButton value={5}>5</ToggleButton>
-            </ToggleButtonGroup>
-
-          </Stack>
-
-
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-            <Typography variant="body1">
-              Showing {startIndex} to {endIndex} of {count}
-            </Typography>
-            {pageCount && pageCount > 1 && (
-              <Pagination
-                count={pageCount}
-                page={pagination.page}
-                onChange={(_, value) => { pagination.setPage(value); }}
-              />
-            )}
-          </Stack>
-        </Stack>
-
+        <RigSyncPagination
+          page={pagination.page}
+          limit={pagination.limit}
+          count={count}
+          setPage={pagination.setPage}
+          setLimit={pagination.setLimit}
+        />
       )}
-
     </Stack>
-
   );
 };
 
