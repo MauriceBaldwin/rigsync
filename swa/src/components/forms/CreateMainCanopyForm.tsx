@@ -15,7 +15,7 @@ const CreateMainCanopyForm = () => {
   const [internalModel, setInternalModel] = useState('');
   const [internalSize, setInternalSize] = useState('');
 
-  const [, isLoading, error, makeRequest] =
+  const { isLoading, error, makeRequest } =
     useApi<MainCanopyResponse>();
 
   const createMainCanopy = () => {

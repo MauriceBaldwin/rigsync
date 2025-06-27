@@ -9,7 +9,8 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import RigSyncPagination, { PaginationProps } from "./RigSyncPagination";
+import RigSyncPagination from "./RigSyncPagination";
+import { UsePagination } from "../hooks/usePagination";
 
 interface RigSyncTableColumn {
   title: string;
@@ -22,7 +23,7 @@ interface RigSyncTableProps {
   columns: RigSyncTableColumn[];
   data?: RigSyncTableData[];
   count?: number;
-  pagination?: PaginationProps;
+  pagination?: UsePagination;
   error?: string
   isLoading?: boolean
 }

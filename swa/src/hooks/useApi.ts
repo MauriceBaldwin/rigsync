@@ -4,17 +4,19 @@ import { StandardErrorResponse } from "../api/generated/models";
 
 type Request<T> = () => Promise<AxiosResponse<T>>;
 
+export interface UseApi<T> {
+  response: T | undefined,
+  isLoading: boolean,
+  error: string | undefined,
+  makeRequest: (request: Request<T>) => void
+}
+
 /**
  * Custom hook for making API requests.
  * @returns The response data, loading state, error message, and a function to
  * make requests.
  */
-const useApi = <T>(): [
-  T | undefined,
-  boolean,
-  string | undefined,
-  (request: Request<T>) => void
-] => {
+const useApi = <T>(): UseApi<T> => {
   const [response, setResponse] = useState<T>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
@@ -47,12 +49,12 @@ const useApi = <T>(): [
     })();
   };
 
-  return [
+  return {
     response,
     isLoading,
     error,
     makeRequest,
-  ];
+  };
 };
 
 export default useApi;

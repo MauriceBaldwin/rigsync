@@ -15,8 +15,12 @@ import CreateMainCanopyForm from '../components/forms/CreateMainCanopyForm';
 const Examples = () => {
   const pagination = usePagination();
 
-  const [response, isLoading, error, makeRequest] =
-    useApi<MainCanopiesResponse>();
+  const {
+    response,
+    isLoading,
+    error,
+    makeRequest,
+  } = useApi<MainCanopiesResponse>();
 
   const fetchMainCanopies = () => {
     makeRequest(() => mainCanopyList({

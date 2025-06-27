@@ -3,6 +3,13 @@ import { useReducer } from "react";
 export const DEFAULT_PAGE = 1;
 export const DEFAULT_LIMIT = 3;
 
+export interface UsePagination {
+  page: number
+  limit: number
+  setPage: React.ActionDispatch<[newPage: number]>
+  setLimit: React.ActionDispatch<[newPage: number]>
+}
+
 /**
  * Reducer function to handle number updates. Ensures the number remains >= 1.
  * @param state - Current number.
@@ -21,7 +28,7 @@ const positiveNonZeroReducer = (state: number, newPage: number): number => {
  * Custom hook for managing pagination state.
  * @returns The current page, limit, and functions to set them.
  */
-const usePagination = () => {
+const usePagination = (): UsePagination => {
   const [page, setPage] = useReducer(positiveNonZeroReducer, DEFAULT_PAGE);
   const [limit, _setLimit] = useReducer(positiveNonZeroReducer, DEFAULT_LIMIT);
 

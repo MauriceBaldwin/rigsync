@@ -5,15 +5,9 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
+import { UsePagination } from "../hooks/usePagination";
 
-export interface PaginationProps {
-  page: number;
-  limit: number;
-  setPage: (page: number) => void;
-  setLimit: (limit: number) => void;
-}
-
-interface RigSyncPaginationProps extends PaginationProps {
+export interface RigSyncPaginationProps extends UsePagination {
   count: number;
 }
 
