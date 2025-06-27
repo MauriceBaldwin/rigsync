@@ -9,6 +9,7 @@ export interface UseApi<T> {
   isLoading: boolean,
   error: string | undefined,
   makeRequest: (request: Request<T>) => void
+  setResponse: React.Dispatch<React.SetStateAction<T | undefined>>
 }
 
 /**
@@ -54,6 +55,7 @@ const useApi = <T>(): UseApi<T> => {
     isLoading,
     error,
     makeRequest,
+    setResponse,
   };
 };
 

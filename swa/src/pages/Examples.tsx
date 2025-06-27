@@ -7,11 +7,11 @@ import {
   Typography,
 } from '@mui/material';
 
-import { type MainCanopiesResponse, mainCanopyList } from '../api';
+import { type MainCanopyResponse, mainCanopyList } from '../api';
 import RigSyncTable from '../components/RigSyncTable';
 import CreateMainCanopyTableForm from
   '../components/forms/CreateMainCanopyTableForm';
-import useApi from '../hooks/useApi';
+import useListApi from '../hooks/useListApi';
 import usePagination from '../hooks/usePagination';
 
 const Examples = () => {
@@ -22,7 +22,8 @@ const Examples = () => {
     isLoading,
     error,
     makeRequest,
-  } = useApi<MainCanopiesResponse>();
+    append,
+  } = useListApi<MainCanopyResponse>();
 
   const fetchMainCanopies = () => {
     makeRequest(() => mainCanopyList({
@@ -54,7 +55,10 @@ const Examples = () => {
             error={error}
             isLoading={isLoading}
           >
-            <CreateMainCanopyTableForm columnCount={columns.length} />
+            <CreateMainCanopyTableForm
+              columnCount={columns.length}
+              onCreate={append}
+            />
           </RigSyncTable>
         </Container>
 

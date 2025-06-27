@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,12 +10,16 @@ import {
 import { mainCanopyCreate, MainCanopyResponse } from "../../api";
 import useApi from "../../hooks/useApi";
 
-const CreateMainCanopyForm = () => {
+interface CreateMainCanopyFormProps {
+  onCreate?: (item: MainCanopyResponse) => void;
+}
+
+const CreateMainCanopyForm = ({ onCreate }: CreateMainCanopyFormProps) => {
   const [internalManufacturer, setInternalManufacturer] = useState('');
   const [internalModel, setInternalModel] = useState('');
   const [internalSize, setInternalSize] = useState('');
 
-  const { isLoading, error, makeRequest } =
+  const { response, isLoading, error, makeRequest } =
     useApi<MainCanopyResponse>();
 
   const createMainCanopy = () => {
@@ -26,6 +30,13 @@ const CreateMainCanopyForm = () => {
         size: parseInt(internalSize),
       }));
   };
+
+  useEffect(() => {
+    if (response && !error && onCreate) {
+      onCreate(response);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response, error]);
 
   return (
     <Box

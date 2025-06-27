@@ -1,22 +1,46 @@
-import { IconButton, Stack, TableCell, TableRow } from "@mui/material";
+import { useState } from "react";
+import {
+  IconButton,
+  Stack,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import CreateMainCanopyForm from "./CreateMainCanopyForm";
-import { useState } from "react";
+import { MainCanopyResponse } from "../../api";
 
 interface CreateMainCanopyTableFormProps {
   columnCount: number
+  onCreate?: (item: MainCanopyResponse) => void
 }
 
 const CreateMainCanopyTableForm = ({
   columnCount,
+  onCreate,
 }: CreateMainCanopyTableFormProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleCreate = (item: MainCanopyResponse) => {
+    setIsFormOpen(false);
+    setShowSuccess(true);
+
+    if (onCreate) {
+      onCreate(item);
+    }
+
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 5000);
+  };
 
   return (
     <TableRow>
-      {!isFormOpen &&
-        <TableCell align="center" colSpan={columnCount}>
+      <TableCell align="center" colSpan={columnCount}>
+        {!isFormOpen && !showSuccess &&
           <IconButton
             color="primary"
             aria-label="Add main canopy"
@@ -24,12 +48,10 @@ const CreateMainCanopyTableForm = ({
           >
             <AddIcon />
           </IconButton>
-        </TableCell>
-      }
-      {isFormOpen &&
-        <TableCell align="center" colSpan={columnCount}>
+        }
+        {isFormOpen &&
           <Stack alignItems="center">
-            <CreateMainCanopyForm />
+            <CreateMainCanopyForm onCreate={handleCreate} />
             <IconButton
               aria-label="Cancel"
               onClick={() => { setIsFormOpen(false); }}
@@ -37,8 +59,16 @@ const CreateMainCanopyTableForm = ({
               <CloseIcon />
             </IconButton>
           </Stack>
-        </TableCell>
-      }
+        }
+        {showSuccess &&
+          <Stack justifyContent="center" direction="row" spacing={2}>
+            <DoneIcon color="success" />
+            <Typography variant="body1" color="success">
+              Main canopy created
+            </Typography>
+          </Stack>
+        }
+      </TableCell>
     </TableRow>
   );
 };
