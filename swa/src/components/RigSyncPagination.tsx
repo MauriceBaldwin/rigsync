@@ -38,11 +38,13 @@ const RigSyncPagination = ({
         <ToggleButtonGroup
           value={limit}
           exclusive
+          size="small"
           onChange={(_, value: number) => { setLimit(value); }}
+          aria-label="Items per page"
         >
-          <ToggleButton value={2}>2</ToggleButton>
-          <ToggleButton value={3}>3</ToggleButton>
-          <ToggleButton value={5}>5</ToggleButton>
+          <ToggleButton value={2} sx={{ px: 2 }}>2</ToggleButton>
+          <ToggleButton value={3} sx={{ px: 2 }}>3</ToggleButton>
+          <ToggleButton value={5} sx={{ px: 2 }}>5</ToggleButton>
         </ToggleButtonGroup>
 
       </Stack>
