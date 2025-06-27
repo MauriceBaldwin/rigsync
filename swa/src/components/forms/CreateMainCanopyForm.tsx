@@ -33,14 +33,12 @@ const CreateMainCanopyForm = () => {
       autoComplete="off"
       action={createMainCanopy}
     >
-      <Stack spacing={4}>
-
-        <Stack direction="row" spacing={4}>
+      <Stack alignItems="center">
+        <Stack direction="row" alignItems="center" spacing={{ xs: 0, sm: 1 }}>
           <TextField
             required
             id="create-main-canopy-manufacturer"
             label="Manufacturer"
-            helperText="Name of the canopy manufacturer"
             placeholder="Performance Designs"
             value={internalManufacturer}
             onChange={(event) => {
@@ -51,7 +49,6 @@ const CreateMainCanopyForm = () => {
             required
             id="create-main-canopy-model"
             label="Model"
-            helperText="Name of the canopy model"
             placeholder="Sabre3"
             value={internalModel}
             onChange={(event) => { setInternalModel(event.target.value); }}
@@ -61,7 +58,6 @@ const CreateMainCanopyForm = () => {
             id="create-main-canopy-size"
             label="Size"
             type="number"
-            helperText="Size of the canopy in square feet"
             placeholder="120"
             slotProps={{
               input: {
@@ -74,9 +70,7 @@ const CreateMainCanopyForm = () => {
             value={internalSize}
             onChange={(event) => { setInternalSize(event.target.value); }}
           />
-        </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={4}>
           <Button
             type="submit"
             variant="contained"
@@ -84,14 +78,13 @@ const CreateMainCanopyForm = () => {
           >
             Create
           </Button>
-
-          {error &&
-            <Typography variant="body1" color="error">
-              Error: {error}
-            </Typography>
-          }
-
         </Stack>
+
+        {error &&
+          <Typography variant="body1" color="error">
+            Error: {error}
+          </Typography>
+        }
       </Stack>
     </Box>
 

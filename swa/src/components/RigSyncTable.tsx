@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import {
   TableContainer,
   Table,
@@ -19,7 +20,7 @@ interface RigSyncTableColumn {
 
 type RigSyncTableData = Record<string, unknown>;
 
-interface RigSyncTableProps {
+interface RigSyncTableProps extends PropsWithChildren {
   columns: RigSyncTableColumn[];
   data?: RigSyncTableData[];
   count?: number;
@@ -59,6 +60,7 @@ const RigSyncTable = ({
   pagination,
   error,
   isLoading,
+  children,
 }: RigSyncTableProps) => {
   return (
     <Stack spacing={2}>
@@ -74,7 +76,7 @@ const RigSyncTable = ({
 
           <TableBody>
             {isLoading &&
-              <TableRow key="loading">
+              <TableRow>
                 <TableCell align="center" colSpan={columns.length}>
                   <CircularProgress />
                 </TableCell>
@@ -92,7 +94,7 @@ const RigSyncTable = ({
             ))}
 
             {error &&
-              <TableRow key="error">
+              <TableRow>
                 <TableCell align="center" colSpan={columns.length}>
                   <Typography variant="body1" color="error">
                     Error: {error}
@@ -100,6 +102,8 @@ const RigSyncTable = ({
                 </TableCell>
               </TableRow>
             }
+
+            {children}
           </TableBody>
         </Table>
       </TableContainer>

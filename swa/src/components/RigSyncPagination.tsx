@@ -5,7 +5,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import { UsePagination } from "../hooks/usePagination";
+import { PAGINATION_LIMITS, UsePagination } from "../hooks/usePagination";
 
 export interface RigSyncPaginationProps extends UsePagination {
   count: number;
@@ -21,6 +21,14 @@ const RigSyncPagination = ({
   const startIndex = ((page - 1) * limit) + 1;
   const endIndex = Math.min(((page - 1) * limit) + limit, count);
   const pageCount = Math.ceil(count / limit);
+
+  // find the first limit that is higher than the total count
+  const maxLimit = PAGINATION_LIMITS.filter(limit => limit > count).at(0);
+
+  // show limits up to and including the first that is higher than total count
+  const limitOptions = maxLimit ?
+    PAGINATION_LIMITS.filter(limit => limit <= maxLimit) :
+    PAGINATION_LIMITS;
 
   return (
     <Stack
@@ -42,9 +50,11 @@ const RigSyncPagination = ({
           onChange={(_, value: number) => { setLimit(value); }}
           aria-label="Items per page"
         >
-          <ToggleButton value={2} sx={{ px: 2 }}>2</ToggleButton>
-          <ToggleButton value={3} sx={{ px: 2 }}>3</ToggleButton>
-          <ToggleButton value={5} sx={{ px: 2 }}>5</ToggleButton>
+          {limitOptions.map(limit => (
+            <ToggleButton key={limit} value={limit} sx={{ px: 2 }}>
+              {limit}
+            </ToggleButton>),
+          )}
         </ToggleButtonGroup>
 
       </Stack>
