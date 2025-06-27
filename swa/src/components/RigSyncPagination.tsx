@@ -23,7 +23,7 @@ const RigSyncPagination = ({
   const pageCount = Math.ceil(count / limit);
 
   // find the first limit that is higher than the total count
-  const maxLimit = PAGINATION_LIMITS.filter(limit => limit > count).at(0);
+  const maxLimit = PAGINATION_LIMITS.filter(limit => limit >= count).at(0);
 
   // show limits up to and including the first that is higher than total count
   const limitOptions = maxLimit ?
