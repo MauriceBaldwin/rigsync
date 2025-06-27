@@ -45,7 +45,11 @@ const CreateMainCanopyForm = ({ onCreate }: CreateMainCanopyFormProps) => {
       action={createMainCanopy}
     >
       <Stack alignItems="center">
-        <Stack direction="row" alignItems="center" spacing={{ xs: 0, sm: 1 }}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "stretch", sm: "center" }}
+          spacing={1}
+        >
           <TextField
             required
             id="create-main-canopy-manufacturer"
