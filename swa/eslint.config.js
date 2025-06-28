@@ -41,7 +41,7 @@ export default tseslint.config(
         'exports': 'always-multiline',
         'functions': 'always-multiline',
       }],
-      'indent': ['error', 2],
+      'indent': ['error', 2, { "SwitchCase": 1 }],
       'max-len': ['error', { 'code': 80 }],
       'semi': ['error', 'always'],
     },
