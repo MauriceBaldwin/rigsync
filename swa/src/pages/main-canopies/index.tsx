@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Container,
   Stack,
@@ -7,11 +7,12 @@ import {
 
 import { type MainCanopyResponse, mainCanopyList } from '../../api';
 import RigSyncTable from '../../components/RigSyncTable';
-import CreateMainCanopyTableForm from
-  '../../components/forms/CreateMainCanopyTableForm';
+import RigSyncAddRow from
+  '../../components/RigSyncAddRow';
 import useListApi from '../../hooks/useListApi';
 import usePagination from '../../hooks/usePagination';
 import { useNavigate } from 'react-router';
+import CreateForm from '../../components/forms/mainCanopy/CreateForm';
 
 const MainCanopies = () => {
   const pagination = usePagination();
@@ -24,6 +25,21 @@ const MainCanopies = () => {
     makeRequest,
     append,
   } = useListApi<MainCanopyResponse>();
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const showSuccessTimeout = () => {
+    setShowSuccess(true);
+
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 5000);
+  };
+
+  const onCreate = (item: MainCanopyResponse) => {
+    showSuccessTimeout();
+    append(item);
+  };
 
   const fetchMainCanopies = () => {
     makeRequest(() => mainCanopyList({
@@ -60,10 +76,13 @@ const MainCanopies = () => {
           editable
           onEdit={navigateToMainCanopy}
         >
-          <CreateMainCanopyTableForm
+          <RigSyncAddRow
             columnCount={columns.length + 1}
-            onCreate={append}
-          />
+            entityName="Main canopy"
+            showSuccess={showSuccess}
+          >
+            <CreateForm onCreate={onCreate} />
+          </RigSyncAddRow>
         </RigSyncTable>
       </Container>
     </Stack>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   IconButton,
   Stack,
@@ -9,33 +9,24 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import CreateMainCanopyForm from "./CreateMainCanopyForm";
-import { MainCanopyResponse } from "../../api";
 
-interface CreateMainCanopyTableFormProps {
+interface CreateMainCanopyTableFormProps extends PropsWithChildren {
   columnCount: number
-  onCreate?: (item: MainCanopyResponse) => void
+  entityName?: string
+  showSuccess?: boolean
 }
 
-const CreateMainCanopyTableForm = ({
+const RigSyncAddRow = ({
   columnCount,
-  onCreate,
+  entityName,
+  children,
+  showSuccess,
 }: CreateMainCanopyTableFormProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleCreate = (item: MainCanopyResponse) => {
+  useEffect(() => {
     setIsFormOpen(false);
-    setShowSuccess(true);
-
-    if (onCreate) {
-      onCreate(item);
-    }
-
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
-  };
+  }, [showSuccess]);
 
   return (
     <TableRow>
@@ -43,7 +34,7 @@ const CreateMainCanopyTableForm = ({
         {!isFormOpen && !showSuccess &&
           <IconButton
             color="primary"
-            aria-label="Add main canopy"
+            aria-label={`Add ${entityName ?? 'row'}`}
             onClick={() => { setIsFormOpen(true); }}
           >
             <AddIcon />
@@ -51,7 +42,7 @@ const CreateMainCanopyTableForm = ({
         }
         {isFormOpen &&
           <Stack alignItems="center">
-            <CreateMainCanopyForm onCreate={handleCreate} />
+            {children}
             <IconButton
               aria-label="Cancel"
               onClick={() => { setIsFormOpen(false); }}
@@ -64,7 +55,7 @@ const CreateMainCanopyTableForm = ({
           <Stack justifyContent="center" direction="row" spacing={2}>
             <DoneIcon color="success" />
             <Typography variant="body1" color="success">
-              Main canopy created
+              {entityName ?? 'Row'} created
             </Typography>
           </Stack>
         }
@@ -73,4 +64,4 @@ const CreateMainCanopyTableForm = ({
   );
 };
 
-export default CreateMainCanopyTableForm;
+export default RigSyncAddRow;
