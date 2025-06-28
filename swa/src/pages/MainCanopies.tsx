@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { Link as RouterLink } from 'react-router';
 import {
   Container,
-  Link,
   Stack,
   Typography,
 } from '@mui/material';
@@ -14,7 +12,7 @@ import CreateMainCanopyTableForm from
 import useListApi from '../hooks/useListApi';
 import usePagination from '../hooks/usePagination';
 
-const Examples = () => {
+const MainCanopies = () => {
   const pagination = usePagination();
 
   const {
@@ -42,30 +40,26 @@ const Examples = () => {
   useEffect(fetchMainCanopies, [pagination.page, pagination.limit]);
 
   return (
-    <Container maxWidth="lg">
-      <Stack spacing={4} alignItems="baseline">
-        <Typography variant="h1">Main canopies</Typography>
+    <Stack spacing={4} alignItems="baseline">
+      <Typography variant="h1">Main canopies</Typography>
 
-        <Container disableGutters sx={{ width: "100%" }}>
-          <RigSyncTable
-            columns={columns}
-            data={response?.items.map(item => ({ ...item }))}
-            count={response?.count}
-            pagination={pagination}
-            error={error}
-            isLoading={isLoading}
-          >
-            <CreateMainCanopyTableForm
-              columnCount={columns.length}
-              onCreate={append}
-            />
-          </RigSyncTable>
-        </Container>
-
-        <Link variant="body1" component={RouterLink} to="/">Home</Link>
-      </Stack>
-    </Container>
+      <Container disableGutters sx={{ width: "100%" }}>
+        <RigSyncTable
+          columns={columns}
+          data={response?.items.map(item => ({ ...item }))}
+          count={response?.count}
+          pagination={pagination}
+          error={error}
+          isLoading={isLoading}
+        >
+          <CreateMainCanopyTableForm
+            columnCount={columns.length}
+            onCreate={append}
+          />
+        </RigSyncTable>
+      </Container>
+    </Stack>
   );
 };
 
-export default Examples;
+export default MainCanopies;
