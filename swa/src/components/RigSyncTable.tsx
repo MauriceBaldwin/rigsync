@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   TableContainer,
   Table,
@@ -9,7 +9,9 @@ import {
   Stack,
   Typography,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 import RigSyncPagination from "./RigSyncPagination";
 import { UsePagination } from "../hooks/usePagination";
 
@@ -27,6 +29,8 @@ interface RigSyncTableProps extends PropsWithChildren {
   pagination?: UsePagination;
   error?: string
   isLoading?: boolean
+  editable?: boolean
+  onEdit?: (id: string) => void
 }
 
 const getItemId = (item: RigSyncTableData): string => {
@@ -60,8 +64,16 @@ const RigSyncTable = ({
   pagination,
   error,
   isLoading,
+  editable,
+  onEdit,
   children,
 }: RigSyncTableProps) => {
+  const [columnCount, setColumnCount] = useState(0);
+
+  useEffect(() => {
+    setColumnCount(editable ? columns.length + 1 : columns.length);
+  }, [editable, columns]);
+
   return (
     <Stack spacing={2}>
       <TableContainer>
@@ -71,31 +83,48 @@ const RigSyncTable = ({
               {columns.map((column) => (
                 <TableCell key={column.fieldKey}>{column.title}</TableCell>
               ))}
+
+              {editable && <TableCell></TableCell>}
             </TableRow>
           </TableHead>
 
           <TableBody>
             {isLoading &&
               <TableRow>
-                <TableCell align="center" colSpan={columns.length}>
+                <TableCell align="center" colSpan={columnCount}>
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             }
 
             {data?.map(item => (
-              <TableRow key={getItemId(item)}>
+              <TableRow
+                key={getItemId(item)}
+                hover={editable}
+                sx={editable ? { cursor: 'pointer' } : {}}
+                onClick={() => {
+                  if (editable && onEdit) onEdit(getItemId(item));
+                }}
+              >
                 {columns.map((column) => (
                   <TableCell key={`${getItemId(item)}_${column.fieldKey}`}>
                     {getItemField(item, column.fieldKey)}
                   </TableCell>
                 ))}
+
+                {editable &&
+                  <TableCell>
+                    <IconButton aria-label="edit">
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                }
               </TableRow>
             ))}
 
             {error &&
               <TableRow>
-                <TableCell align="center" colSpan={columns.length}>
+                <TableCell align="center" colSpan={columnCount}>
                   <Typography variant="body1" color="error">
                     Error: {error}
                   </Typography>

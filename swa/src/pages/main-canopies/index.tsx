@@ -5,15 +5,17 @@ import {
   Typography,
 } from '@mui/material';
 
-import { type MainCanopyResponse, mainCanopyList } from '../api';
-import RigSyncTable from '../components/RigSyncTable';
+import { type MainCanopyResponse, mainCanopyList } from '../../api';
+import RigSyncTable from '../../components/RigSyncTable';
 import CreateMainCanopyTableForm from
-  '../components/forms/CreateMainCanopyTableForm';
-import useListApi from '../hooks/useListApi';
-import usePagination from '../hooks/usePagination';
+  '../../components/forms/CreateMainCanopyTableForm';
+import useListApi from '../../hooks/useListApi';
+import usePagination from '../../hooks/usePagination';
+import { useNavigate } from 'react-router';
 
 const MainCanopies = () => {
   const pagination = usePagination();
+  const navigate = useNavigate();
 
   const {
     response,
@@ -36,12 +38,16 @@ const MainCanopies = () => {
     { title: 'Size (ft\u00B2)', fieldKey: 'size' },
   ];
 
+  const navigateToMainCanopy = (id: string): void => {
+    void navigate(id);
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchMainCanopies, [pagination.page, pagination.limit]);
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1">Main canopies</Typography>
+      <Typography variant="h1" color="primary">Main canopies</Typography>
 
       <Container disableGutters sx={{ width: "100%" }}>
         <RigSyncTable
@@ -51,9 +57,11 @@ const MainCanopies = () => {
           pagination={pagination}
           error={error}
           isLoading={isLoading}
+          editable
+          onEdit={navigateToMainCanopy}
         >
           <CreateMainCanopyTableForm
-            columnCount={columns.length}
+            columnCount={columns.length + 1}
             onCreate={append}
           />
         </RigSyncTable>
