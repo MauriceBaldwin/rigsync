@@ -6,6 +6,7 @@ import { CircularProgress, Container, Stack, Typography } from "@mui/material";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
 import RigSyncPageLink from "../../components/RigSyncPageLink";
+import UpdateForm from "../../components/forms/mainCanopy/UpdateForm";
 
 const returnLink = {
   to: '/main-canopies',
@@ -54,7 +55,9 @@ const MainCanopy = () => {
           }
 
           {response &&
-            <p>loaded main canopy {mainCanopyId} successfully.</p>
+            <UpdateForm
+              mainCanopy={response}
+            />
           }
         </>
       }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Container,
   Stack,
@@ -13,10 +13,12 @@ import useListApi from '../../hooks/useListApi';
 import usePagination from '../../hooks/usePagination';
 import { useNavigate } from 'react-router';
 import CreateForm from '../../components/forms/mainCanopy/CreateForm';
+import useSuccessTimer from '../../hooks/useSuccess';
 
 const MainCanopies = () => {
   const pagination = usePagination();
   const navigate = useNavigate();
+  const { showSuccess, setShowSuccess } = useSuccessTimer();
 
   const {
     response,
@@ -26,18 +28,9 @@ const MainCanopies = () => {
     append,
   } = useListApi<MainCanopyResponse>();
 
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const showSuccessTimeout = () => {
-    setShowSuccess(true);
-
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
-  };
 
   const onCreate = (item: MainCanopyResponse) => {
-    showSuccessTimeout();
+    setShowSuccess(true);
     append(item);
   };
 

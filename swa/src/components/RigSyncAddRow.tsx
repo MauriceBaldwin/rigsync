@@ -4,11 +4,10 @@ import {
   Stack,
   TableCell,
   TableRow,
-  Typography,
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
+import RigSyncSuccess from "./RigSyncSuccess";
 
 interface CreateMainCanopyTableFormProps extends PropsWithChildren {
   columnCount: number
@@ -52,12 +51,7 @@ const RigSyncAddRow = ({
           </Stack>
         }
         {showSuccess &&
-          <Stack justifyContent="center" direction="row" spacing={2}>
-            <DoneIcon color="success" />
-            <Typography variant="body1" color="success">
-              {entityName ?? 'Row'} created
-            </Typography>
-          </Stack>
+          <RigSyncSuccess message={`${entityName ?? 'row'} created`} />
         }
       </TableCell>
     </TableRow>
