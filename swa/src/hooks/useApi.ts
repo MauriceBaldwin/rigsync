@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosResponse, isAxiosError } from "axios";
 import { StandardErrorResponse } from "../api/generated/models";
+import useSuccessTimer from "./useSuccess";
 
 type Request<T> = () => Promise<AxiosResponse<T>>;
 
@@ -8,7 +9,8 @@ export interface UseApi<T> {
   response: T | undefined,
   isLoading: boolean,
   error: string | undefined,
-  makeRequest: (request: Request<T>) => void
+  showSuccess: boolean,
+  makeRequest: (request: Request<T>, onSuccess?: (data: T) => void) => void
   setResponse: React.Dispatch<React.SetStateAction<T | undefined>>
 }
 
@@ -21,8 +23,15 @@ const useApi = <T>(): UseApi<T> => {
   const [response, setResponse] = useState<T>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
+  const { showSuccess, setShowSuccess } = useSuccessTimer();
 
-  const makeRequest = (request: Request<T>) => {
+  useEffect(() => {
+    if (response && !error) setShowSuccess(true);
+    else setShowSuccess(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response, error]);
+
+  const makeRequest = (request: Request<T>, onSuccess?: (data: T) => void) => {
     setResponse(undefined);
     setError(undefined);
     setIsLoading(true);
@@ -33,6 +42,8 @@ const useApi = <T>(): UseApi<T> => {
           .then((response) => {
             setResponse(response.data);
             setIsLoading(false);
+
+            if (onSuccess) onSuccess(response.data);
           });
       }
       catch (error) {
@@ -54,6 +65,7 @@ const useApi = <T>(): UseApi<T> => {
     response,
     isLoading,
     error,
+    showSuccess,
     makeRequest,
     setResponse,
   };

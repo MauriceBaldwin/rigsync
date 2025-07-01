@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -8,7 +8,6 @@ import {
 import { MainCanopyResponse, mainCanopyUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
 import FormFields from "./FormFields";
-import useSuccessTimer from "../../../hooks/useSuccess";
 import RigSyncSuccess from "../../RigSyncSuccess";
 
 interface UpdateMainCanopyFormProps {
@@ -20,9 +19,8 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
     useState(mainCanopy.manufacturer);
   const [internalModel, setInternalModel] = useState(mainCanopy.model);
   const [internalSize, setInternalSize] = useState(mainCanopy.size.toString());
-  const { showSuccess, setShowSuccess } = useSuccessTimer();
 
-  const { response, isLoading, error, makeRequest } =
+  const { isLoading, error, showSuccess, makeRequest } =
     useApi<MainCanopyResponse>();
 
   const updateMainCanopy = () => {
@@ -33,13 +31,6 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
         size: parseInt(internalSize),
       }));
   };
-
-  useEffect(() => {
-    if (response && !error) {
-      setShowSuccess(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, error]);
 
   return (
     <Box
