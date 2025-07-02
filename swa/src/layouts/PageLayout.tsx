@@ -9,14 +9,13 @@ const PageLayout = () => {
         <Stack direction="row" alignItems="center" spacing={4}>
           <Typography variant="overline">Rig Sync</Typography>
 
-          <RigSyncPageLink
-            to="/"
-            title="Home"
-          />
+          <RigSyncPageLink link={{ to: "/", title: "Home" }} />
 
           <RigSyncPageLink
-            to="/main-canopies"
-            title="Main canopies"
+            link={{
+              to: "/main-canopies",
+              title: "Main canopies",
+            }}
           />
         </Stack>
       </header>

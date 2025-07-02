@@ -1,12 +1,22 @@
-import { useParams } from "react-router";
-import useApi from "../../hooks/useApi";
-import { mainCanopyRead, MainCanopyResponse } from "../../api";
 import { useEffect } from "react";
-import { CircularProgress, Container, Stack, Typography } from "@mui/material";
+import { useParams } from "react-router";
+import {
+  CircularProgress,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
+import useApi from "../../hooks/useApi";
+import {
+  mainCanopyDelete,
+  mainCanopyRead,
+  MainCanopyResponse,
+} from "../../api";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
 import RigSyncPageLink from "../../components/RigSyncPageLink";
 import UpdateForm from "../../components/forms/mainCanopy/UpdateForm";
+import RigSyncDelete from "../../components/RigSyncDelete";
 
 const returnLink = {
   to: '/main-canopies',
@@ -43,11 +53,7 @@ const MainCanopy = () => {
         <>
           <Container disableGutters >
             <Typography variant="h1" color="primary">Main canopy</Typography>
-            <RigSyncPageLink
-              to={returnLink.to}
-              title={returnLink.title}
-              isReturn={returnLink.isReturn}
-            />
+            <RigSyncPageLink link={returnLink} />
           </Container>
 
           {isLoading &&
@@ -55,9 +61,13 @@ const MainCanopy = () => {
           }
 
           {response &&
-            <UpdateForm
-              mainCanopy={response}
-            />
+            <>
+              <UpdateForm mainCanopy={response} />
+              <RigSyncDelete
+                deleteRequest={() => mainCanopyDelete(response.id)}
+                successRedirect={returnLink.to}
+              />
+            </>
           }
         </>
       }

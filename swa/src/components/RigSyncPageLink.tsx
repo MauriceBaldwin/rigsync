@@ -3,18 +3,22 @@ import { Link as RouterLink, useLocation } from "react-router";
 import { Link, Stack } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-export interface RigSyncPageLinkProps {
+export interface RigSyncLink {
   to: string
   title: string
   isReturn?: boolean
 }
 
-const RigSyncPageLink = ({ to, title, isReturn }: RigSyncPageLinkProps) => {
+export interface RigSyncPageLinkProps {
+  link: RigSyncLink
+}
+
+const RigSyncPageLink = ({ link }: RigSyncPageLinkProps) => {
   const { pathname } = useLocation();
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (pathname === to) {
+    if (pathname === link.to) {
       setIsActive(true);
     }
     else {
@@ -27,12 +31,18 @@ const RigSyncPageLink = ({ to, title, isReturn }: RigSyncPageLinkProps) => {
     <Link
       variant="body1"
       component={RouterLink}
-      to={to}
+      to={link.to}
       color={isActive ? "primary" : "textDisabled"}
+      aria-current={isActive ? "page" : false}
     >
-      <Stack direction="row" spacing={1}>
-        {isReturn && <ChevronLeftIcon />}
-        {title}
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        justifyContent="flex-start"
+      >
+        {link.isReturn && <ChevronLeftIcon />}
+        {link.title}
       </Stack>
     </Link>
   );

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AxiosResponse, isAxiosError } from "axios";
 import { StandardErrorResponse } from "../api/generated/models";
 import useSuccessTimer from "./useSuccess";
 
-type Request<T> = () => Promise<AxiosResponse<T>>;
+export type Request<T> = () => Promise<AxiosResponse<T>>;
 
 export interface UseApi<T> {
   response: T | undefined,
@@ -25,12 +25,6 @@ const useApi = <T>(): UseApi<T> => {
   const [error, setError] = useState<string>();
   const { showSuccess, setShowSuccess } = useSuccessTimer();
 
-  useEffect(() => {
-    if (response && !error) setShowSuccess(true);
-    else setShowSuccess(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, error]);
-
   const makeRequest = (request: Request<T>, onSuccess?: (data: T) => void) => {
     setResponse(undefined);
     setError(undefined);
@@ -42,6 +36,7 @@ const useApi = <T>(): UseApi<T> => {
           .then((response) => {
             setResponse(response.data);
             setIsLoading(false);
+            setShowSuccess(true);
 
             if (onSuccess) onSuccess(response.data);
           });

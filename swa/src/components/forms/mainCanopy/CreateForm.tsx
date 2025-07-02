@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { mainCanopyCreate, MainCanopyResponse } from "../../../api";
 import useApi from "../../../hooks/useApi";
 import FormFields from "./FormFields";
@@ -57,6 +58,7 @@ const CreateForm = ({ onCreate }: CreateMainCanopyFormProps) => {
             type="submit"
             variant="contained"
             loading={isLoading}
+            startIcon={<AddBoxIcon />}
           >
             Create
           </Button>

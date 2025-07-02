@@ -1,10 +1,10 @@
 import { Container, Stack, Typography } from "@mui/material";
-import RigSyncPageLink, { RigSyncPageLinkProps } from "../RigSyncPageLink";
+import RigSyncPageLink, { RigSyncLink } from "../RigSyncPageLink";
 
 interface RigSyncEntityLoadErrorProps {
   error: string
   entityName?: string
-  link?: RigSyncPageLinkProps
+  link?: RigSyncLink
 }
 
 const RigSyncEntityLoadError = ({
@@ -22,9 +22,7 @@ const RigSyncEntityLoadError = ({
 
         {link &&
           <RigSyncPageLink
-            to={link.to}
-            title={link.title}
-            isReturn={link.isReturn}
+            link={link}
           />
         }
       </Container>

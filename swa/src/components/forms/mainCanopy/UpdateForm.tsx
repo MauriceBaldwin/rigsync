@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 import { MainCanopyResponse, mainCanopyUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
 import FormFields from "./FormFields";
@@ -58,6 +59,7 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
           type="submit"
           variant="contained"
           loading={isLoading}
+          startIcon={<EditIcon />}
         >
           Update
         </Button>
