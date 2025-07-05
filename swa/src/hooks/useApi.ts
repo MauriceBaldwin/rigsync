@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AxiosResponse, isAxiosError } from "axios";
+import { AxiosError, AxiosResponse, isAxiosError } from "axios";
 import { StandardErrorResponse } from "../api/generated/models";
 import useSuccessTimer from "./useSuccess";
 
@@ -13,6 +13,24 @@ export interface UseApi<T> {
   makeRequest: (request: Request<T>, onSuccess?: (data: T) => void) => void
   setResponse: React.Dispatch<React.SetStateAction<T | undefined>>
 }
+
+const getAxiosErrorMessage = (
+  error: AxiosError<StandardErrorResponse>,
+): string => {
+  console.log(error);
+
+  if (error.response?.data.message) {
+    return error.response.data.message;
+  }
+
+  switch (error.status) {
+    case (401):
+      return 'Authentication error. You must be logged in to take this action.';
+
+    default:
+      return 'The request failed. Check your network connection and try again.';
+  }
+};
 
 /**
  * Custom hook for making API requests.
@@ -43,10 +61,7 @@ const useApi = <T>(): UseApi<T> => {
       }
       catch (error) {
         if (isAxiosError<StandardErrorResponse>(error)) {
-          setError(
-            error.response?.data.message ||
-            'The request failed. Check your network connection and try again.',
-          );
+          setError(getAxiosErrorMessage(error));
         } else {
           setError('An unexpected error occurred.');
         }
