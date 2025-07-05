@@ -53,7 +53,7 @@ public class MainCanopy(ILogger<MainCanopy> logger)
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MainCanopyResponse))]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   public async Task<IActionResult> Create(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "main-canopy")] HttpRequest req)
+    [HttpTrigger(AuthorizationLevel.User, "post", Route = "main-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/main-canopy");
     var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateMainCanopyRequest>(req.Body);
@@ -95,7 +95,7 @@ public class MainCanopy(ILogger<MainCanopy> logger)
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   public async Task<IActionResult> Update(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "main-canopy/{id}")] HttpRequest req,
+    [HttpTrigger(AuthorizationLevel.User, "post", Route = "main-canopy/{id}")] HttpRequest req,
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/main-canopy/{id}");
@@ -116,7 +116,7 @@ public class MainCanopy(ILogger<MainCanopy> logger)
   [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NoContent)]
   [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(StandardErrorResponse))]
   public async Task<IActionResult> Delete(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "main-canopy/{id}")] HttpRequest req,
+    [HttpTrigger(AuthorizationLevel.User, "delete", Route = "main-canopy/{id}")] HttpRequest req,
     Guid id)
   {
     this.logger.LogInformation($"DELETE /api/main-canopy/{id}");
