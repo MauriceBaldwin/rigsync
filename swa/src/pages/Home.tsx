@@ -4,8 +4,8 @@ import viteLogo from '/vite.svg';
 
 const Home = () => {
   const AUTH_URL = `${BACKEND_URL}/.auth/login/google`;
-  const REDIRECT_PARAM = '/api/main-canopy';
-  //`post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`;
+  const REDIRECT_PARAM =
+    `post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`;
 
   return (
     <>
