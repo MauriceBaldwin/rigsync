@@ -7,7 +7,7 @@ Prerequisites:
 
 Create `.env.local` file with the following contents:
 ```properties
-VITE_API_BASE_URL=http://localhost:7071/api # Backend url
+VITE_BACKEND_URL=http://localhost:7071 # Backend url
 ```
 
 Install dependencies and run the app

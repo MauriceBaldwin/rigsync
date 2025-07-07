@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../api/axiosInstance';
+import { BACKEND_URL } from '../api/axiosInstance';
 import reactLogo from '../assets/react.svg';
 import viteLogo from '/vite.svg';
 
@@ -18,7 +18,7 @@ const Home = () => {
         Click on the Vite and React logos to learn more
       </p>
       <a
-        href={`${API_BASE_URL || ''}/.auth/login/google`}
+        href={`${BACKEND_URL}/.auth/login/google`}
       >
         Log in with Google
       </a>
