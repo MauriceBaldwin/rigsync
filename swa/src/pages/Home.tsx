@@ -3,6 +3,10 @@ import reactLogo from '../assets/react.svg';
 import viteLogo from '/vite.svg';
 
 const Home = () => {
+  const AUTH_URL = `${BACKEND_URL}/.auth/login/google`;
+  const REDIRECT_PARAM =
+    `post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`;
+
   return (
     <>
       <div>
@@ -17,12 +21,7 @@ const Home = () => {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <a
-        href={
-          `${BACKEND_URL}/.auth/login/google
-            ?post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`
-        }
-      >
+      <a href={`${AUTH_URL}?${REDIRECT_PARAM}`}>
         Log in with Google
       </a>
     </>
