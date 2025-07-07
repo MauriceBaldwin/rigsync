@@ -18,7 +18,10 @@ const Home = () => {
         Click on the Vite and React logos to learn more
       </p>
       <a
-        href={`${BACKEND_URL}/.auth/login/google`}
+        href={
+          `${BACKEND_URL}/.auth/login/google
+            ?post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`
+        }
       >
         Log in with Google
       </a>

@@ -3,6 +3,7 @@
 // typings for the vite environment variables.
 // see .env file.
 interface ImportMetaEnv {
+  readonly VITE_SELF_URL: string | undefined
   readonly VITE_BACKEND_URL: string | undefined
   // more env variables...
 }

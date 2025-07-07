@@ -7,6 +7,7 @@ Prerequisites:
 
 Create `.env.local` file with the following contents:
 ```properties
+VITE_SELF_URL=http://localhost:5173 # Frontend url
 VITE_BACKEND_URL=http://localhost:7071 # Backend url
 ```
 
