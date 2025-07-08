@@ -17,7 +17,7 @@ export interface UseApi<T> {
 const getAxiosErrorMessage = (
   error: AxiosError<StandardErrorResponse>,
 ): string => {
-  if (error.response) {
+  if (error.response?.data.message) {
     return error.response.data.message;
   }
 
