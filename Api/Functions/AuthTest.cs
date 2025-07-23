@@ -2,6 +2,7 @@
 
 namespace Api.Functions;
 
+using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,5 +47,19 @@ public class AuthTest()
     [HttpTrigger(AuthorizationLevel.Function, "get", Route = "auth-test-function")] HttpRequest req)
   {
     return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
+  }
+
+  /// <summary>
+  /// View user details for testing authentication.
+  /// </summary>
+  /// <param name="req">HTTP request.</param>
+  /// <returns>HTTP response.</returns>
+  [Function("AuthTestToken")]
+  public IActionResult RunToken(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "auth-test-token")] HttpRequest req)
+  {
+    var rawToken = req.Headers["X-ZUMO-AUTH"].ToString();
+    var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(rawToken);
+    return new OkObjectResult(decodedToken);
   }
 }
