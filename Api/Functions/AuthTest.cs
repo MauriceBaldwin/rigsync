@@ -22,42 +22,6 @@ public class AuthTest()
   public IActionResult Run(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "auth-test")] HttpRequest req)
   {
-    return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
-  }
-
-  /// <summary>
-  /// View user details for testing authentication.
-  /// </summary>
-  /// <param name="req">HTTP request.</param>
-  /// <returns>HTTP response.</returns>
-  [Function("AuthTestUser")]
-  public IActionResult RunUserAuth(
-    [HttpTrigger(AuthorizationLevel.User, "get", Route = "auth-test-user")] HttpRequest req)
-  {
-    return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
-  }
-
-  /// <summary>
-  /// View user details for testing authentication.
-  /// </summary>
-  /// <param name="req">HTTP request.</param>
-  /// <returns>HTTP response.</returns>
-  [Function("AuthTestFunction")]
-  public IActionResult RunFunctionAuth(
-    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "auth-test-function")] HttpRequest req)
-  {
-    return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
-  }
-
-  /// <summary>
-  /// View user details for testing authentication.
-  /// </summary>
-  /// <param name="req">HTTP request.</param>
-  /// <returns>HTTP response.</returns>
-  [Function("AuthTestToken")]
-  public IActionResult RunToken(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "auth-test-token")] HttpRequest req)
-  {
     var rawToken = req.Headers["X-ZUMO-AUTH"].ToString();
     var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(rawToken);
     return new OkObjectResult(decodedToken);
