@@ -35,4 +35,16 @@ public class AuthTest()
   {
     return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
   }
+
+  /// <summary>
+  /// View user details for testing authentication.
+  /// </summary>
+  /// <param name="req">HTTP request.</param>
+  /// <returns>HTTP response.</returns>
+  [Function("AuthTestFunction")]
+  public IActionResult RunFunctionAuth(
+    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "auth-test-function")] HttpRequest req)
+  {
+    return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
+  }
 }
