@@ -23,4 +23,16 @@ public class AuthTest()
   {
     return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
   }
+
+  /// <summary>
+  /// View user details for testing authentication.
+  /// </summary>
+  /// <param name="req">HTTP request.</param>
+  /// <returns>HTTP response.</returns>
+  [Function("AuthTest")]
+  public IActionResult RunUserAuth(
+    [HttpTrigger(AuthorizationLevel.User, "get", Route = "auth-test-user")] HttpRequest req)
+  {
+    return new OkObjectResult(JsonSerializer.Serialize(req.HttpContext.User));
+  }
 }
