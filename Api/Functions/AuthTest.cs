@@ -29,7 +29,7 @@ public class AuthTest()
   /// </summary>
   /// <param name="req">HTTP request.</param>
   /// <returns>HTTP response.</returns>
-  [Function("AuthTest")]
+  [Function("AuthTestUser")]
   public IActionResult RunUserAuth(
     [HttpTrigger(AuthorizationLevel.User, "get", Route = "auth-test-user")] HttpRequest req)
   {
