@@ -12,6 +12,11 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 public static class MainCanopy
 {
+  // @TODO: this causes an error when multiple requests are made at the same time.
+  // error:
+  // A second operation was started on this context instance before a previous operation completed.
+  // This is usually caused by different threads concurrently using the same instance of DbContext.
+  // For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
   private static readonly Context Context = new Context();
 
   /// <summary>
