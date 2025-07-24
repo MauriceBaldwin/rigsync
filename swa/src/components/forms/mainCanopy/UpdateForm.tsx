@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AxiosRequestConfig } from "axios";
 import {
   Box,
   Button,
@@ -25,12 +26,16 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
     useApi<MainCanopyResponse>();
 
   const updateMainCanopy = () => {
-    makeRequest(() =>
-      mainCanopyUpdate(mainCanopy.id, {
-        manufacturer: internalManufacturer,
-        model: internalModel,
-        size: parseInt(internalSize),
-      }));
+    makeRequest(
+      (options?: AxiosRequestConfig) => mainCanopyUpdate(
+        mainCanopy.id,
+        {
+          manufacturer: internalManufacturer,
+          model: internalModel,
+          size: parseInt(internalSize),
+        },
+        options,
+      ));
   };
 
   return (

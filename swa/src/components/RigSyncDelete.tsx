@@ -1,8 +1,9 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { AxiosRequestConfig } from "axios";
 import { Button, Stack, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useApi, { type Request } from "../hooks/useApi";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 
 interface RigSyncDeleteProps {
   deleteRequest: Request<void>
@@ -18,7 +19,9 @@ const RigSyncDelete = ({
   const { makeRequest, isLoading, error, showSuccess } = useApi();
 
   const makeDeleteRequest = () => {
-    makeRequest(deleteRequest);
+    makeRequest(
+      (options?: AxiosRequestConfig) => deleteRequest(options),
+    );
   };
 
   useEffect(() => {

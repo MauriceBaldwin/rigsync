@@ -1,9 +1,16 @@
-import { useState } from "react";
-import { AxiosError, AxiosResponse, isAxiosError } from "axios";
+import { useContext, useState } from "react";
+import {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  isAxiosError,
+} from "axios";
 import { StandardErrorResponse } from "../api/generated/models";
 import useSuccessTimer from "./useSuccess";
+import RigSyncAuthContext from "../context/RigSyncAuthContext";
 
-export type Request<T> = () => Promise<AxiosResponse<T>>;
+export type Request<T> = (options?: AxiosRequestConfig)
+  => Promise<AxiosResponse<T>>;
 
 export interface UseApi<T> {
   response: T | undefined,
@@ -40,15 +47,21 @@ const useApi = <T>(): UseApi<T> => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
   const { showSuccess, setShowSuccess } = useSuccessTimer();
+  const authContext = useContext(RigSyncAuthContext);
 
   const makeRequest = (request: Request<T>, onSuccess?: (data: T) => void) => {
     setResponse(undefined);
     setError(undefined);
     setIsLoading(true);
 
+    const options: AxiosRequestConfig = {};
+    if (authContext?.authToken) {
+      options.headers = { 'X-ZUMO-AUTH': authContext.authToken };
+    }
+
     void (async () => {
       try {
-        await request()
+        await request(options)
           .then((response) => {
             setResponse(response.data);
             setIsLoading(false);

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
+import { AxiosRequestConfig } from "axios";
 import {
   CircularProgress,
   Container,
@@ -35,7 +36,11 @@ const MainCanopy = () => {
   } = useApi<MainCanopyResponse>();
 
   useEffect(() => {
-    if (mainCanopyId) makeRequest(() => mainCanopyRead(mainCanopyId));
+    if (mainCanopyId) {
+      makeRequest(
+        (options?: AxiosRequestConfig) => mainCanopyRead(mainCanopyId, options),
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mainCanopyId]);
 

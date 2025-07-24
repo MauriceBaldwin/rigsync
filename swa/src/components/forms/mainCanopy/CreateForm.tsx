@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AxiosRequestConfig } from "axios";
 import {
   Box,
   Button,
@@ -24,11 +25,14 @@ const CreateForm = ({ onCreate }: CreateMainCanopyFormProps) => {
 
   const createMainCanopy = () => {
     makeRequest(
-      () => mainCanopyCreate({
-        manufacturer: internalManufacturer,
-        model: internalModel,
-        size: parseInt(internalSize),
-      }),
+      (options?: AxiosRequestConfig) => mainCanopyCreate(
+        {
+          manufacturer: internalManufacturer,
+          model: internalModel,
+          size: parseInt(internalSize),
+        },
+        options,
+      ),
       onCreate,
     );
   };

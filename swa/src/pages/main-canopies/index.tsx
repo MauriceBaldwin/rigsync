@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import {
   Container,
   Stack,
@@ -35,10 +36,14 @@ const MainCanopies = () => {
   };
 
   const fetchMainCanopies = () => {
-    makeRequest(() => mainCanopyList({
-      page: pagination.page,
-      limit: pagination.limit,
-    }));
+    makeRequest(
+      (options?: AxiosRequestConfig) => mainCanopyList(
+        {
+          page: pagination.page,
+          limit: pagination.limit,
+        },
+        options,
+      ));
   };
 
   const columns = [

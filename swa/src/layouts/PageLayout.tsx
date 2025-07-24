@@ -1,8 +1,12 @@
-import { Container, Stack, Typography } from "@mui/material";
+import { useContext } from "react";
 import { Outlet } from "react-router";
+import { Container, Stack, Typography } from "@mui/material";
 import RigSyncPageLink from "../components/RigSyncPageLink";
+import RigSyncAuthContext from "../context/RigSyncAuthContext";
 
 const PageLayout = () => {
+  const authContext = useContext(RigSyncAuthContext);
+
   return (
     <>
       <header>
@@ -17,6 +21,10 @@ const PageLayout = () => {
               title: "Main canopies",
             }}
           />
+
+          <Typography variant="caption">
+            UserId: {authContext?.userId ?? 'undefined'}
+          </Typography>
         </Stack>
       </header>
 
