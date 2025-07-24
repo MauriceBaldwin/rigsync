@@ -69,7 +69,10 @@ const MainCanopy = () => {
             <>
               <UpdateForm mainCanopy={response} />
               <RigSyncDelete
-                deleteRequest={() => mainCanopyDelete(response.id)}
+                deleteRequest={
+                  (options?: AxiosRequestConfig) =>
+                    mainCanopyDelete(response.id, options)
+                }
                 successRedirect={returnLink.to}
               />
             </>
