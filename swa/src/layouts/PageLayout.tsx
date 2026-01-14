@@ -1,30 +1,39 @@
-import { useContext } from "react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import { Container, Stack, Typography } from "@mui/material";
 import RigSyncPageLink from "../components/RigSyncPageLink";
-import RigSyncAuthContext from "../context/RigSyncAuthContext";
+import RigSyncUserProfile from "../components/auth/RigSyncUserProfile";
 
 const PageLayout = () => {
-  const authContext = useContext(RigSyncAuthContext);
-
   return (
     <>
       <header>
-        <Stack direction="row" alignItems="center" spacing={4}>
-          <Typography variant="overline">Rig Sync</Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Stack direction="row" alignItems="center" spacing={4} >
+            <Typography
+              variant="overline"
+              color="textPrimary"
+              component={Link}
+              to={"/"}
+              sx={{ textDecoration: "none" }}
+            >
+              Rig Sync
+            </Typography>
 
-          <RigSyncPageLink link={{ to: "/", title: "Home" }} />
 
-          <RigSyncPageLink
-            link={{
-              to: "/main-canopies",
-              title: "Main canopies",
-            }}
-          />
+            <RigSyncPageLink
+              link={{
+                to: "/main-canopies",
+                title: "Main canopies",
+              }}
+            />
 
-          <Typography variant="caption">
-            UserId: {authContext?.userId ?? 'undefined'}
-          </Typography>
+          </Stack>
+
+          <RigSyncUserProfile />
         </Stack>
       </header>
 
