@@ -1,30 +1,18 @@
-import { BACKEND_URL } from '../api/axiosInstance';
-import reactLogo from '../assets/react.svg';
-import viteLogo from '/vite.svg';
+import { Typography, Container, Stack } from '@mui/material';
+import RigSyncGoogleLoginButton
+  from '../components/auth/RigSyncGoogleLoginButton';
 
 const Home = () => {
-  const AUTH_URL = `${BACKEND_URL}/.auth/login/google`;
-  const REDIRECT_PARAM =
-    `post_login_redirect_uri=${import.meta.env.VITE_SELF_URL ?? ''}`;
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" rel="noreferrer" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" rel="noreferrer" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <a href={`${AUTH_URL}?${REDIRECT_PARAM}`}>
-        Log in with Google
-      </a>
-    </>
+    <Container>
+      <Stack alignItems="center">
+        <Typography variant="h1" gutterBottom color="primary">
+          RigSync
+        </Typography>
+
+        <RigSyncGoogleLoginButton />
+      </Stack>
+    </Container>
   );
 };
 
