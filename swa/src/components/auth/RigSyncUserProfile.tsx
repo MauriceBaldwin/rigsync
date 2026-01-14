@@ -11,7 +11,7 @@ const RigSyncUserProfile = () => {
       {
         authContext?.userId && (
           <Typography variant="caption" >
-            UserId: authContext.userId
+            UserId: {authContext.userId}
           </Typography>
         )
       }
