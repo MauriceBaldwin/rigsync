@@ -103,7 +103,6 @@ const useRigSyncAuth = (): RigSyncAuth => {
   };
 
   useEffect(() => {
-    console.log('running');
     void setAuthData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.hash]);
