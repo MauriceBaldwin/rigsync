@@ -4,6 +4,7 @@ import { Container, Stack, Typography } from "@mui/material";
 import RigSyncPageLink from "../components/RigSyncPageLink";
 import RigSyncUserProfile from "../components/auth/RigSyncUserProfile";
 import RigSyncAuthContext from "../context/RigSyncAuthContext";
+import RigSyncIcon from "../components/icons/RigSyncIcon";
 
 const PageLayout = () => {
   const authContext = useContext(RigSyncAuthContext);
@@ -17,15 +18,23 @@ const PageLayout = () => {
           justifyContent="space-between"
         >
           <Stack direction="row" alignItems="center" spacing={4} >
-            <Typography
-              variant="overline"
-              color="textPrimary"
+            <Stack
+              direction="row"
+              alignItems="center"
               component={Link}
               to={"/"}
               sx={{ textDecoration: "none" }}
             >
-              Rig Sync
-            </Typography>
+              <RigSyncIcon />
+
+              <Typography
+                variant="overline"
+                color="textPrimary"
+
+              >
+                Rig Sync
+              </Typography>
+            </Stack>
 
             {authContext?.userId &&
               <RigSyncPageLink
