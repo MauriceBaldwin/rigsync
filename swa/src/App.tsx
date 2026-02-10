@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import RigSyncAuthProvider from './components/RigSyncAuthProvider.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
 import RequireAuthLayout from './layouts/RequireAuthLayout.tsx';
-import Home from './pages/Home.tsx';
+import Home from './pages/home/index.tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
 import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
 import NotFound from './pages/errors/NotFound.tsx';
