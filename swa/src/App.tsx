@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 
 import RigSyncAuthProvider from './components/RigSyncAuthProvider.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
+import RequireAuthLayout from './layouts/RequireAuthLayout.tsx';
 import Home from './pages/Home.tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
 import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
@@ -20,9 +21,11 @@ const App = () => {
           <Route element={<PageLayout />} >
             <Route index element={<Home />} />
 
-            <Route path="main-canopies">
-              <Route index element={<MainCanopies />} />
-              <Route path=":mainCanopyId" element={<MainCanopy />} />
+            <Route element={<RequireAuthLayout />} >
+              <Route path="main-canopies">
+                <Route index element={<MainCanopies />} />
+                <Route path=":mainCanopyId" element={<MainCanopy />} />
+              </Route>
             </Route>
 
             <Route path="*" element={<NotFound />} />
