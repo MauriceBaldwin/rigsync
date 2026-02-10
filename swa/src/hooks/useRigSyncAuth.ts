@@ -25,6 +25,13 @@ type AuthData = {
  * }
  */
 const extractAuthData = (location: Location): AuthData | undefined => {
+  if (process.env.NODE_ENV === 'development') {
+    return {
+      authenticationToken: 'dev-auth-token',
+      userId: 'dev-user-id',
+    };
+  }
+
   const hash = location.hash;
 
   if (!hash || !hash.startsWith('#token=')) {
@@ -96,9 +103,10 @@ const useRigSyncAuth = (): RigSyncAuth => {
   };
 
   useEffect(() => {
+    console.log('running');
     void setAuthData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [location.hash]);
 
   return {
     authToken,
