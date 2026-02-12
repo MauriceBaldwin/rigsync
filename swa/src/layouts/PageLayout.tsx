@@ -37,12 +37,20 @@ const PageLayout = () => {
             </Stack>
 
             {authContext?.userId &&
-              <RigSyncPageLink
-                link={{
-                  to: "/main-canopies",
-                  title: "Main canopies",
-                }}
-              />
+              <>
+                <RigSyncPageLink
+                  link={{
+                    to: "/main-canopies",
+                    title: "Main canopies",
+                  }}
+                />
+                <RigSyncPageLink
+                  link={{
+                    to: "/reserve-canopies",
+                    title: "Reserve canopies",
+                  }}
+                />
+              </>
             }
 
           </Stack>

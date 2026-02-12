@@ -6,6 +6,8 @@ import RequireAuthLayout from './layouts/RequireAuthLayout.tsx';
 import Home from './pages/home/index.tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
 import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
+import ReserveCanopies from './pages/reserve-canopies/index.tsx';
+import ReserveCanopy from './pages/reserve-canopies/[reserveCanopyId].tsx';
 import NotFound from './pages/errors/NotFound.tsx';
 
 import '@fontsource/roboto/300.css';
@@ -25,6 +27,10 @@ const App = () => {
               <Route path="main-canopies">
                 <Route index element={<MainCanopies />} />
                 <Route path=":mainCanopyId" element={<MainCanopy />} />
+              </Route>
+              <Route path="reserve-canopies">
+                <Route index element={<ReserveCanopies />} />
+                <Route path=":reserveCanopyId" element={<ReserveCanopy />} />
               </Route>
             </Route>
 
