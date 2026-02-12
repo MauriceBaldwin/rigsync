@@ -4,6 +4,8 @@ import RigSyncAuthProvider from './components/RigSyncAuthProvider.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
 import RequireAuthLayout from './layouts/RequireAuthLayout.tsx';
 import Home from './pages/home/index.tsx';
+import Containers from './pages/container/index.tsx';
+import Container from './pages/container/[containerId].tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
 import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
 import ReserveCanopies from './pages/reserve-canopies/index.tsx';
@@ -24,6 +26,10 @@ const App = () => {
             <Route index element={<Home />} />
 
             <Route element={<RequireAuthLayout />} >
+              <Route path="containers">
+                <Route index element={<Containers />} />
+                <Route path=":containerId" element={<Container />} />
+              </Route>
               <Route path="main-canopies">
                 <Route index element={<MainCanopies />} />
                 <Route path=":mainCanopyId" element={<MainCanopy />} />

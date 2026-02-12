@@ -50,6 +50,12 @@ const PageLayout = () => {
                     title: "Reserve canopies",
                   }}
                 />
+                <RigSyncPageLink
+                  link={{
+                    to: "/containers",
+                    title: "Containers",
+                  }}
+                />
               </>
             }
 
