@@ -11,6 +11,368 @@
     "http"
   ],
   "paths": {
+    "/aad": {
+      "get": {
+        "tags": [
+          "aad"
+        ],
+        "operationId": "AAD_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of AADsResponse",
+            "schema": {
+              "$ref": "#/definitions/aaDsResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "aad"
+        ],
+        "operationId": "AAD_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createAADRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of AADResponse",
+            "schema": {
+              "$ref": "#/definitions/aadResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/aad/{id}": {
+      "get": {
+        "tags": [
+          "aad"
+        ],
+        "operationId": "AAD_Read",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of AADResponse",
+            "schema": {
+              "$ref": "#/definitions/aadResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "aad"
+        ],
+        "operationId": "AAD_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateAADRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of AADResponse",
+            "schema": {
+              "$ref": "#/definitions/aadResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "aad"
+        ],
+        "operationId": "AAD_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "204": {
+            "description": "No description"
+          }
+        }
+      }
+    },
+    "/container": {
+      "get": {
+        "tags": [
+          "container"
+        ],
+        "operationId": "Container_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ContainersResponse",
+            "schema": {
+              "$ref": "#/definitions/containersResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "container"
+        ],
+        "operationId": "Container_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createContainerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ContainerResponse",
+            "schema": {
+              "$ref": "#/definitions/containerResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/container/{id}": {
+      "get": {
+        "tags": [
+          "container"
+        ],
+        "operationId": "Container_Read",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ContainerResponse",
+            "schema": {
+              "$ref": "#/definitions/containerResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "container"
+        ],
+        "operationId": "Container_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateContainerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ContainerResponse",
+            "schema": {
+              "$ref": "#/definitions/containerResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "container"
+        ],
+        "operationId": "Container_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "204": {
+            "description": "No description"
+          }
+        }
+      }
+    },
     "/main-canopy": {
       "get": {
         "tags": [
@@ -180,8 +542,111 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
           "204": {
             "description": "No description"
+          }
+        }
+      }
+    },
+    "/reserve-canopy": {
+      "get": {
+        "tags": [
+          "reserve-canopy"
+        ],
+        "operationId": "ReserveCanopy_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ReserveCanopiesResponse",
+            "schema": {
+              "$ref": "#/definitions/reserveCanopiesResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "reserve-canopy"
+        ],
+        "operationId": "ReserveCanopy_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createReserveCanopyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ReserveCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/reserveCanopyResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/reserve-canopy/{id}": {
+      "get": {
+        "tags": [
+          "reserve-canopy"
+        ],
+        "operationId": "ReserveCanopy_Read",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ReserveCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/reserveCanopyResponse"
+            }
           },
           "404": {
             "description": "Payload of StandardErrorResponse",
@@ -190,10 +655,252 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "reserve-canopy"
+        ],
+        "operationId": "ReserveCanopy_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateReserveCanopyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of ReserveCanopyResponse",
+            "schema": {
+              "$ref": "#/definitions/reserveCanopyResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "reserve-canopy"
+        ],
+        "operationId": "ReserveCanopy_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "204": {
+            "description": "No description"
+          }
+        }
       }
     }
   },
   "definitions": {
+    "aadResponse": {
+      "required": [
+        "id",
+        "nextServiceDue",
+        "endOfLife",
+        "manufacturer",
+        "model",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "nextServiceDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "endOfLife": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "aaDsResponse": {
+      "required": [
+        "page",
+        "limit",
+        "items",
+        "count"
+      ],
+      "type": "object",
+      "properties": {
+        "page": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/aadResponse"
+          }
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "containerResponse": {
+      "required": [
+        "id",
+        "manufacturer",
+        "model",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "containersResponse": {
+      "required": [
+        "page",
+        "limit",
+        "items",
+        "count"
+      ],
+      "type": "object",
+      "properties": {
+        "page": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/containerResponse"
+          }
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "createAADRequest": {
+      "required": [
+        "manufacturer",
+        "model",
+        "nextServiceDue",
+        "endOfLife"
+      ],
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "nextServiceDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "endOfLife": {
+          "$ref": "#/definitions/dateOnly"
+        }
+      }
+    },
+    "createContainerRequest": {
+      "required": [
+        "manufacturer",
+        "model"
+      ],
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
     "createMainCanopyRequest": {
       "required": [
         "manufacturer",
@@ -211,6 +918,67 @@
           "type": "string"
         },
         "size": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "createReserveCanopyRequest": {
+      "required": [
+        "manufacturer",
+        "model",
+        "size"
+      ],
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "dateOnly": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "month": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "day": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dayOfWeek": {
+          "format": "int32",
+          "default": 0,
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "type": "integer"
+        },
+        "dayOfYear": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dayNumber": {
           "format": "int32",
           "type": "integer"
         }
@@ -278,6 +1046,68 @@
         }
       }
     },
+    "reserveCanopiesResponse": {
+      "required": [
+        "page",
+        "limit",
+        "items",
+        "count"
+      ],
+      "type": "object",
+      "properties": {
+        "page": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/reserveCanopyResponse"
+          }
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "reserveCanopyResponse": {
+      "required": [
+        "id",
+        "size",
+        "manufacturer",
+        "model",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "manufacturer": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
     "standardErrorResponse": {
       "required": [
         "errorCode",
@@ -295,7 +1125,50 @@
         }
       }
     },
+    "updateAADRequest": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "nextServiceDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "endOfLife": {
+          "$ref": "#/definitions/dateOnly"
+        }
+      }
+    },
+    "updateContainerRequest": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        }
+      }
+    },
     "updateMainCanopyRequest": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "updateReserveCanopyRequest": {
       "type": "object",
       "properties": {
         "manufacturer": {
