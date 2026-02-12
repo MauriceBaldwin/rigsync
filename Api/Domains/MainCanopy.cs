@@ -12,20 +12,14 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 public static class MainCanopy
 {
-  // @TODO: this causes an error when multiple requests are made at the same time.
-  // error:
-  // A second operation was started on this context instance before a previous operation completed.
-  // This is usually caused by different threads concurrently using the same instance of DbContext.
-  // For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
-  private static readonly Context Context = new Context();
-
   /// <summary>
   /// Count all main canopies.
   /// </summary>
   /// <returns>The count of all main canopies.</returns>
   public static async Task<int> CountAsync()
   {
-    return await Context.MainCanopies.CountAsync();
+    using var context = new Context();
+    return await context.MainCanopies.CountAsync();
   }
 
   /// <summary>
@@ -36,7 +30,8 @@ public static class MainCanopy
   /// <returns>A list of main canopies.</returns>
   public static async Task<List<Models.MainCanopy>> ListAsync(int page, int limit)
   {
-    return await Context.MainCanopies
+    using var context = new Context();
+    return await context.MainCanopies
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -49,7 +44,8 @@ public static class MainCanopy
   /// <returns>The main canopy with the given ID.</returns>
   public static async Task<Models.MainCanopy> GetAsync(Guid id)
   {
-    return await Context.MainCanopies.SingleOrDefaultAsync(m => m.Id == id) ??
+    using var context = new Context();
+    return await context.MainCanopies.SingleOrDefaultAsync(m => m.Id == id) ??
       throw new NotFoundByIdException($"Main canopy with id = \"{id}\" does not exist");
   }
 
@@ -60,10 +56,11 @@ public static class MainCanopy
   /// <returns>The newly created main canopy.</returns>
   public static async Task<Models.MainCanopy> CreateAsync(CreateMainCanopyRequest toCreate)
   {
+    using var context = new Context();
     var mainCanopy = new Models.MainCanopy(toCreate);
 
-    await Context.MainCanopies.AddAsync(mainCanopy);
-    await Context.SaveChangesAsync();
+    await context.MainCanopies.AddAsync(mainCanopy);
+    await context.SaveChangesAsync();
 
     return mainCanopy;
   }
@@ -76,7 +73,9 @@ public static class MainCanopy
   /// <returns>The updated main canopy.</returns>
   public static async Task<Models.MainCanopy> UpdateAsync(Guid id, UpdateMainCanopyRequest toUpdate)
   {
-    var mainCanopy = await GetAsync(id);
+    using var context = new Context();
+    var mainCanopy = await context.MainCanopies.SingleOrDefaultAsync(m => m.Id == id) ??
+      throw new NotFoundByIdException($"Main canopy with id = \"{id}\" does not exist");
 
     if (toUpdate.Manufacturer != null)
     {
@@ -93,7 +92,7 @@ public static class MainCanopy
       mainCanopy.Size = toUpdate.Size.Value;
     }
 
-    await Context.SaveChangesAsync();
+    await context.SaveChangesAsync();
 
     return mainCanopy;
   }
@@ -105,8 +104,10 @@ public static class MainCanopy
   /// <returns>Nothing.</returns>
   public static async Task DeleteAsync(Guid id)
   {
-    var mainCanopy = await GetAsync(id);
-    Context.MainCanopies.Remove(mainCanopy);
-    await Context.SaveChangesAsync();
+    using var context = new Context();
+    var mainCanopy = await context.MainCanopies.SingleOrDefaultAsync(m => m.Id == id) ??
+      throw new NotFoundByIdException($"Main canopy with id = \"{id}\" does not exist");
+    context.MainCanopies.Remove(mainCanopy);
+    await context.SaveChangesAsync();
   }
 }
