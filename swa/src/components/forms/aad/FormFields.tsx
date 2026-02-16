@@ -21,7 +21,7 @@ const FormFields = ({
         required
         id="create-container-manufacturer"
         label="Manufacturer"
-        placeholder="Upt"
+        placeholder="Cypress"
         value={manufacturer}
         onChange={(event) => { setManufacturer(event.target.value); }}
       />
@@ -30,7 +30,7 @@ const FormFields = ({
         required
         id="create-container-model"
         label="Model"
-        placeholder="Vector"
+        placeholder="Expert"
         value={model}
         onChange={(event) => { setModel(event.target.value); }}
       />
