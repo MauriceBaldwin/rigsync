@@ -4,6 +4,8 @@ import RigSyncAuthProvider from './components/RigSyncAuthProvider.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
 import RequireAuthLayout from './layouts/RequireAuthLayout.tsx';
 import Home from './pages/home/index.tsx';
+import AADs from './pages/aads/index.tsx';
+import AAD from './pages/aads/[aadId].tsx';
 import Containers from './pages/container/index.tsx';
 import Container from './pages/container/[containerId].tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
@@ -26,6 +28,10 @@ const App = () => {
             <Route index element={<Home />} />
 
             <Route element={<RequireAuthLayout />} >
+              <Route path="aads">
+                <Route index element={<AADs />} />
+                <Route path=":aadId" element={<AAD />} />
+              </Route>
               <Route path="containers">
                 <Route index element={<Containers />} />
                 <Route path=":containerId" element={<Container />} />

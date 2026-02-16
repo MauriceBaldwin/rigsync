@@ -12,6 +12,6 @@ export interface CreateAADRequest {
   manufacturer: string;
   /** @minLength 1 */
   model: string;
-  nextServiceDue: DateOnly;
-  endOfLife: DateOnly;
+  nextServiceDue?: DateOnly;
+  endOfLife?: DateOnly;
 }
