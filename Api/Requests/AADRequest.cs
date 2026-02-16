@@ -24,13 +24,11 @@ public class CreateAADRequest(string manufacturer, string model, DateOnly? nextS
   /// <summary>
   /// Gets or sets the date when the next AAD service is due.
   /// </summary>
-  [Required]
   public DateOnly? NextServiceDue { get; set; } = nextServiceDue;
 
   /// <summary>
   /// Gets or sets the expiry date of the AAD.
   /// </summary>
-  [Required]
   public DateOnly? EndOfLife { get; set; } = endOfLife;
 }
 
