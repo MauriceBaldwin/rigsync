@@ -17,7 +17,7 @@ public class AAD : Kit
   /// <param name="model">The model of the AAD.</param>
   /// <param name="nextServiceDue">The date when the next AAD service is due.</param>
   /// <param name="endOfLife">The expiry date of the AAD.</param>
-  public AAD(Guid id, string manufacturer, string model, DateOnly nextServiceDue, DateOnly endOfLife)
+  public AAD(Guid id, string manufacturer, string model, DateOnly? nextServiceDue, DateOnly? endOfLife)
     : base(manufacturer, model)
   {
     this.Id = id;
@@ -45,12 +45,12 @@ public class AAD : Kit
   /// <summary>
   /// Gets or sets the date when the next AAD service is due.
   /// </summary>
-  public DateOnly NextServiceDue { get; set; }
+  public DateOnly? NextServiceDue { get; set; }
 
   /// <summary>
   /// Gets or sets the expiry date of the AAD.
   /// </summary>
-  public DateOnly EndOfLife { get; set; }
+  public DateOnly? EndOfLife { get; set; }
 
   /// <summary>
   /// Gets or sets the rig that the AAD is part of.
