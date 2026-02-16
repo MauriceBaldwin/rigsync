@@ -56,6 +56,12 @@ const PageLayout = () => {
                     title: "Containers",
                   }}
                 />
+                <RigSyncPageLink
+                  link={{
+                    to: "/aads",
+                    title: "AADs",
+                  }}
+                />
               </>
             }
 
