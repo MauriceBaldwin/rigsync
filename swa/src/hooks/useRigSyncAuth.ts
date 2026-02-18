@@ -141,14 +141,7 @@ const logoutFromAuthProvider = async (authToken: string): Promise<void> => {
     return;
   }
 
-  const params = new URLSearchParams();
-
-  params.append(
-    'post_logout_redirect_uri',
-    import.meta.env.VITE_SELF_URL ?? '',
-  );
-
-  await fetch(`${BACKEND_URL}/.auth/logout?${params}`, {
+  await fetch(`${BACKEND_URL}/.auth/logout`, {
     method: 'GET',
     headers: {
       "X-ZUMO-AUTH": authToken,
@@ -208,6 +201,8 @@ const useRigSyncAuth = (): RigSyncAuth => {
     setName(undefined);
 
     if (authTokenToLogout) await logoutFromAuthProvider(authTokenToLogout);
+
+    await navigate('/');
   };
 
   useEffect(() => {
