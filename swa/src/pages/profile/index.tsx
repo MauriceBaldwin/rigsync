@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import {
   Stack,
   Typography,
@@ -16,14 +17,17 @@ const Profile = () => {
   } = useApi();
 
   const fetchProfile = (
+    options?: AxiosRequestConfig,
   ) => {
     return customInstance(
       { url: `/auth-test`, method: 'GET' },
+      options,
     );
   };
 
   useEffect(() => {
     makeRequest(fetchProfile);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
