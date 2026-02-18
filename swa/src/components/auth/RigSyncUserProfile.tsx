@@ -16,8 +16,9 @@ const RigSyncUserProfile = () => {
             color="textPrimary"
             component={Link}
             to="/profile"
-            sx={{ textDecoration: "none" }}>
-            UserId: {authContext.userId}
+            sx={{ textDecoration: "none" }}
+          >
+            {authContext.name ?? authContext.email ?? 'User'}
           </Typography>
         )
       }

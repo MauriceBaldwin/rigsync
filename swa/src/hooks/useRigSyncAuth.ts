@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
 import { Location, useLocation, useNavigate } from "react-router";
+import { BACKEND_URL } from "../api/axiosInstance";
 
 export type RigSyncAuth = {
   authToken: string | undefined;
   userId: string | undefined;
+  email: string | undefined;
+  name: string | undefined;
 }
 
 type AuthData = {
   authenticationToken: string;
   userId: string;
 };
+
+type UserClaims = {
+  email?: string;
+  name?: string;
+}
+
+type UserClaimsResponse = {
+  user_claims: { typ: string; val: string; }[];
+}
 
 /**
  * Auth data is expected to be appended to the url in the following format:
@@ -77,9 +89,55 @@ const extractAuthData = (location: Location): AuthData | undefined => {
   return undefined;
 };
 
+const fetchUserClaims = async (authToken: string): Promise<UserClaims> => {
+  if (process.env.NODE_ENV === 'development') {
+    return {
+      email: 'dev-email',
+      name: 'dev-name',
+    };
+  }
+
+  const response = await fetch(`${BACKEND_URL}/.auth/me`, {
+    method: 'GET',
+    headers: {
+      "X-ZUMO-AUTH": authToken,
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      email: undefined,
+      name: undefined,
+    };
+  }
+
+  const data = await response.json() as UserClaimsResponse;
+
+  let email: string | undefined = undefined;
+  let name: string | undefined = undefined;
+
+  data.user_claims.forEach(claim => {
+    switch (claim.typ) {
+      // eslint-disable-next-line max-len
+      case 'http:\\/\\/schemas.xmlsoap.org\\/ws\\/2005\\/05\\/identity\\/claims\\/emailaddress':
+        email = claim.val;
+        break;
+      case 'name':
+        name = claim.val;
+        break;
+      default:
+        break;
+    }
+  });
+
+  return { email, name };
+};
+
 const useRigSyncAuth = (): RigSyncAuth => {
   const [authToken, setAuthToken] = useState<string | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [name, setName] = useState<string | undefined>(undefined);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -102,14 +160,37 @@ const useRigSyncAuth = (): RigSyncAuth => {
     }
   };
 
+  const setUserClaims = async () => {
+    if (!authToken) {
+      setEmail(undefined);
+      setName(undefined);
+
+      return;
+    }
+
+    const userClaims = await fetchUserClaims(authToken);
+
+    setEmail(userClaims.email);
+    setName(userClaims.name);
+
+    return;
+  };
+
   useEffect(() => {
     void setAuthData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.hash]);
 
+  useEffect(() => {
+    void setUserClaims();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
+
   return {
     authToken,
     userId,
+    email,
+    name,
   };
 };
 

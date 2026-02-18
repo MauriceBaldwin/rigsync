@@ -1,75 +1,47 @@
-import { AxiosRequestConfig } from 'axios';
+import { useContext } from 'react';
 import {
+  List,
+  ListItem,
   Stack,
   Typography,
 } from '@mui/material';
-import { customInstance, customInstanceRoot } from '../../api/axiosInstance';
-import { useEffect } from 'react';
-import useApi from '../../hooks/useApi';
+import RigSyncAuthContext from '../../context/RigSyncAuthContext';
 
 const Profile = () => {
-
-  const {
-    response: authTestResponse,
-    isLoading: isAuthTestLoading,
-    error: authTestError,
-    makeRequest: makeAuthTestRequest,
-  } = useApi();
-
-  const {
-    response: meResponse,
-    isLoading: meIsLoading,
-    error: meError,
-    makeRequest: makeMeRequest,
-  } = useApi();
-
-  const fetchAuthTest = (
-    options?: AxiosRequestConfig,
-  ) => {
-    return customInstance(
-      { url: `/auth-test`, method: 'GET' },
-      options,
-    );
-  };
-
-  const fetchMe = (
-    options?: AxiosRequestConfig,
-  ) => {
-    return customInstanceRoot(
-      { url: `/.auth/me`, method: 'GET' },
-      options,
-    );
-  };
-
-  useEffect(() => {
-    makeAuthTestRequest(fetchAuthTest);
-    makeMeRequest(fetchMe);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const authContext = useContext(RigSyncAuthContext);
 
   return (
     <Stack spacing={4} alignItems="baseline">
       <Typography variant="h1" color="primary">My profile</Typography>
 
-      {isAuthTestLoading && <Typography>Loading auth test...</Typography>}
+      <List>
+        <ListItem>
+          <Typography variant="body2" color="textSecondary">
+            Id:&nbsp;
+          </Typography>
+          <Typography variant="body1">
+            {authContext?.userId ?? '_'}
+          </Typography>
+        </ListItem>
 
-      {authTestError &&
-        <Typography color="error">
-          Error loading profile: {authTestError}
-        </Typography>
-      }
+        <ListItem>
+          <Typography variant="body2" color="textSecondary">
+            Name:&nbsp;
+          </Typography>
+          <Typography variant="body1">
+            {authContext?.name ?? 'unknown'}
+          </Typography>
+        </ListItem>
 
-      <Typography>{JSON.stringify(authTestResponse)}</Typography>
-
-      {meIsLoading && <Typography>Loading me...</Typography>}
-
-      {meError &&
-        <Typography color="error">
-          Error loading me: {meError}
-        </Typography>
-      }
-
-      <Typography>{JSON.stringify(meResponse)}</Typography>
+        <ListItem>
+          <Typography variant="body2" color="textSecondary">
+            Email:&nbsp;
+          </Typography>
+          <Typography variant="body1">
+            {authContext?.email ?? 'unknown'}
+          </Typography>
+        </ListItem>
+      </List>
     </Stack>
   );
 };
