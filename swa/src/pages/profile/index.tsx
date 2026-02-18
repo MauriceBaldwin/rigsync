@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import RigSyncAuthContext from '../../context/RigSyncAuthContext';
+import RigSyncLogoutButton from '../../components/auth/RigSyncLogoutButton';
 
 const Profile = () => {
   const authContext = useContext(RigSyncAuthContext);
@@ -15,15 +16,6 @@ const Profile = () => {
       <Typography variant="h1" color="primary">My profile</Typography>
 
       <List>
-        <ListItem>
-          <Typography variant="body2" color="textSecondary">
-            Id:&nbsp;
-          </Typography>
-          <Typography variant="body1">
-            {authContext?.userId ?? '_'}
-          </Typography>
-        </ListItem>
-
         <ListItem>
           <Typography variant="body2" color="textSecondary">
             Name:&nbsp;
@@ -42,6 +34,8 @@ const Profile = () => {
           </Typography>
         </ListItem>
       </List>
+
+      <RigSyncLogoutButton />
     </Stack>
   );
 };

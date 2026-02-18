@@ -7,6 +7,7 @@ export type RigSyncAuth = {
   userId: string | undefined;
   email: string | undefined;
   name: string | undefined;
+  logout: () => Promise<void>;
 }
 
 type AuthData = {
@@ -135,6 +136,22 @@ const fetchUserClaims = async (authToken: string): Promise<UserClaims> => {
   return { email, name };
 };
 
+const logoutFromAuthProvider = async (authToken: string): Promise<void> => {
+  if (process.env.NODE_ENV === 'development') {
+    return;
+  }
+
+  const params = new URLSearchParams();
+  params.append('post_login_redirect_uri', import.meta.env.VITE_SELF_URL ?? '');
+
+  await fetch(`${BACKEND_URL}/.auth/logout`, {
+    method: 'GET',
+    headers: {
+      "X-ZUMO-AUTH": authToken,
+    },
+  });
+};
+
 const useRigSyncAuth = (): RigSyncAuth => {
   const [authToken, setAuthToken] = useState<string | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -178,6 +195,17 @@ const useRigSyncAuth = (): RigSyncAuth => {
     return;
   };
 
+  const logout = async () => {
+    const authTokenToLogout = authToken;
+
+    setAuthToken(undefined);
+    setUserId(undefined);
+    setEmail(undefined);
+    setName(undefined);
+
+    if (authTokenToLogout) await logoutFromAuthProvider(authTokenToLogout);
+  };
+
   useEffect(() => {
     void setAuthData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -193,6 +221,7 @@ const useRigSyncAuth = (): RigSyncAuth => {
     userId,
     email,
     name,
+    logout,
   };
 };
 
