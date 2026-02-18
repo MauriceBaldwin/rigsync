@@ -10,13 +10,20 @@ import useApi from '../../hooks/useApi';
 const Profile = () => {
 
   const {
-    response,
-    isLoading,
-    error,
-    makeRequest,
+    response: authTestResponse,
+    isLoading: isAuthTestLoading,
+    error: authTestError,
+    makeRequest: makeAuthTestRequest,
   } = useApi();
 
-  const fetchProfile = (
+  const {
+    response: meResponse,
+    isLoading: meIsLoading,
+    error: meError,
+    makeRequest: makeMeRequest,
+  } = useApi();
+
+  const fetchAuthTest = (
     options?: AxiosRequestConfig,
   ) => {
     return customInstance(
@@ -25,8 +32,18 @@ const Profile = () => {
     );
   };
 
+  const fetchMe = (
+    options?: AxiosRequestConfig,
+  ) => {
+    return customInstance(
+      { url: `/.auth/me`, method: 'GET' },
+      options,
+    );
+  };
+
   useEffect(() => {
-    makeRequest(fetchProfile);
+    makeAuthTestRequest(fetchAuthTest);
+    makeMeRequest(fetchMe);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,17 +51,25 @@ const Profile = () => {
     <Stack spacing={4} alignItems="baseline">
       <Typography variant="h1" color="primary">My profile</Typography>
 
-      {isLoading && <Typography>Loading...</Typography>}
+      {isAuthTestLoading && <Typography>Loading auth test...</Typography>}
 
-      {error &&
+      {authTestError &&
         <Typography color="error">
-          Error loading profile: {error}
+          Error loading profile: {authTestError}
         </Typography>
       }
 
+      <Typography>{JSON.stringify(authTestResponse)}</Typography>
 
-      <Typography>{JSON.stringify(response)}</Typography>
+      {meIsLoading && <Typography>Loading me...</Typography>}
 
+      {meError &&
+        <Typography color="error">
+          Error loading me: {meError}
+        </Typography>
+      }
+
+      <Typography>{JSON.stringify(meResponse)}</Typography>
     </Stack>
   );
 };
