@@ -3,7 +3,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { customInstance } from '../../api/axiosInstance';
+import { customInstance, customInstanceRoot } from '../../api/axiosInstance';
 import { useEffect } from 'react';
 import useApi from '../../hooks/useApi';
 
@@ -35,7 +35,7 @@ const Profile = () => {
   const fetchMe = (
     options?: AxiosRequestConfig,
   ) => {
-    return customInstance(
+    return customInstanceRoot(
       { url: `/.auth/me`, method: 'GET' },
       options,
     );
