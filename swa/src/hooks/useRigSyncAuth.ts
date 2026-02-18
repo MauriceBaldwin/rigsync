@@ -193,14 +193,12 @@ const useRigSyncAuth = (): RigSyncAuth => {
   };
 
   const logout = async () => {
-    const authTokenToLogout = authToken;
+    if (authToken) await logoutFromAuthProvider(authToken);
 
     setAuthToken(undefined);
     setUserId(undefined);
     setEmail(undefined);
     setName(undefined);
-
-    if (authTokenToLogout) await logoutFromAuthProvider(authTokenToLogout);
 
     await navigate('/');
   };
