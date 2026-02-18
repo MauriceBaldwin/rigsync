@@ -142,7 +142,11 @@ const logoutFromAuthProvider = async (authToken: string): Promise<void> => {
   }
 
   const params = new URLSearchParams();
-  params.append('post_login_redirect_uri', import.meta.env.VITE_SELF_URL ?? '');
+
+  params.append(
+    'post_logout_redirect_uri',
+    import.meta.env.VITE_SELF_URL ?? '',
+  );
 
   await fetch(`${BACKEND_URL}/.auth/logout?${params}`, {
     method: 'GET',
