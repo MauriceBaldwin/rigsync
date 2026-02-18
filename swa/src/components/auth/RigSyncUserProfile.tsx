@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import RigSyncAuthContext from "../../context/RigSyncAuthContext";
+import { Link } from 'react-router';
 import { Typography } from "@mui/material";
+import RigSyncAuthContext from "../../context/RigSyncAuthContext";
 
 
 const RigSyncUserProfile = () => {
@@ -10,7 +11,12 @@ const RigSyncUserProfile = () => {
     <>
       {
         authContext?.userId && (
-          <Typography variant="caption" >
+          <Typography
+            variant="caption"
+            color="textPrimary"
+            component={Link}
+            to="/profile"
+            sx={{ textDecoration: "none" }}>
             UserId: {authContext.userId}
           </Typography>
         )

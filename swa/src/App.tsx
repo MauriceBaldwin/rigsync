@@ -10,6 +10,7 @@ import Containers from './pages/container/index.tsx';
 import Container from './pages/container/[containerId].tsx';
 import MainCanopies from './pages/main-canopies/index.tsx';
 import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
+import Profile from './pages/profile/index.tsx';
 import ReserveCanopies from './pages/reserve-canopies/index.tsx';
 import ReserveCanopy from './pages/reserve-canopies/[reserveCanopyId].tsx';
 import NotFound from './pages/errors/NotFound.tsx';
@@ -40,6 +41,7 @@ const App = () => {
                 <Route index element={<MainCanopies />} />
                 <Route path=":mainCanopyId" element={<MainCanopy />} />
               </Route>
+              <Route path="profile" element={<Profile />} />
               <Route path="reserve-canopies">
                 <Route index element={<ReserveCanopies />} />
                 <Route path=":reserveCanopyId" element={<ReserveCanopy />} />
