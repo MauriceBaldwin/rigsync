@@ -120,7 +120,7 @@ const fetchUserClaims = async (authToken: string): Promise<UserClaims> => {
     item.user_claims.forEach(claim => {
       switch (claim.typ) {
         // eslint-disable-next-line max-len
-        case 'http:\\/\\/schemas.xmlsoap.org\\/ws\\/2005\\/05\\/identity\\/claims\\/emailaddress':
+        case 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress':
           email = claim.val;
           break;
         case 'name':
