@@ -40,7 +40,8 @@ type UserClaimsResponse = {
 const extractAuthData = (location: Location): AuthData | undefined => {
   if (process.env.NODE_ENV === 'development') {
     return {
-      authenticationToken: 'dev-auth-token',
+      // eslint-disable-next-line max-len
+      authenticationToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZXYtdXNlci1pZCJ9.BU-o2cgKzD6xauIPxmE7FXjeE3eiWJVGq8bZelDjf_I', // HEADER { "typ": "JWT", "alg": "HS256" } PAYLOAD { "sub": "dev-user-id" } SECRET a-string-secret-at-least-256-bits-long
       userId: 'dev-user-id',
     };
   }
