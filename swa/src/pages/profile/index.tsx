@@ -33,6 +33,15 @@ const Profile = () => {
             {authContext?.email ?? 'unknown'}
           </Typography>
         </ListItem>
+
+        <ListItem>
+          <Typography variant="body2" color="textSecondary">
+            Id:&nbsp;
+          </Typography>
+          <Typography variant="body1">
+            {authContext?.userId ?? 'unknown'}
+          </Typography>
+        </ListItem>
       </List>
 
       <RigSyncLogoutButton />
