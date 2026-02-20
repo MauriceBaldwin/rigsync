@@ -4,6 +4,7 @@ namespace Api.Functions;
 
 using System.Net;
 using Api.Functions.Utilities;
+using Api.Models;
 using Api.Requests;
 using Api.Responses;
 using Api.Responses.Error;
@@ -56,8 +57,9 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "reserve-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/reserve-canopy");
+    var user = new AuthProfile(req);
     var reserveCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateReserveCanopyRequest>(req.Body);
-    var newReserveCanopy = await Domains.ReserveCanopy.CreateAsync(reserveCanopyRequest);
+    var newReserveCanopy = await Domains.ReserveCanopy.CreateAsync(reserveCanopyRequest, user);
     return new OkObjectResult(new ReserveCanopyResponse(newReserveCanopy));
   }
 

@@ -11,7 +11,8 @@ public class Rig(
   Guid mainCanopyId,
   Guid reserveCanopyId,
   Guid containerId,
-  Guid aADId)
+  Guid aADId,
+  string ownerId)
 {
   /// <summary>
   /// Gets the rig's id.
@@ -44,9 +45,14 @@ public class Rig(
   public Guid AADId { get; set; } = aADId;
 
   /// <summary>
-  /// Gets the main canopy.
+  /// Gets the rig's owner ID.
   /// </summary>
-  public MainCanopy MainCanopy { get; } = null!;
+  public string OwnerId { get; private set; } = ownerId;
+
+  /// <summary>
+  /// Gets or sets the main canopy.
+  /// </summary>
+  public MainCanopy MainCanopy { get; set; } = null!;
 
   /// <summary>
   /// Gets or sets the reserve canopy.

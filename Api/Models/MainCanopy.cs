@@ -17,8 +17,9 @@ public class MainCanopy : Canopy
   /// <param name="manufacturer">The manufacturer of the main canopy.</param>
   /// <param name="model">The model of the main canopy.</param>
   /// <param name="size">The size of the main canopy, in square feet.</param>
-  public MainCanopy(Guid id, string manufacturer, string model, int size)
-  : base(manufacturer, model, size)
+  /// <param name="ownerId">The ID of the user that owns this main canopy.</param>
+  public MainCanopy(Guid id, string manufacturer, string model, int size, string ownerId)
+  : base(manufacturer, model, size, ownerId)
   {
     this.Id = id;
   }
@@ -27,8 +28,9 @@ public class MainCanopy : Canopy
   /// Initializes a new instance of the <see cref="MainCanopy"/> class.
   /// </summary>
   /// <param name="createRequest">The HTTP request body to create a new main canopy.</param>
-  public MainCanopy(CreateMainCanopyRequest createRequest)
-    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Size)
+  /// <param name="owner">The owner of this main canopy.</param>
+  public MainCanopy(CreateMainCanopyRequest createRequest, AuthProfile owner)
+    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Size, owner.Id)
   {
   }
 

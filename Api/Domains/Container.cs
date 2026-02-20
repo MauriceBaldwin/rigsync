@@ -53,11 +53,12 @@ public static class Container
   /// Creates a container in the db.
   /// </summary>
   /// <param name="toCreate">The container to be created.</param>
+  /// <param name="user">The owner of the container to be created.</param>
   /// <returns>The newly created container.</returns>
-  public static async Task<Models.Container> CreateAsync(CreateContainerRequest toCreate)
+  public static async Task<Models.Container> CreateAsync(CreateContainerRequest toCreate, AuthProfile user)
   {
     using var context = new Context();
-    var container = new Models.Container(toCreate);
+    var container = new Models.Container(toCreate, user);
 
     await context.Containers.AddAsync(container);
     await context.SaveChangesAsync();

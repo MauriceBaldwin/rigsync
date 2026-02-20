@@ -53,11 +53,12 @@ public static class ReserveCanopy
   /// Creates a reserve canopy in the db.
   /// </summary>
   /// <param name="toCreate">The reserve canopy to be created.</param>
+  /// <param name="user">The owner of the reserve canopy to be created.</param>
   /// <returns>The newly created reserve canopy.</returns>
-  public static async Task<Models.ReserveCanopy> CreateAsync(CreateReserveCanopyRequest toCreate)
+  public static async Task<Models.ReserveCanopy> CreateAsync(CreateReserveCanopyRequest toCreate, AuthProfile user)
   {
     using var context = new Context();
-    var reserveCanopy = new Models.ReserveCanopy(toCreate);
+    var reserveCanopy = new Models.ReserveCanopy(toCreate, user);
 
     await context.ReserveCanopies.AddAsync(reserveCanopy);
     await context.SaveChangesAsync();

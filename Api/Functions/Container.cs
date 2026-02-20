@@ -4,6 +4,7 @@ namespace Api.Functions;
 
 using System.Net;
 using Api.Functions.Utilities;
+using Api.Models;
 using Api.Requests;
 using Api.Responses;
 using Api.Responses.Error;
@@ -56,8 +57,9 @@ public class Container(ILogger<Container> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "container")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/container");
+    var user = new AuthProfile(req);
     var containerRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateContainerRequest>(req.Body);
-    var newContainer = await Domains.Container.CreateAsync(containerRequest);
+    var newContainer = await Domains.Container.CreateAsync(containerRequest, user);
     return new OkObjectResult(new ContainerResponse(newContainer));
   }
 

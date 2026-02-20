@@ -5,7 +5,7 @@ namespace Api.Models.Shared;
 /// <summary>
 /// Represents a generic piece of kit.
 /// </summary>
-public class Kit(string manufacturer, string model)
+public class Kit(string manufacturer, string model, string ownerId)
 {
   /// <summary>
   /// Gets or sets the manufacturer of the piece of kit.
@@ -16,6 +16,11 @@ public class Kit(string manufacturer, string model)
   /// Gets or sets the model of the piece of kit.
   /// </summary>
   public string Model { get; set; } = model;
+
+  /// <summary>
+  /// Gets or sets the ID of the user that owns this piece of kit.
+  /// </summary>
+  public string OwnerId { get; set; } = ownerId;
 
   /// <summary>
   /// Gets or sets the description of the piece of kit.

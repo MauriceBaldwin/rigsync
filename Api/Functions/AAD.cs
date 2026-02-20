@@ -4,6 +4,7 @@ namespace Api.Functions;
 
 using System.Net;
 using Api.Functions.Utilities;
+using Api.Models;
 using Api.Requests;
 using Api.Responses;
 using Api.Responses.Error;
@@ -56,8 +57,9 @@ public class AAD(ILogger<AAD> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "aad")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/aad");
+    var user = new AuthProfile(req);
     var aadRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateAADRequest>(req.Body);
-    var newAAD = await Domains.AAD.CreateAsync(aadRequest);
+    var newAAD = await Domains.AAD.CreateAsync(aadRequest, user);
     return new OkObjectResult(new AADResponse(newAAD));
   }
 

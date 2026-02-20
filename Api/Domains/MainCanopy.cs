@@ -53,11 +53,12 @@ public static class MainCanopy
   /// Creates a main canopy in the db.
   /// </summary>
   /// <param name="toCreate">The main canopy to be created.</param>
+  /// <param name="user">The owner of the main canopy to be created.</param>
   /// <returns>The newly created main canopy.</returns>
-  public static async Task<Models.MainCanopy> CreateAsync(CreateMainCanopyRequest toCreate)
+  public static async Task<Models.MainCanopy> CreateAsync(CreateMainCanopyRequest toCreate, AuthProfile user)
   {
     using var context = new Context();
-    var mainCanopy = new Models.MainCanopy(toCreate);
+    var mainCanopy = new Models.MainCanopy(toCreate, user);
 
     await context.MainCanopies.AddAsync(mainCanopy);
     await context.SaveChangesAsync();

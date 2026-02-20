@@ -3,6 +3,7 @@
 namespace Api.Models;
 
 using Api.Models.Shared;
+using Api.Requests;
 
 /// <summary>
 /// Initializes a new instance of the <see cref="ReserveCanopy"/> class.
@@ -16,8 +17,9 @@ public class ReserveCanopy : Canopy
   /// <param name="manufacturer">The manufacturer of the reserve canopy.</param>
   /// <param name="model">The model of the reserve canopy.</param>
   /// <param name="size">The size of the reserve canopy, in square feet.</param>
-  public ReserveCanopy(Guid id, string manufacturer, string model, int size)
-    : base(manufacturer, model, size)
+  /// <param name="ownerId">The ID of the user that owns this reserve canopy.</param>
+  public ReserveCanopy(Guid id, string manufacturer, string model, int size, string ownerId)
+    : base(manufacturer, model, size, ownerId)
   {
     this.Id = id;
   }
@@ -26,8 +28,9 @@ public class ReserveCanopy : Canopy
   /// Initializes a new instance of the <see cref="ReserveCanopy"/> class from a CreateReserveCanopyRequest.
   /// </summary>
   /// <param name="createRequest">The HTTP request body to create a new reserve canopy.</param>
-  public ReserveCanopy(Api.Requests.CreateReserveCanopyRequest createRequest)
-    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Size)
+  /// <param name="owner">The owner of this reserve canopy.</param>
+  public ReserveCanopy(CreateReserveCanopyRequest createRequest, AuthProfile owner)
+    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Size, owner.Id)
   {
     this.Id = Guid.NewGuid();
   }

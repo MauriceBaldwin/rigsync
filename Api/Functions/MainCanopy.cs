@@ -4,6 +4,7 @@ namespace Api.Functions;
 
 using System.Net;
 using Api.Functions.Utilities;
+using Api.Models;
 using Api.Requests;
 using Api.Responses;
 using Api.Responses.Error;
@@ -56,8 +57,9 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "main-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/main-canopy");
+    var user = new AuthProfile(req);
     var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateMainCanopyRequest>(req.Body);
-    var newMainCanopy = await Domains.MainCanopy.CreateAsync(mainCanopyRequest);
+    var newMainCanopy = await Domains.MainCanopy.CreateAsync(mainCanopyRequest, user);
     return new OkObjectResult(new MainCanopyResponse(newMainCanopy));
   }
 

@@ -3,6 +3,7 @@
 namespace Api.Models;
 
 using Api.Models.Shared;
+using Api.Requests;
 
 /// <summary>
 /// Initializes a new instance of the <see cref="AAD"/> class.
@@ -15,10 +16,11 @@ public class AAD : Kit
   /// <param name="id">The GUID of the AAD.</param>
   /// <param name="manufacturer">The manufacturer of the AAD.</param>
   /// <param name="model">The model of the AAD.</param>
+  /// <param name="ownerId">The ID of the owner of this AAD.</param>
   /// <param name="nextServiceDue">The date when the next AAD service is due.</param>
   /// <param name="endOfLife">The expiry date of the AAD.</param>
-  public AAD(Guid id, string manufacturer, string model, DateOnly? nextServiceDue, DateOnly? endOfLife)
-    : base(manufacturer, model)
+  public AAD(Guid id, string manufacturer, string model, string ownerId, DateOnly? nextServiceDue, DateOnly? endOfLife)
+    : base(manufacturer, model, ownerId)
   {
     this.Id = id;
     this.NextServiceDue = nextServiceDue;
@@ -29,8 +31,9 @@ public class AAD : Kit
   /// Initializes a new instance of the <see cref="AAD"/> class from a CreateAADRequest.
   /// </summary>
   /// <param name="createRequest">The HTTP request body to create a new AAD.</param>
-  public AAD(Api.Requests.CreateAADRequest createRequest)
-    : base(createRequest.Manufacturer, createRequest.Model)
+  /// <param name="owner">The owner of this AAD.</param>
+  public AAD(CreateAADRequest createRequest, AuthProfile owner)
+    : base(createRequest.Manufacturer, createRequest.Model, owner.Id)
   {
     this.Id = Guid.NewGuid();
     this.NextServiceDue = createRequest.NextServiceDue;

@@ -53,11 +53,12 @@ public static class AAD
   /// Creates an AAD in the db.
   /// </summary>
   /// <param name="toCreate">The AAD to be created.</param>
+  /// <param name="user">The owner of the AAD to be created.</param>
   /// <returns>The newly created AAD.</returns>
-  public static async Task<Models.AAD> CreateAsync(CreateAADRequest toCreate)
+  public static async Task<Models.AAD> CreateAsync(CreateAADRequest toCreate, AuthProfile user)
   {
     using var context = new Context();
-    var aad = new Models.AAD(toCreate);
+    var aad = new Models.AAD(toCreate, user);
 
     await context.AADs.AddAsync(aad);
     await context.SaveChangesAsync();
