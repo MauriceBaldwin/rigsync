@@ -36,10 +36,17 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "main-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("GET /api/main-canopy");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
     var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
-    var count = await Domains.MainCanopy.CountAsync();
-    var mainCanopies = await Domains.MainCanopy.ListAsync(page, limit);
+
+    // Act
+    var count = await Domains.MainCanopy.CountAsync(user);
+    var mainCanopies = await Domains.MainCanopy.ListAsync(page, limit, user);
+
+    // Respond
     return new OkObjectResult(new MainCanopiesResponse(mainCanopies, page, limit, count));
   }
 
@@ -57,9 +64,15 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "main-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/main-canopy");
+
+    // Prepare
     var user = new AuthProfile(req);
     var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateMainCanopyRequest>(req.Body);
+
+    // Act
     var newMainCanopy = await Domains.MainCanopy.CreateAsync(mainCanopyRequest, user);
+
+    // Respond
     return new OkObjectResult(new MainCanopyResponse(newMainCanopy));
   }
 
@@ -79,7 +92,14 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"GET /api/main-canopy/{id}");
-    var mainCanopy = await Domains.MainCanopy.GetAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    var mainCanopy = await Domains.MainCanopy.GetAsync(id, user);
+
+    // Respond
     return new OkObjectResult(new MainCanopyResponse(mainCanopy));
   }
 
@@ -101,8 +121,15 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/main-canopy/{id}");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateMainCanopyRequest>(req.Body);
-    var updatedMainCanopy = await Domains.MainCanopy.UpdateAsync(id, mainCanopyRequest);
+
+    // Act
+    var updatedMainCanopy = await Domains.MainCanopy.UpdateAsync(id, mainCanopyRequest, user);
+
+    // Respond
     return new OkObjectResult(new MainCanopyResponse(updatedMainCanopy));
   }
 
@@ -122,7 +149,14 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"DELETE /api/main-canopy/{id}");
-    await Domains.MainCanopy.DeleteAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    await Domains.MainCanopy.DeleteAsync(id, user);
+
+    // Respond
     return new NoContentResult();
   }
 }
