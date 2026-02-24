@@ -64,9 +64,15 @@ public class AAD(ILogger<AAD> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "aad")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/aad");
+
+    // Prepare
     var user = new AuthProfile(req);
     var aadRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateAADRequest>(req.Body);
+
+    // Act
     var newAAD = await Domains.AAD.CreateAsync(aadRequest, user);
+
+    // Respond
     return new OkObjectResult(new AADResponse(newAAD));
   }
 

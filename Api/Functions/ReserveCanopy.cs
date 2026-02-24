@@ -64,9 +64,15 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "reserve-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/reserve-canopy");
+
+    // Prepare
     var user = new AuthProfile(req);
     var reserveCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateReserveCanopyRequest>(req.Body);
+
+    // Act
     var newReserveCanopy = await Domains.ReserveCanopy.CreateAsync(reserveCanopyRequest, user);
+
+    // Respond
     return new OkObjectResult(new ReserveCanopyResponse(newReserveCanopy));
   }
 

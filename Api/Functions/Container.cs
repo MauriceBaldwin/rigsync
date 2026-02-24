@@ -64,9 +64,15 @@ public class Container(ILogger<Container> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "container")] HttpRequest req)
   {
     this.logger.LogInformation("POST /api/container");
+
+    // Prepare
     var user = new AuthProfile(req);
     var containerRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateContainerRequest>(req.Body);
+
+    // Act
     var newContainer = await Domains.Container.CreateAsync(containerRequest, user);
+
+    // Respond
     return new OkObjectResult(new ContainerResponse(newContainer));
   }
 
