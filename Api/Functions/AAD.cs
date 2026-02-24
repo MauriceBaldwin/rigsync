@@ -36,10 +36,17 @@ public class AAD(ILogger<AAD> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "aad")] HttpRequest req)
   {
     this.logger.LogInformation("GET /api/aad");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
     var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
-    var count = await Domains.AAD.CountAsync();
-    var aads = await Domains.AAD.ListAsync(page, limit);
+
+    // Act
+    var count = await Domains.AAD.CountAsync(user);
+    var aads = await Domains.AAD.ListAsync(page, limit, user);
+
+    // Respond
     return new OkObjectResult(new AADsResponse(aads, page, limit, count));
   }
 
@@ -79,7 +86,14 @@ public class AAD(ILogger<AAD> logger)
     Guid id)
   {
     this.logger.LogInformation($"GET /api/aad/{id}");
-    var aad = await Domains.AAD.GetAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    var aad = await Domains.AAD.GetAsync(id, user);
+
+    // Respond
     return new OkObjectResult(new AADResponse(aad));
   }
 
@@ -101,8 +115,15 @@ public class AAD(ILogger<AAD> logger)
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/aad/{id}");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var aadRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateAADRequest>(req.Body);
-    var updatedAAD = await Domains.AAD.UpdateAsync(id, aadRequest);
+
+    // Act
+    var updatedAAD = await Domains.AAD.UpdateAsync(id, aadRequest, user);
+
+    // Respond
     return new OkObjectResult(new AADResponse(updatedAAD));
   }
 
@@ -122,7 +143,14 @@ public class AAD(ILogger<AAD> logger)
     Guid id)
   {
     this.logger.LogInformation($"DELETE /api/aad/{id}");
-    await Domains.AAD.DeleteAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    await Domains.AAD.DeleteAsync(id, user);
+
+    // Respond
     return new NoContentResult();
   }
 }
