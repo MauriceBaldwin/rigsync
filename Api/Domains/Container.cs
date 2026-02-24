@@ -3,6 +3,7 @@
 namespace Api.Domains;
 
 using Api.Domains.Exceptions;
+using Api.Domains.Shared;
 using Api.Models;
 using Api.Requests;
 using Microsoft.EntityFrameworkCore;
@@ -13,25 +14,32 @@ using Microsoft.EntityFrameworkCore;
 public static class Container
 {
   /// <summary>
-  /// Count all containers.
+  /// Count all containers owned by a user.
   /// </summary>
-  /// <returns>The count of all containers.</returns>
-  public static async Task<int> CountAsync()
+  /// <param name="user">The user whose containers are to be counted.</param>
+  /// <returns>The count of all containers for the given user.</returns>
+  public static async Task<int> CountAsync(AuthProfile user)
   {
     using var context = new Context();
-    return await context.Containers.CountAsync();
+
+    return await context.Containers
+      .HasAccess(user)
+      .CountAsync();
   }
 
   /// <summary>
-  /// Retrieve a paginated list of containers.
+  /// Retrieve a paginated list of containers for a user.
   /// </summary>
   /// <param name="page">The page number for pagination.</param>
   /// <param name="limit">The limit of items per page for pagination.</param>
+  /// <param name="user">The user whose containers are to be retrieved.</param>
   /// <returns>A list of containers.</returns>
-  public static async Task<List<Models.Container>> ListAsync(int page, int limit)
+  public static async Task<List<Models.Container>> ListAsync(int page, int limit, AuthProfile user)
   {
     using var context = new Context();
+
     return await context.Containers
+      .HasAccess(user)
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -41,11 +49,16 @@ public static class Container
   /// Retrieve a single container using its ID.
   /// </summary>
   /// <param name="id">The ID of the container to retrieve.</param>
+  /// <param name="user">The user retrieving the container.</param>
   /// <returns>The container with the given ID.</returns>
-  public static async Task<Models.Container> GetAsync(Guid id)
+  public static async Task<Models.Container> GetAsync(Guid id, AuthProfile user)
   {
     using var context = new Context();
-    return await context.Containers.SingleOrDefaultAsync(c => c.Id == id) ??
+
+    return await context.Containers
+      .HasAccess(user)
+      .SingleOrDefaultAsync(c => c.Id == id)
+    ??
       throw new NotFoundByIdException($"Container with id = \"{id}\" does not exist");
   }
 
@@ -71,11 +84,16 @@ public static class Container
   /// </summary>
   /// <param name="id">The ID of the container to update.</param>
   /// <param name="toUpdate">The container info to be updated.</param>
+  /// <param name="user">The user performing the update.</param>
   /// <returns>The updated container.</returns>
-  public static async Task<Models.Container> UpdateAsync(Guid id, UpdateContainerRequest toUpdate)
+  public static async Task<Models.Container> UpdateAsync(Guid id, UpdateContainerRequest toUpdate, AuthProfile user)
   {
     using var context = new Context();
-    var container = await context.Containers.SingleOrDefaultAsync(c => c.Id == id) ??
+
+    var container = await context.Containers
+      .HasAccess(user)
+      .SingleOrDefaultAsync(c => c.Id == id)
+    ??
       throw new NotFoundByIdException($"Container with id = \"{id}\" does not exist");
 
     if (toUpdate.Manufacturer != null)
@@ -97,12 +115,18 @@ public static class Container
   /// Deletes a container from the db using its ID.
   /// </summary>
   /// <param name="id">The ID of the container to delete.</param>
+  /// <param name="user">The user deleting the container.</param>
   /// <returns>Nothing.</returns>
-  public static async Task DeleteAsync(Guid id)
+  public static async Task DeleteAsync(Guid id, AuthProfile user)
   {
     using var context = new Context();
-    var container = await context.Containers.SingleOrDefaultAsync(c => c.Id == id) ??
+
+    var container = await context.Containers
+      .HasAccess(user)
+      .SingleOrDefaultAsync(c => c.Id == id)
+    ??
       throw new NotFoundByIdException($"Container with id = \"{id}\" does not exist");
+
     context.Containers.Remove(container);
     await context.SaveChangesAsync();
   }

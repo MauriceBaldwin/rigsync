@@ -36,10 +36,17 @@ public class Container(ILogger<Container> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "container")] HttpRequest req)
   {
     this.logger.LogInformation("GET /api/container");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
     var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
-    var count = await Domains.Container.CountAsync();
-    var containers = await Domains.Container.ListAsync(page, limit);
+
+    // Act
+    var count = await Domains.Container.CountAsync(user);
+    var containers = await Domains.Container.ListAsync(page, limit, user);
+
+    // Respond
     return new OkObjectResult(new ContainersResponse(containers, page, limit, count));
   }
 
@@ -79,7 +86,14 @@ public class Container(ILogger<Container> logger)
     Guid id)
   {
     this.logger.LogInformation($"GET /api/container/{id}");
-    var container = await Domains.Container.GetAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    var container = await Domains.Container.GetAsync(id, user);
+
+    // Respond
     return new OkObjectResult(new ContainerResponse(container));
   }
 
@@ -101,8 +115,15 @@ public class Container(ILogger<Container> logger)
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/container/{id}");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var containerRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateContainerRequest>(req.Body);
-    var updatedContainer = await Domains.Container.UpdateAsync(id, containerRequest);
+
+    // Act
+    var updatedContainer = await Domains.Container.UpdateAsync(id, containerRequest, user);
+
+    // Respond
     return new OkObjectResult(new ContainerResponse(updatedContainer));
   }
 
@@ -122,7 +143,14 @@ public class Container(ILogger<Container> logger)
     Guid id)
   {
     this.logger.LogInformation($"DELETE /api/container/{id}");
-    await Domains.Container.DeleteAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    await Domains.Container.DeleteAsync(id, user);
+
+    // Respond
     return new NoContentResult();
   }
 }
