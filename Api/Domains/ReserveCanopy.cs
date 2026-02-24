@@ -3,6 +3,7 @@
 namespace Api.Domains;
 
 using Api.Domains.Exceptions;
+using Api.Domains.Shared;
 using Api.Models;
 using Api.Requests;
 using Microsoft.EntityFrameworkCore;
@@ -13,25 +14,32 @@ using Microsoft.EntityFrameworkCore;
 public static class ReserveCanopy
 {
   /// <summary>
-  /// Count all reserve canopies.
+  /// Count all reserve canopies the specified user owns.
   /// </summary>
-  /// <returns>The count of all reserve canopies.</returns>
-  public static async Task<int> CountAsync()
+  /// <param name="user">The user whose reserve canopies are to be counted.</param>
+  /// <returns>The count of all reserve canopies for the given user.</returns>
+  public static async Task<int> CountAsync(AuthProfile user)
   {
     using var context = new Context();
-    return await context.ReserveCanopies.CountAsync();
+
+    return await context.ReserveCanopies
+      .HasAccess(user)
+      .CountAsync();
   }
 
   /// <summary>
-  /// Retrieve a paginated list of reserve canopies.
+  /// Retrieve a paginated list of reserve canopies for a user.
   /// </summary>
   /// <param name="page">The page number for pagination.</param>
   /// <param name="limit">The limit of items per page for pagination.</param>
+  /// <param name="user">The user whose reserve canopies are to be retrieved.</param>
   /// <returns>A list of reserve canopies.</returns>
-  public static async Task<List<Models.ReserveCanopy>> ListAsync(int page, int limit)
+  public static async Task<List<Models.ReserveCanopy>> ListAsync(int page, int limit, AuthProfile user)
   {
     using var context = new Context();
+
     return await context.ReserveCanopies
+      .HasAccess(user)
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -41,11 +49,16 @@ public static class ReserveCanopy
   /// Retrieve a single reserve canopy using its ID.
   /// </summary>
   /// <param name="id">The ID of the reserve canopy to retrieve.</param>
+  /// <param name="user">The user retrieving the reserve canopy.</param>
   /// <returns>The reserve canopy with the given ID.</returns>
-  public static async Task<Models.ReserveCanopy> GetAsync(Guid id)
+  public static async Task<Models.ReserveCanopy> GetAsync(Guid id, AuthProfile user)
   {
     using var context = new Context();
-    return await context.ReserveCanopies.SingleOrDefaultAsync(r => r.Id == id) ??
+
+    return await context.ReserveCanopies
+      .HasAccess(user)
+      .SingleOrDefaultAsync(r => r.Id == id)
+    ??
       throw new NotFoundByIdException($"Reserve canopy with id = \"{id}\" does not exist");
   }
 
@@ -71,11 +84,16 @@ public static class ReserveCanopy
   /// </summary>
   /// <param name="id">The ID of the reserve canopy to update.</param>
   /// <param name="toUpdate">The reserve canopy info to be updated.</param>
+  /// <param name="user">The user performing the update.</param>
   /// <returns>The updated reserve canopy.</returns>
-  public static async Task<Models.ReserveCanopy> UpdateAsync(Guid id, UpdateReserveCanopyRequest toUpdate)
+  public static async Task<Models.ReserveCanopy> UpdateAsync(Guid id, UpdateReserveCanopyRequest toUpdate, AuthProfile user)
   {
     using var context = new Context();
-    var reserveCanopy = await context.ReserveCanopies.SingleOrDefaultAsync(r => r.Id == id) ??
+
+    var reserveCanopy = await context.ReserveCanopies
+      .HasAccess(user)
+      .SingleOrDefaultAsync(r => r.Id == id)
+    ??
       throw new NotFoundByIdException($"Reserve canopy with id = \"{id}\" does not exist");
 
     if (toUpdate.Manufacturer != null)
@@ -102,12 +120,18 @@ public static class ReserveCanopy
   /// Deletes a reserve canopy from the db using its ID.
   /// </summary>
   /// <param name="id">The ID of the reserve canopy to delete.</param>
+  /// <param name="user">The user deleting the reserve canopy.</param>
   /// <returns>Nothing.</returns>
-  public static async Task DeleteAsync(Guid id)
+  public static async Task DeleteAsync(Guid id, AuthProfile user)
   {
     using var context = new Context();
-    var reserveCanopy = await context.ReserveCanopies.SingleOrDefaultAsync(r => r.Id == id) ??
+
+    var reserveCanopy = await context.ReserveCanopies
+      .HasAccess(user)
+      .SingleOrDefaultAsync(r => r.Id == id)
+    ??
       throw new NotFoundByIdException($"Reserve canopy with id = \"{id}\" does not exist");
+
     context.ReserveCanopies.Remove(reserveCanopy);
     await context.SaveChangesAsync();
   }

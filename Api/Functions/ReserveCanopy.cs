@@ -36,10 +36,17 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "reserve-canopy")] HttpRequest req)
   {
     this.logger.LogInformation("GET /api/reserve-canopy");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var page = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "page") ?? 1;
     var limit = QueryParamReader.ReadPositiveNonZeroIntOrDefault(req, "limit") ?? 10;
-    var count = await Domains.ReserveCanopy.CountAsync();
-    var reserveCanopies = await Domains.ReserveCanopy.ListAsync(page, limit);
+
+    // Act
+    var count = await Domains.ReserveCanopy.CountAsync(user);
+    var reserveCanopies = await Domains.ReserveCanopy.ListAsync(page, limit, user);
+
+    // Respond
     return new OkObjectResult(new ReserveCanopiesResponse(reserveCanopies, page, limit, count));
   }
 
@@ -79,7 +86,14 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"GET /api/reserve-canopy/{id}");
-    var reserveCanopy = await Domains.ReserveCanopy.GetAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    var reserveCanopy = await Domains.ReserveCanopy.GetAsync(id, user);
+
+    // Respond
     return new OkObjectResult(new ReserveCanopyResponse(reserveCanopy));
   }
 
@@ -101,8 +115,15 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"POST  /api/reserve-canopy/{id}");
+
+    // Prepare
+    var user = new AuthProfile(req);
     var reserveCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<UpdateReserveCanopyRequest>(req.Body);
-    var updatedReserveCanopy = await Domains.ReserveCanopy.UpdateAsync(id, reserveCanopyRequest);
+
+    // Act
+    var updatedReserveCanopy = await Domains.ReserveCanopy.UpdateAsync(id, reserveCanopyRequest, user);
+
+    // Respond
     return new OkObjectResult(new ReserveCanopyResponse(updatedReserveCanopy));
   }
 
@@ -122,7 +143,14 @@ public class ReserveCanopy(ILogger<ReserveCanopy> logger)
     Guid id)
   {
     this.logger.LogInformation($"DELETE /api/reserve-canopy/{id}");
-    await Domains.ReserveCanopy.DeleteAsync(id);
+
+    // Prepare
+    var user = new AuthProfile(req);
+
+    // Act
+    await Domains.ReserveCanopy.DeleteAsync(id, user);
+
+    // Respond
     return new NoContentResult();
   }
 }
