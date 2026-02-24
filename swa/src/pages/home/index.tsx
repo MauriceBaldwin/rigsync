@@ -3,6 +3,7 @@ import { Typography, Container, Stack } from '@mui/material';
 import RigSyncAuthContext from "../../context/RigSyncAuthContext";
 import AuthorisedContent from './AuthorisedContent';
 import UnauthorisedContent from './UnauthorisedContent';
+import RigSyncIcon from "../../components/icons/RigSyncIcon";
 
 const Home = () => {
   const authContext = useContext(RigSyncAuthContext);
@@ -11,9 +12,13 @@ const Home = () => {
     <Container>
       <Stack alignItems="center" spacing={8}>
         <Stack alignItems="center">
-          <Typography variant="h1" color="primary" gutterBottom>
-            RigSync
-          </Typography>
+          <Stack direction="row" alignItems="center">
+            <RigSyncIcon sx={{ width: 100, height: 130 }} />
+            <Typography variant="h1" color="primary" gutterBottom>
+              RigSync
+            </Typography>
+          </Stack>
+
 
           <Typography variant="body1">
             RigSync helps keep your rigs organised and jump-ready.
