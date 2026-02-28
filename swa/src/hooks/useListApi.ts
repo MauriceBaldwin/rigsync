@@ -1,6 +1,6 @@
 import useApi, { UseApi } from "./useApi";
 
-interface RigSyncListResponse<T> {
+export interface RigSyncListResponse<T> {
   page: number
   limit: number
   items: T[]

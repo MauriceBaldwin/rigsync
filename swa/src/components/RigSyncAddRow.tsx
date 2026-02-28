@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import RigSyncSuccess from "./RigSyncSuccess";
 
-interface CreateMainCanopyTableFormProps extends PropsWithChildren {
+interface RigSyncAddRowProps extends PropsWithChildren {
   columnCount: number
   entityName?: string
   showSuccess?: boolean
@@ -20,7 +20,7 @@ const RigSyncAddRow = ({
   entityName,
   children,
   showSuccess,
-}: CreateMainCanopyTableFormProps) => {
+}: RigSyncAddRowProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {

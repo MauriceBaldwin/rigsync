@@ -734,6 +734,187 @@
           }
         }
       }
+    },
+    "/rig": {
+      "get": {
+        "tags": [
+          "rig"
+        ],
+        "operationId": "Rig_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of RigsResponse",
+            "schema": {
+              "$ref": "#/definitions/rigsResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "rig"
+        ],
+        "operationId": "Rig_Create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createRigRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of RigResponse",
+            "schema": {
+              "$ref": "#/definitions/rigResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/rig/{id}": {
+      "get": {
+        "tags": [
+          "rig"
+        ],
+        "operationId": "Rig_Read",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of RigResponse",
+            "schema": {
+              "$ref": "#/definitions/rigResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "rig"
+        ],
+        "operationId": "Rig_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateRigRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payload of RigResponse",
+            "schema": {
+              "$ref": "#/definitions/rigResponse"
+            }
+          },
+          "400": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "rig"
+        ],
+        "operationId": "Rig_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Payload of StandardErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/standardErrorResponse"
+            }
+          },
+          "204": {
+            "description": "No description"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -943,6 +1124,40 @@
         }
       }
     },
+    "createRigRequest": {
+      "required": [
+        "mainCanopyId",
+        "reserveCanopyId",
+        "containerId",
+        "aadId"
+      ],
+      "type": "object",
+      "properties": {
+        "mainCanopyId": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "reserveCanopyId": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "containerId": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "aadId": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "nextReserveRepackDue": {
+          "$ref": "#/definitions/dateOnly"
+        }
+      }
+    },
     "dateOnly": {
       "type": "object",
       "properties": {
@@ -1106,6 +1321,72 @@
         }
       }
     },
+    "rigResponse": {
+      "required": [
+        "id",
+        "mainCanopy",
+        "reserveCanopy",
+        "container",
+        "aad",
+        "ownerId"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "nextReserveRepackDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "mainCanopy": {
+          "$ref": "#/definitions/mainCanopyResponse"
+        },
+        "reserveCanopy": {
+          "$ref": "#/definitions/reserveCanopyResponse"
+        },
+        "container": {
+          "$ref": "#/definitions/containerResponse"
+        },
+        "aad": {
+          "$ref": "#/definitions/aadResponse"
+        },
+        "ownerId": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "rigsResponse": {
+      "required": [
+        "page",
+        "limit",
+        "items",
+        "count"
+      ],
+      "type": "object",
+      "properties": {
+        "page": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/rigResponse"
+          }
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "standardErrorResponse": {
       "required": [
         "errorCode",
@@ -1178,6 +1459,30 @@
         "size": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "updateRigRequest": {
+      "type": "object",
+      "properties": {
+        "nextReserveRepackDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "mainCanopyId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "reserveCanopyId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "containerId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "aadId": {
+          "format": "uuid",
+          "type": "string"
         }
       }
     }

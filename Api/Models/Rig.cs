@@ -2,18 +2,37 @@
 
 namespace Api.Models;
 
+using Api.Requests;
+
 /// <summary>
 /// Represent a rig.
 /// </summary>
 public class Rig(
   Guid id,
-  DateOnly nextReserveRepackDue,
+  DateOnly? nextReserveRepackDue,
   Guid mainCanopyId,
   Guid reserveCanopyId,
   Guid containerId,
   Guid aADId,
   string ownerId)
 {
+  /// <summary>
+  /// Initializes a new instance of the <see cref="Rig"/> class.
+  /// </summary>
+  /// <param name="createRequest">The HTTP request body to create a new rig.</param>
+  /// <param name="owner">The owner of this rig.</param>
+  public Rig(CreateRigRequest createRequest, AuthProfile owner)
+    : this(
+      Guid.NewGuid(),
+      createRequest.NextReserveRepackDue,
+      createRequest.MainCanopyId,
+      createRequest.ReserveCanopyId,
+      createRequest.ContainerId,
+      createRequest.AADId,
+      owner.Id)
+  {
+  }
+
   /// <summary>
   /// Gets the rig's id.
   /// </summary>
@@ -22,7 +41,7 @@ public class Rig(
   /// <summary>
   /// Gets or sets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly NextReserveRepackDue { get; set; } = nextReserveRepackDue;
+  public DateOnly? NextReserveRepackDue { get; set; } = nextReserveRepackDue;
 
   /// <summary>
   /// Gets or sets the ID of the rig's main canopy.
