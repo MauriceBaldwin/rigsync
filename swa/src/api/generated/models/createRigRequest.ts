@@ -9,6 +9,8 @@ import type { DateOnly } from './dateOnly';
 
 export interface CreateRigRequest {
   /** @minLength 1 */
+  name: string;
+  /** @minLength 1 */
   mainCanopyId: string;
   /** @minLength 1 */
   reserveCanopyId: string;

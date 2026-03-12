@@ -24,7 +24,7 @@ const RigSyncRigCard = ({
       to={`/rigs/${rig.id}`}>
       <CardContent>
         <Typography variant="h5" color="primary">
-          {rig.id}
+          {rig.name}
         </Typography>
 
         <List sx={{ width: '100%' }}>

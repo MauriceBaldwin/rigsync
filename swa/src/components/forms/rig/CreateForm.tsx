@@ -17,6 +17,7 @@ interface CreateRigFormProps {
 }
 
 const CreateForm = ({ onCreate }: CreateRigFormProps) => {
+  const [name, setName] = useState("");
   const [mainCanopyId, setMainCanopyId] = useState("");
   const [reserveCanopyId, setReserveCanopyId] = useState("");
   const [aadId, setAadId] = useState("");
@@ -29,6 +30,7 @@ const CreateForm = ({ onCreate }: CreateRigFormProps) => {
       (options?: AxiosRequestConfig) =>
         rigCreate(
           {
+            name,
             mainCanopyId,
             reserveCanopyId,
             aadId,
@@ -45,10 +47,12 @@ const CreateForm = ({ onCreate }: CreateRigFormProps) => {
       <Stack alignItems="center">
         <Grid>
           <FormFields
+            name={name}
             mainCanopyId={mainCanopyId}
             reserveCanopyId={reserveCanopyId}
             aadId={aadId}
             containerId={containerId}
+            setName={setName}
             setMainCanopyId={setMainCanopyId}
             setReserveCanopyId={setReserveCanopyId}
             setAadId={setAadId}

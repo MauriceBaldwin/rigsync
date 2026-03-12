@@ -9,6 +9,7 @@ using Api.Requests;
 /// </summary>
 public class Rig(
   Guid id,
+  string name,
   DateOnly? nextReserveRepackDue,
   Guid mainCanopyId,
   Guid reserveCanopyId,
@@ -24,6 +25,7 @@ public class Rig(
   public Rig(CreateRigRequest createRequest, AuthProfile owner)
     : this(
       Guid.NewGuid(),
+      createRequest.Name,
       createRequest.NextReserveRepackDue,
       createRequest.MainCanopyId,
       createRequest.ReserveCanopyId,
@@ -37,6 +39,11 @@ public class Rig(
   /// Gets the rig's id.
   /// </summary>
   public Guid Id { get; private set; } = id;
+
+  /// <summary>
+  /// Gets or sets the name of the rig.
+  /// </summary>
+  public string Name { get; set; } = name;
 
   /// <summary>
   /// Gets or sets the date that the reserve repack expires.

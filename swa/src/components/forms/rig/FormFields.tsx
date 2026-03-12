@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import RigSyncSelectFromApi from "../../RigSyncSelectFromApi";
 import {
   mainCanopyList,
@@ -11,10 +12,12 @@ import {
 } from "../../../api";
 
 interface RigFormFieldsProps {
+  name: string;
   mainCanopyId: string;
   reserveCanopyId: string;
   aadId: string;
   containerId: string;
+  setName: (name: string) => void;
   setMainCanopyId: (mainCanopyId: string) => void;
   setReserveCanopyId: (reserveCanopyId: string) => void;
   setAadId: (aadId: string) => void;
@@ -22,10 +25,12 @@ interface RigFormFieldsProps {
 }
 
 const FormFields = ({
+  name,
   mainCanopyId,
   reserveCanopyId,
   aadId,
   containerId,
+  setName,
   setMainCanopyId,
   setReserveCanopyId,
   setAadId,
@@ -33,6 +38,15 @@ const FormFields = ({
 }: RigFormFieldsProps) => {
   return (
     <>
+      <TextField
+        required
+        id="rig-name"
+        label="Name"
+        placeholder="Name"
+        value={name}
+        onChange={(event) => { setName(event.target.value); }}
+      />
+
       <RigSyncSelectFromApi<MainCanopyResponse, string>
         label="Main canopy"
         value={mainCanopyId}

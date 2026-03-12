@@ -1126,6 +1126,7 @@
     },
     "createRigRequest": {
       "required": [
+        "name",
         "mainCanopyId",
         "reserveCanopyId",
         "containerId",
@@ -1133,6 +1134,10 @@
       ],
       "type": "object",
       "properties": {
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
         "mainCanopyId": {
           "format": "uuid",
           "minLength": 1,
@@ -1324,6 +1329,7 @@
     "rigResponse": {
       "required": [
         "id",
+        "name",
         "mainCanopy",
         "reserveCanopy",
         "container",
@@ -1334,6 +1340,10 @@
       "properties": {
         "id": {
           "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
           "minLength": 1,
           "type": "string"
         },
@@ -1465,6 +1475,9 @@
     "updateRigRequest": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string"
+        },
         "nextReserveRepackDue": {
           "$ref": "#/definitions/dateOnly"
         },

@@ -18,6 +18,12 @@ public class RigResponse(Rig rig)
   public Guid Id { get; private set; } = rig.Id;
 
   /// <summary>
+  /// Gets the name of the rig.
+  /// </summary>
+  [Required]
+  public string Name { get; private set; } = rig.Name;
+
+  /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
   public DateOnly? NextReserveRepackDue { get; private set; } = rig.NextReserveRepackDue;

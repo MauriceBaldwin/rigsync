@@ -14,6 +14,8 @@ import type { AadResponse } from './aadResponse';
 export interface RigResponse {
   /** @minLength 1 */
   id: string;
+  /** @minLength 1 */
+  name: string;
   nextReserveRepackDue?: DateOnly;
   mainCanopy: MainCanopyResponse;
   reserveCanopy: ReserveCanopyResponse;

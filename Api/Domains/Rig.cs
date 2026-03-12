@@ -3,7 +3,6 @@
 namespace Api.Domains;
 
 using Api.Domains.Exceptions;
-using Api.Domains.Shared;
 using Api.Models;
 using Api.Requests;
 using Microsoft.EntityFrameworkCore;
@@ -138,6 +137,11 @@ public static class Rig
       .SingleOrDefaultAsync(r => r.Id == id)
     ??
       throw new NotFoundByIdException($"Rig with id = \"{id}\" does not exist");
+
+    if (toUpdate.Name != null)
+    {
+      rig.Name = toUpdate.Name;
+    }
 
     if (toUpdate.NextReserveRepackDue != null)
     {

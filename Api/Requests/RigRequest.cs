@@ -8,12 +8,19 @@ using System.ComponentModel.DataAnnotations;
 /// Create body for a rig.
 /// </summary>
 public class CreateRigRequest(
+  string name,
   Guid mainCanopyId,
   Guid reserveCanopyId,
   Guid containerId,
   Guid aADId,
   DateOnly? nextReserveRepackDue)
 {
+  /// <summary>
+  /// Gets or sets the name of the rig.
+  /// </summary>
+  [Required]
+  public string Name { get; set; } = name;
+
   /// <summary>
   /// Gets or sets the ID of the rig's main canopy.
   /// </summary>
@@ -49,6 +56,11 @@ public class CreateRigRequest(
 /// </summary>
 public class UpdateRigRequest
 {
+  /// <summary>
+  /// Gets or sets the name of the rig.
+  /// </summary>
+  public string? Name { get; set; }
+
   /// <summary>
   /// Gets or sets the date that the reserve repack expires.
   /// </summary>

@@ -8,6 +8,7 @@
 import type { DateOnly } from './dateOnly';
 
 export interface UpdateRigRequest {
+  name?: string;
   nextReserveRepackDue?: DateOnly;
   mainCanopyId?: string;
   reserveCanopyId?: string;
