@@ -7,7 +7,9 @@ const useInternalCanopyFormFields = (
 ) => {
   const kitInternalFormFields = useInternalKitFormFields(canopy);
 
-  const [internalSize, setInternalSize] = useState(canopy?.size ?? '');
+  const [internalSize, setInternalSize] = useState(
+    canopy?.size.toString() ?? '',
+  );
 
   return {
     ...kitInternalFormFields,
