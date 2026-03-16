@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,28 +8,26 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { ReserveCanopyResponse, reserveCanopyUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/canopy/FormFields";
 import RigSyncSuccess from "../../RigSyncSuccess";
+import useInternalReserveCanopyFormFields from
+  "../../../hooks/internalFormFields/useInternalReserveCanopyFormFields";
 
 interface UpdateReserveCanopyFormProps {
   reserveCanopy: ReserveCanopyResponse;
 }
 
 const UpdateForm = ({ reserveCanopy }: UpdateReserveCanopyFormProps) => {
-  const [
+  const {
     internalManufacturer,
-    setInternalManufacturer,
-  ] = useState(reserveCanopy.manufacturer);
-
-  const [
     internalModel,
-    setInternalModel,
-  ] = useState(reserveCanopy.model);
-
-  const [
     internalSize,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
     setInternalSize,
-  ] = useState(reserveCanopy.size.toString());
+    setInternalDescription,
+  } = useInternalReserveCanopyFormFields(reserveCanopy);
 
   const {
     isLoading,
@@ -47,6 +44,7 @@ const UpdateForm = ({ reserveCanopy }: UpdateReserveCanopyFormProps) => {
           manufacturer: internalManufacturer,
           model: internalModel,
           size: parseInt(internalSize),
+          description: internalDescription,
         },
         options,
       ),
@@ -70,9 +68,11 @@ const UpdateForm = ({ reserveCanopy }: UpdateReserveCanopyFormProps) => {
             manufacturer={internalManufacturer}
             model={internalModel}
             size={internalSize}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
             setSize={setInternalSize}
+            setDescription={setInternalDescription}
           />
         </Stack>
         <Button

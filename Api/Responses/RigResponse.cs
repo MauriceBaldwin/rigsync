@@ -15,48 +15,48 @@ public class RigResponse(Rig rig)
   /// Gets the ID of the rig.
   /// </summary>
   [Required]
-  public Guid Id { get; private set; } = rig.Id;
+  public Guid Id { get; } = rig.Id;
 
   /// <summary>
   /// Gets the name of the rig.
   /// </summary>
   [Required]
-  public string Name { get; private set; } = rig.Name;
+  public string Name { get; } = rig.Name;
 
   /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { get; private set; } = rig.NextReserveRepackDue;
+  public DateOnly? NextReserveRepackDue { get; } = rig.NextReserveRepackDue;
 
   /// <summary>
   /// Gets the rig's main canopy.
   /// </summary>
   [Required]
-  public MainCanopyResponse MainCanopy { get; private set; } = new MainCanopyResponse(rig.MainCanopy);
+  public MainCanopyResponse MainCanopy { get; } = new MainCanopyResponse(rig.MainCanopy);
 
   /// <summary>
   /// Gets the rig's reserve canopy.
   /// </summary>
   [Required]
-  public ReserveCanopyResponse ReserveCanopy { get; private set; } = new ReserveCanopyResponse(rig.ReserveCanopy);
+  public ReserveCanopyResponse ReserveCanopy { get; } = new ReserveCanopyResponse(rig.ReserveCanopy);
 
   /// <summary>
   /// Gets the rig's container.
   /// </summary>
   [Required]
-  public ContainerResponse Container { get; private set; } = new ContainerResponse(rig.Container);
+  public ContainerResponse Container { get; } = new ContainerResponse(rig.Container);
 
   /// <summary>
   /// Gets the rig's AAD.
   /// </summary>
   [Required]
-  public AADResponse AAD { get; private set; } = new AADResponse(rig.AAD);
+  public AADResponse AAD { get; } = new AADResponse(rig.AAD);
 
   /// <summary>
   /// Gets the ID of the rig's owner.
   /// </summary>
   [Required]
-  public string OwnerId { get; private set; } = rig.OwnerId;
+  public string OwnerId { get; } = rig.OwnerId;
 }
 
 /// <summary>

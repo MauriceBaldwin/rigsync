@@ -14,17 +14,16 @@ public class KitResponse(Kit kit)
   /// Gets the manufacturer of the piece of kit.
   /// </summary>
   [Required]
-  public string Manufacturer { get; private set; } = kit.Manufacturer;
+  public string Manufacturer { get; } = kit.Manufacturer;
 
   /// <summary>
   /// Gets the model of the piece of kit.
   /// </summary>
   [Required]
-  public string Model { get; private set; } = kit.Model;
+  public string Model { get; } = kit.Model;
 
   /// <summary>
   /// Gets the description of the piece of kit.
   /// </summary>
-  [Required]
-  public string? Description { get; private set; } = kit.Description;
+  public string? Description { get; } = kit.Description;
 }

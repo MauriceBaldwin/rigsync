@@ -106,6 +106,11 @@ public static class AAD
       aad.Model = toUpdate.Model;
     }
 
+    if (toUpdate.Description != null)
+    {
+      aad.Description = toUpdate.Description;
+    }
+
     if (toUpdate.NextServiceDue != null)
     {
       aad.NextServiceDue = toUpdate.NextServiceDue.Value;

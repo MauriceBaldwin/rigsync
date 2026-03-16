@@ -45,6 +45,8 @@ const getItemField = (
   item: RigSyncTableData,
   fieldKey: string,
 ): string | number => {
+  if (item[fieldKey] === null || item[fieldKey] === undefined) return '-';
+
   if (
     typeof item[fieldKey] !== 'string' &&
     typeof item[fieldKey] !== 'number'

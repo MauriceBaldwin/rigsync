@@ -16,19 +16,19 @@ public class AADResponse(AAD aad)
   /// Gets the ID of the AAD.
   /// </summary>
   [Required]
-  public Guid Id { get; private set; } = aad.Id;
+  public Guid Id { get; } = aad.Id;
 
   /// <summary>
   /// Gets the next service due date.
   /// </summary>
   [Required]
-  public DateOnly? NextServiceDue { get; private set; } = aad.NextServiceDue;
+  public DateOnly? NextServiceDue { get; } = aad.NextServiceDue;
 
   /// <summary>
   /// Gets the end of life date.
   /// </summary>
   [Required]
-  public DateOnly? EndOfLife { get; private set; } = aad.EndOfLife;
+  public DateOnly? EndOfLife { get; } = aad.EndOfLife;
 }
 
 /// <summary>

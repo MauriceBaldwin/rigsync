@@ -16,7 +16,7 @@ public class ReserveCanopyResponse(ReserveCanopy reserveCanopy)
   /// Gets the ID of the reserve canopy.
   /// </summary>
   [Required]
-  public Guid Id { get; private set; } = reserveCanopy.Id;
+  public Guid Id { get; } = reserveCanopy.Id;
 }
 
 /// <summary>

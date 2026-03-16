@@ -13,6 +13,5 @@ export interface ContainerResponse {
   manufacturer: string;
   /** @minLength 1 */
   model: string;
-  /** @minLength 1 */
-  description: string;
+  description?: string;
 }

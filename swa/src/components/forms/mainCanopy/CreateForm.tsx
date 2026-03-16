@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,16 +8,25 @@ import {
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { mainCanopyCreate, MainCanopyResponse } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/canopy/FormFields";
+import useInternalMainCanopyFormFields from
+  "../../../hooks/internalFormFields/useInternalMainCanopyFormFields";
 
 interface CreateMainCanopyFormProps {
   onCreate?: (item: MainCanopyResponse) => void;
 }
 
 const CreateForm = ({ onCreate }: CreateMainCanopyFormProps) => {
-  const [internalManufacturer, setInternalManufacturer] = useState('');
-  const [internalModel, setInternalModel] = useState('');
-  const [internalSize, setInternalSize] = useState('');
+  const {
+    internalManufacturer,
+    internalModel,
+    internalSize,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
+    setInternalSize,
+    setInternalDescription,
+  } = useInternalMainCanopyFormFields();
 
   const { isLoading, error, makeRequest } =
     useApi<MainCanopyResponse>();
@@ -30,6 +38,7 @@ const CreateForm = ({ onCreate }: CreateMainCanopyFormProps) => {
           manufacturer: internalManufacturer,
           model: internalModel,
           size: parseInt(internalSize),
+          description: internalDescription,
         },
         options,
       ),
@@ -53,9 +62,11 @@ const CreateForm = ({ onCreate }: CreateMainCanopyFormProps) => {
             manufacturer={internalManufacturer}
             model={internalModel}
             size={internalSize}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
             setSize={setInternalSize}
+            setDescription={setInternalDescription}
           />
 
           <Button

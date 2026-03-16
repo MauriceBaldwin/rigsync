@@ -16,11 +16,12 @@ public class AAD : Kit
   /// <param name="id">The GUID of the AAD.</param>
   /// <param name="manufacturer">The manufacturer of the AAD.</param>
   /// <param name="model">The model of the AAD.</param>
+  /// <param name="description">Optional description of the AAD.</param>
   /// <param name="ownerId">The ID of the owner of this AAD.</param>
   /// <param name="nextServiceDue">The date when the next AAD service is due.</param>
   /// <param name="endOfLife">The expiry date of the AAD.</param>
-  public AAD(Guid id, string manufacturer, string model, string ownerId, DateOnly? nextServiceDue, DateOnly? endOfLife)
-    : base(manufacturer, model, ownerId)
+  public AAD(Guid id, string manufacturer, string model, string? description, string ownerId, DateOnly? nextServiceDue, DateOnly? endOfLife)
+    : base(manufacturer, model, description, ownerId)
   {
     this.Id = id;
     this.NextServiceDue = nextServiceDue;
@@ -33,7 +34,7 @@ public class AAD : Kit
   /// <param name="createRequest">The HTTP request body to create a new AAD.</param>
   /// <param name="owner">The owner of this AAD.</param>
   public AAD(CreateAADRequest createRequest, AuthProfile owner)
-    : base(createRequest.Manufacturer, createRequest.Model, owner.Id)
+    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Description, owner.Id)
   {
     this.Id = Guid.NewGuid();
     this.NextServiceDue = createRequest.NextServiceDue;

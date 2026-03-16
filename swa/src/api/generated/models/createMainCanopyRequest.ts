@@ -7,9 +7,10 @@
  */
 
 export interface CreateMainCanopyRequest {
+  size: number;
   /** @minLength 1 */
   manufacturer: string;
   /** @minLength 1 */
   model: string;
-  size: number;
+  description?: string;
 }

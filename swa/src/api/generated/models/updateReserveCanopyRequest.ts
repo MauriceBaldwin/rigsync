@@ -7,7 +7,8 @@
  */
 
 export interface UpdateReserveCanopyRequest {
+  size?: number;
   manufacturer?: string;
   model?: string;
-  size?: number;
+  description?: string;
 }

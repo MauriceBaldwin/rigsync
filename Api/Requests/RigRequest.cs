@@ -7,48 +7,42 @@ using System.ComponentModel.DataAnnotations;
 /// <summary>
 /// Create body for a rig.
 /// </summary>
-public class CreateRigRequest(
-  string name,
-  Guid mainCanopyId,
-  Guid reserveCanopyId,
-  Guid containerId,
-  Guid aADId,
-  DateOnly? nextReserveRepackDue)
+public class CreateRigRequest
 {
   /// <summary>
-  /// Gets or sets the name of the rig.
+  /// Gets the name of the rig.
   /// </summary>
   [Required]
-  public string Name { get; set; } = name;
+  public string Name { init; get; } = string.Empty;
 
   /// <summary>
-  /// Gets or sets the ID of the rig's main canopy.
+  /// Gets the ID of the rig's main canopy.
   /// </summary>
   [Required]
-  public Guid MainCanopyId { get; set; } = mainCanopyId;
+  public Guid MainCanopyId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's reserve canopy.
+  /// Gets the ID of the rig's reserve canopy.
   /// </summary>
   [Required]
-  public Guid ReserveCanopyId { get; set; } = reserveCanopyId;
+  public Guid ReserveCanopyId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's container.
+  /// Gets the ID of the rig's container.
   /// </summary>
   [Required]
-  public Guid ContainerId { get; set; } = containerId;
+  public Guid ContainerId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's AAD.
+  /// Gets the ID of the rig's AAD.
   /// </summary>
   [Required]
-  public Guid AADId { get; set; } = aADId;
+  public Guid AADId { init; get; }
 
   /// <summary>
-  /// Gets or sets the date that the reserve repack expires.
+  /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { get; set; } = nextReserveRepackDue;
+  public DateOnly? NextReserveRepackDue { init; get; }
 }
 
 /// <summary>
@@ -57,32 +51,32 @@ public class CreateRigRequest(
 public class UpdateRigRequest
 {
   /// <summary>
-  /// Gets or sets the name of the rig.
+  /// Gets the name of the rig.
   /// </summary>
-  public string? Name { get; set; }
+  public string? Name { init; get; }
 
   /// <summary>
-  /// Gets or sets the date that the reserve repack expires.
+  /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { get; set; }
+  public DateOnly? NextReserveRepackDue { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's main canopy.
+  /// Gets the ID of the rig's main canopy.
   /// </summary>
-  public Guid? MainCanopyId { get; set; }
+  public Guid? MainCanopyId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's reserve canopy.
+  /// Gets the ID of the rig's reserve canopy.
   /// </summary>
-  public Guid? ReserveCanopyId { get; set; }
+  public Guid? ReserveCanopyId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's container.
+  /// Gets the ID of the rig's container.
   /// </summary>
-  public Guid? ContainerId { get; set; }
+  public Guid? ContainerId { init; get; }
 
   /// <summary>
-  /// Gets or sets the ID of the rig's AAD.
+  /// Gets the ID of the rig's AAD.
   /// </summary>
-  public Guid? AADId { get; set; }
+  public Guid? AADId { init; get; }
 }

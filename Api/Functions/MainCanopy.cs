@@ -69,6 +69,8 @@ public class MainCanopy(ILogger<MainCanopy> logger)
     var user = new AuthProfile(req);
     var mainCanopyRequest = await RequestBodyReader.ReadJsonBodyAsync<CreateMainCanopyRequest>(req.Body);
 
+    this.logger.LogInformation("Description: {Desc}", mainCanopyRequest.Description ?? "<null>");
+
     // Act
     var newMainCanopy = await Domains.MainCanopy.CreateAsync(mainCanopyRequest, user);
 

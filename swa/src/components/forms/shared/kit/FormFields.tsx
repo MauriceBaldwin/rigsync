@@ -1,38 +1,37 @@
-import {
-  TextField,
-} from "@mui/material";
-
-interface ContainerFormFieldsProps {
-  manufacturer: string;
-  model: string;
-  setManufacturer: (manufacturer: string) => void;
-  setModel: (model: string) => void;
-}
+import { TextField } from "@mui/material";
+import { type KitFormFieldsProps } from "./types";
 
 const FormFields = ({
   manufacturer,
   model,
+  description,
   setManufacturer,
   setModel,
-}: ContainerFormFieldsProps) => {
+  setDescription,
+}: KitFormFieldsProps) => {
   return (
     <>
       <TextField
         required
-        id="create-container-manufacturer"
+        id="manufacturer"
         label="Manufacturer"
-        placeholder="Upt"
         value={manufacturer}
         onChange={(event) => { setManufacturer(event.target.value); }}
       />
 
       <TextField
         required
-        id="create-container-model"
+        id="model"
         label="Model"
-        placeholder="Vector"
         value={model}
         onChange={(event) => { setModel(event.target.value); }}
+      />
+
+      <TextField
+        id="description"
+        label="Description"
+        value={description}
+        onChange={(event) => { setDescription(event.target.value); }}
       />
     </>
   );

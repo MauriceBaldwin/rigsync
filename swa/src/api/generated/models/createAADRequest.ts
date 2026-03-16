@@ -8,10 +8,11 @@
 import type { DateOnly } from './dateOnly';
 
 export interface CreateAADRequest {
+  nextServiceDue?: DateOnly;
+  endOfLife?: DateOnly;
   /** @minLength 1 */
   manufacturer: string;
   /** @minLength 1 */
   model: string;
-  nextServiceDue?: DateOnly;
-  endOfLife?: DateOnly;
+  description?: string;
 }

@@ -49,6 +49,7 @@ const AADs = () => {
   const columns = [
     { title: 'Manufacturer', fieldKey: 'manufacturer' },
     { title: 'Model', fieldKey: 'model' },
+    { title: 'Description', fieldKey: 'description' },
   ];
 
   const navigateToAAD = (id: string): void => {

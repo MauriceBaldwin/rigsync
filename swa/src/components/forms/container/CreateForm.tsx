@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,15 +8,23 @@ import {
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { containerCreate, ContainerResponse } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/kit/FormFields";
+import useInternalContainerFormFields from
+  "../../../hooks/internalFormFields/useInternalContainerFormFields";
 
 interface CreateContainerFormProps {
   onCreate?: (item: ContainerResponse) => void;
 }
 
 const CreateForm = ({ onCreate }: CreateContainerFormProps) => {
-  const [internalManufacturer, setInternalManufacturer] = useState('');
-  const [internalModel, setInternalModel] = useState('');
+  const {
+    internalManufacturer,
+    internalModel,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
+    setInternalDescription,
+  } = useInternalContainerFormFields();
 
   const { isLoading, error, makeRequest } =
     useApi<ContainerResponse>();
@@ -28,6 +35,7 @@ const CreateForm = ({ onCreate }: CreateContainerFormProps) => {
         {
           manufacturer: internalManufacturer,
           model: internalModel,
+          description: internalDescription,
         },
         options,
       ),
@@ -50,8 +58,10 @@ const CreateForm = ({ onCreate }: CreateContainerFormProps) => {
           <FormFields
             manufacturer={internalManufacturer}
             model={internalModel}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
+            setDescription={setInternalDescription}
           />
 
           <Button

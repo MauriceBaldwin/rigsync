@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,17 +8,24 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { AadResponse, aADUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/kit/FormFields";
 import RigSyncSuccess from "../../RigSyncSuccess";
+import useInternalAadFormFields from
+  "../../../hooks/internalFormFields/useInternalAadFormFields";
 
 interface UpdateAADFormProps {
   aad: AadResponse
 }
 
 const UpdateForm = ({ aad }: UpdateAADFormProps) => {
-  const [internalManufacturer, setInternalManufacturer] =
-    useState(aad.manufacturer);
-  const [internalModel, setInternalModel] = useState(aad.model);
+  const {
+    internalManufacturer,
+    internalModel,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
+    setInternalDescription,
+  } = useInternalAadFormFields(aad);
 
   const { isLoading, error, showSuccess, makeRequest } =
     useApi<AadResponse>();
@@ -31,6 +37,7 @@ const UpdateForm = ({ aad }: UpdateAADFormProps) => {
         {
           manufacturer: internalManufacturer,
           model: internalModel,
+          description: internalDescription,
         },
         options,
       ));
@@ -52,8 +59,10 @@ const UpdateForm = ({ aad }: UpdateAADFormProps) => {
           <FormFields
             manufacturer={internalManufacturer}
             model={internalModel}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
+            setDescription={setInternalDescription}
           />
         </Stack>
         <Button

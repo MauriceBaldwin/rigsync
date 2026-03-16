@@ -111,6 +111,11 @@ public static class ReserveCanopy
       reserveCanopy.Size = toUpdate.Size.Value;
     }
 
+    if (toUpdate.Description != null)
+    {
+      reserveCanopy.Description = toUpdate.Description;
+    }
+
     await context.SaveChangesAsync();
 
     return reserveCanopy;

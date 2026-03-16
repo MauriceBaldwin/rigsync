@@ -111,6 +111,11 @@ public static class MainCanopy
       mainCanopy.Size = toUpdate.Size.Value;
     }
 
+    if (toUpdate.Description != null)
+    {
+      mainCanopy.Description = toUpdate.Description;
+    }
+
     await context.SaveChangesAsync();
 
     return mainCanopy;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,16 +8,25 @@ import {
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { ReserveCanopyResponse, reserveCanopyCreate } from '../../../api';
 import useApi from '../../../hooks/useApi';
-import FormFields from "./FormFields";
+import FormFields from "../shared/canopy/FormFields";
+import useInternalReserveCanopyFormFields from
+  "../../../hooks/internalFormFields/useInternalReserveCanopyFormFields";
 
 interface CreateReserveCanopyFormProps {
   onCreate?: (item: ReserveCanopyResponse) => void;
 }
 
 const CreateForm = ({ onCreate }: CreateReserveCanopyFormProps) => {
-  const [internalManufacturer, setInternalManufacturer] = useState('');
-  const [internalModel, setInternalModel] = useState('');
-  const [internalSize, setInternalSize] = useState('');
+  const {
+    internalManufacturer,
+    internalModel,
+    internalSize,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
+    setInternalSize,
+    setInternalDescription,
+  } = useInternalReserveCanopyFormFields();
 
   const { isLoading, error, makeRequest } = useApi<ReserveCanopyResponse>();
 
@@ -29,6 +37,7 @@ const CreateForm = ({ onCreate }: CreateReserveCanopyFormProps) => {
           manufacturer: internalManufacturer,
           model: internalModel,
           size: parseInt(internalSize),
+          description: internalDescription,
         },
         options,
       ),
@@ -52,9 +61,11 @@ const CreateForm = ({ onCreate }: CreateReserveCanopyFormProps) => {
             manufacturer={internalManufacturer}
             model={internalModel}
             size={internalSize}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
             setSize={setInternalSize}
+            setDescription={setInternalDescription}
           />
           <Button
             type="submit"

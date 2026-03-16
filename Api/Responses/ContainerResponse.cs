@@ -16,7 +16,7 @@ public class ContainerResponse(Container container)
   /// Gets the ID of the container.
   /// </summary>
   [Required]
-  public Guid Id { get; private set; } = container.Id;
+  public Guid Id { get; } = container.Id;
 }
 
 /// <summary>

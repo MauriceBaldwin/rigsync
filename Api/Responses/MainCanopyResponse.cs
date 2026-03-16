@@ -16,7 +16,7 @@ public class MainCanopyResponse(MainCanopy mainCanopy)
   /// Gets the ID of the main canopy.
   /// </summary>
   [Required]
-  public Guid Id { get; private set; } = mainCanopy.Id;
+  public Guid Id { get; } = mainCanopy.Id;
 }
 
 /// <summary>

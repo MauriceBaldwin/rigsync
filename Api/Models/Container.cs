@@ -16,9 +16,10 @@ public class Container : Kit
   /// <param name="id">The GUID of the container.</param>
   /// <param name="manufacturer">The manufacturer of the container.</param>
   /// <param name="model">The model of the container.</param>
+  /// <param name="description">Optional description of the container.</param>
   /// <param name="ownerId">The ID of the user that owns this container.</param>
-  public Container(Guid id, string manufacturer, string model, string ownerId)
-    : base(manufacturer, model, ownerId)
+  public Container(Guid id, string manufacturer, string model, string? description, string ownerId)
+    : base(manufacturer, model, description, ownerId)
   {
     this.Id = id;
   }
@@ -29,7 +30,7 @@ public class Container : Kit
   /// <param name="createRequest">The HTTP request body to create a new container.</param>
   /// <param name="owner">The owner of this container.</param>
   public Container(CreateContainerRequest createRequest, AuthProfile owner)
-    : base(createRequest.Manufacturer, createRequest.Model, owner.Id)
+    : base(createRequest.Manufacturer, createRequest.Model, createRequest.Description, owner.Id)
   {
     this.Id = Guid.NewGuid();
   }

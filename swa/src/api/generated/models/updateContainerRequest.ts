@@ -9,4 +9,5 @@
 export interface UpdateContainerRequest {
   manufacturer?: string;
   model?: string;
+  description?: string;
 }

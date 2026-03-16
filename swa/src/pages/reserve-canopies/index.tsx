@@ -47,6 +47,7 @@ const ReserveCanopies = () => {
   const columns = [
     { title: 'Manufacturer', fieldKey: 'manufacturer' },
     { title: 'Model', fieldKey: 'model' },
+    { title: 'Description', fieldKey: 'description' },
     { title: 'Size (ft\u00B2)', fieldKey: 'size' },
   ];
 

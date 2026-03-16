@@ -924,8 +924,7 @@
         "nextServiceDue",
         "endOfLife",
         "manufacturer",
-        "model",
-        "description"
+        "model"
       ],
       "type": "object",
       "properties": {
@@ -949,7 +948,6 @@
           "type": "string"
         },
         "description": {
-          "minLength": 1,
           "type": "string"
         }
       }
@@ -987,8 +985,7 @@
       "required": [
         "id",
         "manufacturer",
-        "model",
-        "description"
+        "model"
       ],
       "type": "object",
       "properties": {
@@ -1006,7 +1003,6 @@
           "type": "string"
         },
         "description": {
-          "minLength": 1,
           "type": "string"
         }
       }
@@ -1047,6 +1043,12 @@
       ],
       "type": "object",
       "properties": {
+        "nextServiceDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "endOfLife": {
+          "$ref": "#/definitions/dateOnly"
+        },
         "manufacturer": {
           "minLength": 1,
           "type": "string"
@@ -1055,11 +1057,8 @@
           "minLength": 1,
           "type": "string"
         },
-        "nextServiceDue": {
-          "$ref": "#/definitions/dateOnly"
-        },
-        "endOfLife": {
-          "$ref": "#/definitions/dateOnly"
+        "description": {
+          "type": "string"
         }
       }
     },
@@ -1077,17 +1076,24 @@
         "model": {
           "minLength": 1,
           "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       }
     },
     "createMainCanopyRequest": {
       "required": [
+        "size",
         "manufacturer",
-        "model",
-        "size"
+        "model"
       ],
       "type": "object",
       "properties": {
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
         "manufacturer": {
           "minLength": 1,
           "type": "string"
@@ -1096,20 +1102,23 @@
           "minLength": 1,
           "type": "string"
         },
-        "size": {
-          "format": "int32",
-          "type": "integer"
+        "description": {
+          "type": "string"
         }
       }
     },
     "createReserveCanopyRequest": {
       "required": [
+        "size",
         "manufacturer",
-        "model",
-        "size"
+        "model"
       ],
       "type": "object",
       "properties": {
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
         "manufacturer": {
           "minLength": 1,
           "type": "string"
@@ -1118,9 +1127,8 @@
           "minLength": 1,
           "type": "string"
         },
-        "size": {
-          "format": "int32",
-          "type": "integer"
+        "description": {
+          "type": "string"
         }
       }
     },
@@ -1236,8 +1244,7 @@
         "id",
         "size",
         "manufacturer",
-        "model",
-        "description"
+        "model"
       ],
       "type": "object",
       "properties": {
@@ -1259,7 +1266,6 @@
           "type": "string"
         },
         "description": {
-          "minLength": 1,
           "type": "string"
         }
       }
@@ -1298,8 +1304,7 @@
         "id",
         "size",
         "manufacturer",
-        "model",
-        "description"
+        "model"
       ],
       "type": "object",
       "properties": {
@@ -1321,7 +1326,6 @@
           "type": "string"
         },
         "description": {
-          "minLength": 1,
           "type": "string"
         }
       }
@@ -1417,17 +1421,20 @@
     "updateAADRequest": {
       "type": "object",
       "properties": {
+        "nextServiceDue": {
+          "$ref": "#/definitions/dateOnly"
+        },
+        "endOfLife": {
+          "$ref": "#/definitions/dateOnly"
+        },
         "manufacturer": {
           "type": "string"
         },
         "model": {
           "type": "string"
         },
-        "nextServiceDue": {
-          "$ref": "#/definitions/dateOnly"
-        },
-        "endOfLife": {
-          "$ref": "#/definitions/dateOnly"
+        "description": {
+          "type": "string"
         }
       }
     },
@@ -1439,36 +1446,45 @@
         },
         "model": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       }
     },
     "updateMainCanopyRequest": {
       "type": "object",
       "properties": {
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
         "manufacturer": {
           "type": "string"
         },
         "model": {
           "type": "string"
         },
-        "size": {
-          "format": "int32",
-          "type": "integer"
+        "description": {
+          "type": "string"
         }
       }
     },
     "updateReserveCanopyRequest": {
       "type": "object",
       "properties": {
+        "size": {
+          "format": "int32",
+          "type": "integer"
+        },
         "manufacturer": {
           "type": "string"
         },
         "model": {
           "type": "string"
         },
-        "size": {
-          "format": "int32",
-          "type": "integer"
+        "description": {
+          "type": "string"
         }
       }
     },

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,20 +8,24 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { containerUpdate, ContainerResponse } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/kit/FormFields";
 import RigSyncSuccess from "../../RigSyncSuccess";
+import useInternalContainerFormFields from
+  "../../../hooks/internalFormFields/useInternalContainerFormFields";
 
 interface UpdateContainerFormProps {
   container: ContainerResponse;
 }
 
 const UpdateForm = ({ container }: UpdateContainerFormProps) => {
-  const [
+  const {
     internalManufacturer,
+    internalModel,
+    internalDescription,
     setInternalManufacturer,
-  ] = useState(container.manufacturer);
-
-  const [internalModel, setInternalModel] = useState(container.model);
+    setInternalModel,
+    setInternalDescription,
+  } = useInternalContainerFormFields(container);
 
   const {
     isLoading,
@@ -38,6 +41,7 @@ const UpdateForm = ({ container }: UpdateContainerFormProps) => {
         {
           manufacturer: internalManufacturer,
           model: internalModel,
+          description: internalDescription,
         },
         options,
       ),
@@ -60,8 +64,10 @@ const UpdateForm = ({ container }: UpdateContainerFormProps) => {
           <FormFields
             manufacturer={internalManufacturer}
             model={internalModel}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
+            setDescription={setInternalDescription}
           />
         </Stack>
         <Button

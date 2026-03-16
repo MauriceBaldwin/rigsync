@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import {
   Box,
@@ -9,18 +8,26 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { MainCanopyResponse, mainCanopyUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
-import FormFields from "./FormFields";
+import FormFields from "../shared/canopy/FormFields";
 import RigSyncSuccess from "../../RigSyncSuccess";
+import useInternalMainCanopyFormFields from
+  "../../../hooks/internalFormFields/useInternalMainCanopyFormFields";
 
 interface UpdateMainCanopyFormProps {
   mainCanopy: MainCanopyResponse
 }
 
 const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
-  const [internalManufacturer, setInternalManufacturer] =
-    useState(mainCanopy.manufacturer);
-  const [internalModel, setInternalModel] = useState(mainCanopy.model);
-  const [internalSize, setInternalSize] = useState(mainCanopy.size.toString());
+  const {
+    internalManufacturer,
+    internalModel,
+    internalSize,
+    internalDescription,
+    setInternalManufacturer,
+    setInternalModel,
+    setInternalSize,
+    setInternalDescription,
+  } = useInternalMainCanopyFormFields(mainCanopy);
 
   const { isLoading, error, showSuccess, makeRequest } =
     useApi<MainCanopyResponse>();
@@ -33,6 +40,7 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
           manufacturer: internalManufacturer,
           model: internalModel,
           size: parseInt(internalSize),
+          description: internalDescription,
         },
         options,
       ));
@@ -55,9 +63,11 @@ const UpdateForm = ({ mainCanopy }: UpdateMainCanopyFormProps) => {
             manufacturer={internalManufacturer}
             model={internalModel}
             size={internalSize}
+            description={internalDescription}
             setManufacturer={setInternalManufacturer}
             setModel={setInternalModel}
             setSize={setInternalSize}
+            setDescription={setInternalDescription}
           />
         </Stack>
         <Button

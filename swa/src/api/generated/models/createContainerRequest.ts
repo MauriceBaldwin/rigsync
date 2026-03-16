@@ -11,4 +11,5 @@ export interface CreateContainerRequest {
   manufacturer: string;
   /** @minLength 1 */
   model: string;
+  description?: string;
 }

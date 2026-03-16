@@ -8,8 +8,9 @@
 import type { DateOnly } from './dateOnly';
 
 export interface UpdateAADRequest {
-  manufacturer?: string;
-  model?: string;
   nextServiceDue?: DateOnly;
   endOfLife?: DateOnly;
+  manufacturer?: string;
+  model?: string;
+  description?: string;
 }

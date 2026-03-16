@@ -106,6 +106,11 @@ public static class Container
       container.Model = toUpdate.Model;
     }
 
+    if (toUpdate.Description != null)
+    {
+      container.Description = toUpdate.Description;
+    }
+
     await context.SaveChangesAsync();
 
     return container;

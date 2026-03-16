@@ -32,14 +32,14 @@ public class ListResponse<T>
   }
 
   /// <summary>
-  /// Gets or sets the list of resources.
+  /// Gets the list of resources.
   /// </summary>
   [Required]
-  public IEnumerable<T> Items { get; protected set; }
+  public IEnumerable<T> Items { get; }
 
   /// <summary>
-  /// Gets or sets the total count of resources.
+  /// Gets the total count of resources.
   /// </summary>
   [Required]
-  public int Count { get; protected set; }
+  public int Count { get; }
 }

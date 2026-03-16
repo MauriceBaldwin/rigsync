@@ -15,5 +15,5 @@ public class CanopyResponse(Canopy canopy)
   /// Gets the size of the canopy in square feet.
   /// </summary>
   [Required]
-  public int Size { get; private set; } = canopy.Size;
+  public int Size { get; } = canopy.Size;
 }

@@ -2,38 +2,18 @@
 
 namespace Api.Requests;
 
-using System.ComponentModel.DataAnnotations;
+using Api.Requests.Shared;
 
 /// <summary>
 /// Create body for a container.
 /// </summary>
-public class CreateContainerRequest(string manufacturer, string model)
+public class CreateContainerRequest : CreateKitRequest
 {
-  /// <summary>
-  /// Gets or sets the manufacturer of the container.
-  /// </summary>
-  [Required]
-  public string Manufacturer { get; set; } = manufacturer;
-
-  /// <summary>
-  /// Gets or sets the model of the container.
-  /// </summary>
-  [Required]
-  public string Model { get; set; } = model;
 }
 
 /// <summary>
 /// Update body for a container.
 /// </summary>
-public class UpdateContainerRequest
+public class UpdateContainerRequest : UpdateKitRequest
 {
-  /// <summary>
-  /// Gets or sets the manufacturer of the container.
-  /// </summary>
-  public string? Manufacturer { get; set; }
-
-  /// <summary>
-  /// Gets or sets the model of the container.
-  /// </summary>
-  public string? Model { get; set; }
 }
