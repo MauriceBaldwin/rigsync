@@ -25,6 +25,7 @@ export * from './mainCanopyResponse';
 export * from './reserveCanopiesResponse';
 export * from './reserveCanopyListParams';
 export * from './reserveCanopyResponse';
+export * from './rigBasicResponse';
 export * from './rigListParams';
 export * from './rigResponse';
 export * from './rigsResponse';

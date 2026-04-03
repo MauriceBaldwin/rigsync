@@ -939,6 +939,9 @@
         "endOfLife": {
           "$ref": "#/definitions/dateOnly"
         },
+        "rig": {
+          "$ref": "#/definitions/rigBasicResponse"
+        },
         "manufacturer": {
           "minLength": 1,
           "type": "string"
@@ -993,6 +996,9 @@
           "format": "uuid",
           "minLength": 1,
           "type": "string"
+        },
+        "rig": {
+          "$ref": "#/definitions/rigBasicResponse"
         },
         "manufacturer": {
           "minLength": 1,
@@ -1253,6 +1259,9 @@
           "minLength": 1,
           "type": "string"
         },
+        "rig": {
+          "$ref": "#/definitions/rigBasicResponse"
+        },
         "size": {
           "format": "int32",
           "type": "integer"
@@ -1313,6 +1322,9 @@
           "minLength": 1,
           "type": "string"
         },
+        "rig": {
+          "$ref": "#/definitions/rigBasicResponse"
+        },
         "size": {
           "format": "int32",
           "type": "integer"
@@ -1330,15 +1342,10 @@
         }
       }
     },
-    "rigResponse": {
+    "rigBasicResponse": {
       "required": [
         "id",
-        "name",
-        "mainCanopy",
-        "reserveCanopy",
-        "container",
-        "aad",
-        "ownerId"
+        "name"
       ],
       "type": "object",
       "properties": {
@@ -1350,7 +1357,20 @@
         "name": {
           "minLength": 1,
           "type": "string"
-        },
+        }
+      }
+    },
+    "rigResponse": {
+      "required": [
+        "mainCanopy",
+        "reserveCanopy",
+        "container",
+        "aad",
+        "id",
+        "name"
+      ],
+      "type": "object",
+      "properties": {
         "nextReserveRepackDue": {
           "$ref": "#/definitions/dateOnly"
         },
@@ -1366,7 +1386,12 @@
         "aad": {
           "$ref": "#/definitions/aadResponse"
         },
-        "ownerId": {
+        "id": {
+          "format": "uuid",
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
           "minLength": 1,
           "type": "string"
         }

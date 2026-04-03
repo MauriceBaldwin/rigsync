@@ -17,6 +17,13 @@ public class MainCanopyResponse(MainCanopy mainCanopy)
   /// </summary>
   [Required]
   public Guid Id { get; } = mainCanopy.Id;
+
+  /// <summary>
+  /// Gets the rig that this main canopy is in.
+  /// </summary>
+  public RigBasicResponse? Rig { get; } = mainCanopy.Rig != null
+    ? new RigBasicResponse(mainCanopy.Rig)
+    : null;
 }
 
 /// <summary>

@@ -6,12 +6,14 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { DateOnly } from './dateOnly';
+import type { RigBasicResponse } from './rigBasicResponse';
 
 export interface AadResponse {
   /** @minLength 1 */
   id: string;
   nextServiceDue: DateOnly;
   endOfLife: DateOnly;
+  rig?: RigBasicResponse;
   /** @minLength 1 */
   manufacturer: string;
   /** @minLength 1 */

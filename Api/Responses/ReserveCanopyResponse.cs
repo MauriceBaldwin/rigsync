@@ -17,6 +17,13 @@ public class ReserveCanopyResponse(ReserveCanopy reserveCanopy)
   /// </summary>
   [Required]
   public Guid Id { get; } = reserveCanopy.Id;
+
+  /// <summary>
+  /// Gets the rig that this reserve canopy is in.
+  /// </summary>
+  public RigBasicResponse? Rig { get; } = reserveCanopy.Rig != null
+    ? new RigBasicResponse(reserveCanopy.Rig)
+    : null;
 }
 
 /// <summary>

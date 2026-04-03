@@ -29,6 +29,13 @@ public class AADResponse(AAD aad)
   /// </summary>
   [Required]
   public DateOnly? EndOfLife { get; } = aad.EndOfLife;
+
+  /// <summary>
+  /// Gets the rig that this AAD is in.
+  /// </summary>
+  public RigBasicResponse? Rig { get; } = aad.Rig != null
+    ? new RigBasicResponse(aad.Rig)
+    : null;
 }
 
 /// <summary>

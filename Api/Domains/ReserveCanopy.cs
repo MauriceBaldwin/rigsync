@@ -14,6 +14,17 @@ using Microsoft.EntityFrameworkCore;
 public static class ReserveCanopy
 {
   /// <summary>
+  /// Eager loads all related entities for the reserve canopy. (Useful when querying).
+  /// </summary>
+  /// <param name="query">The queryable to load related entities for.</param>
+  /// <returns>The queryable with all related entities loaded.</returns>
+  public static IQueryable<Models.ReserveCanopy> IncludeRelated(this IQueryable<Models.ReserveCanopy> query)
+  {
+    return query
+      .Include(r => r.Rig);
+  }
+
+  /// <summary>
   /// Count all reserve canopies the specified user owns.
   /// </summary>
   /// <param name="user">The user whose reserve canopies are to be counted.</param>
@@ -40,6 +51,7 @@ public static class ReserveCanopy
 
     return await context.ReserveCanopies
       .HasAccess(user)
+      .IncludeRelated()
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -57,6 +69,7 @@ public static class ReserveCanopy
 
     return await context.ReserveCanopies
       .HasAccess(user)
+      .IncludeRelated()
       .SingleOrDefaultAsync(r => r.Id == id)
     ??
       throw new NotFoundByIdException($"Reserve canopy with id = \"{id}\" does not exist");

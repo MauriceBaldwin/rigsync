@@ -14,6 +14,17 @@ using Microsoft.EntityFrameworkCore;
 public static class MainCanopy
 {
   /// <summary>
+  /// Eager loads all related entities for the main canopy. (Useful when querying).
+  /// </summary>
+  /// <param name="query">The queryable to load related entities for.</param>
+  /// <returns>The queryable with all related entities loaded.</returns>
+  public static IQueryable<Models.MainCanopy> IncludeRelated(this IQueryable<Models.MainCanopy> query)
+  {
+    return query
+      .Include(m => m.Rig);
+  }
+
+  /// <summary>
   /// Count all main canopies.
   /// </summary>
   /// <param name="user">The user whose main canopies are to be counted.</param>
@@ -40,6 +51,7 @@ public static class MainCanopy
 
     return await context.MainCanopies
       .HasAccess(user)
+      .IncludeRelated()
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -57,6 +69,7 @@ public static class MainCanopy
 
     return await context.MainCanopies
       .HasAccess(user)
+      .IncludeRelated()
       .SingleOrDefaultAsync(m => m.Id == id)
     ??
       throw new NotFoundByIdException($"Main canopy with id = \"{id}\" does not exist");

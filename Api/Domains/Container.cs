@@ -14,6 +14,17 @@ using Microsoft.EntityFrameworkCore;
 public static class Container
 {
   /// <summary>
+  /// Eager loads all related entities for the container. (Useful when querying).
+  /// </summary>
+  /// <param name="query">The queryable to load related entities for.</param>
+  /// <returns>The queryable with all related entities loaded.</returns>
+  public static IQueryable<Models.Container> IncludeRelated(this IQueryable<Models.Container> query)
+  {
+    return query
+      .Include(c => c.Rig);
+  }
+
+  /// <summary>
   /// Count all containers owned by a user.
   /// </summary>
   /// <param name="user">The user whose containers are to be counted.</param>
@@ -40,6 +51,7 @@ public static class Container
 
     return await context.Containers
       .HasAccess(user)
+      .IncludeRelated()
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -57,6 +69,7 @@ public static class Container
 
     return await context.Containers
       .HasAccess(user)
+      .IncludeRelated()
       .SingleOrDefaultAsync(c => c.Id == id)
     ??
       throw new NotFoundByIdException($"Container with id = \"{id}\" does not exist");

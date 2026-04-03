@@ -12,15 +12,13 @@ import type { ContainerResponse } from './containerResponse';
 import type { AadResponse } from './aadResponse';
 
 export interface RigResponse {
-  /** @minLength 1 */
-  id: string;
-  /** @minLength 1 */
-  name: string;
   nextReserveRepackDue?: DateOnly;
   mainCanopy: MainCanopyResponse;
   reserveCanopy: ReserveCanopyResponse;
   container: ContainerResponse;
   aad: AadResponse;
   /** @minLength 1 */
-  ownerId: string;
+  id: string;
+  /** @minLength 1 */
+  name: string;
 }

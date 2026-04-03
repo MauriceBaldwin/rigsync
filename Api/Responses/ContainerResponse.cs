@@ -17,6 +17,13 @@ public class ContainerResponse(Container container)
   /// </summary>
   [Required]
   public Guid Id { get; } = container.Id;
+
+  /// <summary>
+  /// Gets the rig that this container is part of.
+  /// </summary>
+  public RigBasicResponse? Rig { get; } = container.Rig != null
+    ? new RigBasicResponse(container.Rig)
+    : null;
 }
 
 /// <summary>

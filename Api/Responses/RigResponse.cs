@@ -10,19 +10,8 @@ using Api.Responses.Shared;
 /// Response type for a single rig.
 /// </summary>
 public class RigResponse(Rig rig)
+  : RigBasicResponse(rig)
 {
-  /// <summary>
-  /// Gets the ID of the rig.
-  /// </summary>
-  [Required]
-  public Guid Id { get; } = rig.Id;
-
-  /// <summary>
-  /// Gets the name of the rig.
-  /// </summary>
-  [Required]
-  public string Name { get; } = rig.Name;
-
   /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
@@ -51,12 +40,6 @@ public class RigResponse(Rig rig)
   /// </summary>
   [Required]
   public AADResponse AAD { get; } = new AADResponse(rig.AAD);
-
-  /// <summary>
-  /// Gets the ID of the rig's owner.
-  /// </summary>
-  [Required]
-  public string OwnerId { get; } = rig.OwnerId;
 }
 
 /// <summary>

@@ -14,6 +14,17 @@ using Microsoft.EntityFrameworkCore;
 public static class AAD
 {
   /// <summary>
+  /// Eager loads all related entities for the AAD. (Useful when querying).
+  /// </summary>
+  /// <param name="query">The queryable to load related entities for.</param>
+  /// <returns>The queryable with all related entities loaded.</returns>
+  public static IQueryable<Models.AAD> IncludeRelated(this IQueryable<Models.AAD> query)
+  {
+    return query
+      .Include(a => a.Rig);
+  }
+
+  /// <summary>
   /// Count all AADs belonging to the given user.
   /// </summary>
   /// <param name="user">The user whose AADs are to be counted.</param>
@@ -40,6 +51,7 @@ public static class AAD
 
     return await context.AADs
       .HasAccess(user)
+      .IncludeRelated()
       .Skip((page - 1) * limit)
       .Take(limit)
       .ToListAsync();
@@ -57,6 +69,7 @@ public static class AAD
 
     return await context.AADs
       .HasAccess(user)
+      .IncludeRelated()
       .SingleOrDefaultAsync(a => a.Id == id)
     ??
       throw new NotFoundByIdException($"AAD with id = \"{id}\" does not exist");

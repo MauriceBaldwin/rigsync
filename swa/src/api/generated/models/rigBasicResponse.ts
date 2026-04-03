@@ -5,15 +5,10 @@
  * This is the OpenAPI Document on Azure Functions
  * OpenAPI spec version: 1.0.0
  */
-import type { RigBasicResponse } from './rigBasicResponse';
 
-export interface ContainerResponse {
+export interface RigBasicResponse {
   /** @minLength 1 */
   id: string;
-  rig?: RigBasicResponse;
   /** @minLength 1 */
-  manufacturer: string;
-  /** @minLength 1 */
-  model: string;
-  description?: string;
+  name: string;
 }
