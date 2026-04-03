@@ -1,5 +1,6 @@
 import { Container, Stack, Typography } from "@mui/material";
-import RigSyncPageLink, { RigSyncLink } from "../RigSyncPageLink";
+import RigSyncPageLink from "../links/RigSyncPageLink";
+import { RigSyncLink } from "../links/links";
 
 interface RigSyncEntityLoadErrorProps {
   error: string

@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router";
 import { Link, Stack } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
-export interface RigSyncLink {
-  to: string
-  title: string
-  isReturn?: boolean
-}
+import { RigSyncLink } from "./links";
 
 export interface RigSyncPageLinkProps {
   link: RigSyncLink

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, Outlet } from "react-router";
 import { Container, Stack, Typography } from "@mui/material";
-import RigSyncPageLink from "../components/RigSyncPageLink";
+import RigSyncPageLink from "../components/links/RigSyncPageLink";
 import RigSyncUserProfile from "../components/auth/RigSyncUserProfile";
 import RigSyncAuthContext from "../context/RigSyncAuthContext";
 import RigSyncIcon from "../components/icons/RigSyncIcon";

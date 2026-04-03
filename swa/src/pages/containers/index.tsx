@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { AxiosRequestConfig } from "axios";
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { type ContainerResponse, containerList } from "../../api";
 import RigSyncTable from "../../components/RigSyncTable";
 import RigSyncAddRow from "../../components/RigSyncAddRow";
@@ -9,6 +9,8 @@ import usePagination from "../../hooks/usePagination";
 import { useNavigate } from "react-router";
 import CreateForm from "../../components/forms/container/CreateForm";
 import useSuccessTimer from "../../hooks/useSuccess";
+import RigSyncTitle from "../../components/RigSyncTitle";
+import { returnHomeLink } from "../../components/links/links";
 
 const Containers = () => {
   const pagination = usePagination();
@@ -56,9 +58,7 @@ const Containers = () => {
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1" color="primary">
-        Containers
-      </Typography>
+      <RigSyncTitle title="Containers" link={returnHomeLink} />
 
       <Container disableGutters sx={{ width: "100%" }}>
         <RigSyncTable

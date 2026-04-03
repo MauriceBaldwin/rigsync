@@ -1,20 +1,16 @@
 import { useEffect } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import {
-  Container,
-  Stack,
-  Typography,
-} from '@mui/material';
-
+import { Container, Stack } from '@mui/material';
 import { type MainCanopyResponse, mainCanopyList } from '../../api';
 import RigSyncTable from '../../components/RigSyncTable';
-import RigSyncAddRow from
-  '../../components/RigSyncAddRow';
+import RigSyncAddRow from '../../components/RigSyncAddRow';
 import useListApi from '../../hooks/useListApi';
 import usePagination from '../../hooks/usePagination';
 import { useNavigate } from 'react-router';
 import CreateForm from '../../components/forms/mainCanopy/CreateForm';
 import useSuccessTimer from '../../hooks/useSuccess';
+import RigSyncTitle from '../../components/RigSyncTitle';
+import { returnHomeLink } from '../../components/links/links';
 
 const MainCanopies = () => {
   const pagination = usePagination();
@@ -62,7 +58,7 @@ const MainCanopies = () => {
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1" color="primary">Main canopies</Typography>
+      <RigSyncTitle title="Main canopies" link={returnHomeLink} />
 
       <Container disableGutters sx={{ width: "100%" }}>
         <RigSyncTable

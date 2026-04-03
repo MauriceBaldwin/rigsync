@@ -1,5 +1,5 @@
 import { Typography, Stack, Grid, CircularProgress } from '@mui/material';
-import RigSyncCardLink from "../../components/RigSyncCardLink";
+import RigSyncCardLink from "../../components/links/RigSyncCardLink";
 import RigSyncRigCard from '../../components/RigSyncRigCard';
 import { rigList, RigResponse } from '../../api';
 import CreateForm from '../../components/forms/rig/CreateForm';

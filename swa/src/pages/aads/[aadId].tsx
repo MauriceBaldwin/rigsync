@@ -1,29 +1,15 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { AxiosRequestConfig } from "axios";
-import {
-  CircularProgress,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import useApi from "../../hooks/useApi";
-import {
-  aADDelete,
-  aADRead,
-  AadResponse,
-} from "../../api";
+import { aADDelete, aADRead, AadResponse } from "../../api";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
-import RigSyncPageLink from "../../components/RigSyncPageLink";
 import UpdateForm from "../../components/forms/aad/UpdateForm";
 import RigSyncDelete from "../../components/RigSyncDelete";
-
-const returnLink = {
-  to: '/aads',
-  title: 'Return to AADs',
-  isReturn: true,
-};
+import { returnToAADsLink } from "../../components/links/links";
+import RigSyncTitle from "../../components/RigSyncTitle";
 
 const AAD = () => {
   const { aadId } = useParams();
@@ -50,16 +36,13 @@ const AAD = () => {
         <RigSyncEntityLoadError
           error={error}
           entityName="AAD"
-          link={returnLink}
+          link={returnToAADsLink}
         />
       }
 
       {!error &&
         <>
-          <Container disableGutters >
-            <Typography variant="h1" color="primary">AAD</Typography>
-            <RigSyncPageLink link={returnLink} />
-          </Container>
+          <RigSyncTitle title="AAD" link={returnToAADsLink} />
 
           {isLoading &&
             <CircularProgress />
@@ -73,7 +56,7 @@ const AAD = () => {
                   (options?: AxiosRequestConfig) =>
                     aADDelete(response.id, options)
                 }
-                successRedirect={returnLink.to}
+                successRedirect={returnToAADsLink.to}
               />
             </>
           }

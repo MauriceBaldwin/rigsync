@@ -3,46 +3,46 @@ import { useParams } from "react-router";
 import { AxiosRequestConfig } from "axios";
 import { CircularProgress, Stack } from "@mui/material";
 import useApi from "../../hooks/useApi";
-import { containerDelete, containerRead, ContainerResponse } from "../../api";
+import { rigDelete, rigRead, RigResponse } from "../../api";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
-import UpdateForm from "../../components/forms/container/UpdateForm";
 import RigSyncDelete from "../../components/RigSyncDelete";
-import { returnToContainersLink } from "../../components/links/links";
+import { returnHomeLink } from "../../components/links/links";
 import RigSyncTitle from "../../components/RigSyncTitle";
 
-const ContainerPage = () => {
-  const { containerId } = useParams();
+const Rig = () => {
+  const { rigId } = useParams();
 
   const {
     response,
     isLoading,
     error,
     makeRequest,
-  } = useApi<ContainerResponse>();
+  } = useApi<RigResponse>();
 
   useEffect(() => {
-    if (containerId) {
+    if (rigId) {
       makeRequest(
-        (options?: AxiosRequestConfig) => containerRead(containerId, options),
+        (options?: AxiosRequestConfig) =>
+          rigRead(rigId, options),
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerId]);
+  }, [rigId]);
 
   return (
     <Stack spacing={4} alignItems="baseline">
       {error &&
         <RigSyncEntityLoadError
           error={error}
-          entityName="container"
-          link={returnToContainersLink}
+          entityName="rig"
+          link={returnHomeLink}
         />
       }
 
       {!error &&
         <>
-          <RigSyncTitle title="Container" link={returnToContainersLink} />
+          <RigSyncTitle title="Rig" link={returnHomeLink} />
 
           {isLoading &&
             <CircularProgress />
@@ -50,13 +50,14 @@ const ContainerPage = () => {
 
           {response &&
             <>
-              <UpdateForm container={response} />
+              {/* <UpdateForm reserveCanopy={response} /> */}
+
               <RigSyncDelete
                 deleteRequest={
                   (options?: AxiosRequestConfig) =>
-                    containerDelete(response.id, options)
+                    rigDelete(response.id, options)
                 }
-                successRedirect={returnToContainersLink.to}
+                successRedirect={returnHomeLink.to}
               />
             </>
           }
@@ -66,4 +67,4 @@ const ContainerPage = () => {
   );
 };
 
-export default ContainerPage;
+export default Rig;

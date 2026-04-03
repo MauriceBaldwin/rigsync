@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { AxiosRequestConfig } from "axios";
-import {
-  CircularProgress,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import useApi from "../../hooks/useApi";
 import {
   reserveCanopyDelete,
@@ -15,17 +10,11 @@ import {
 } from "../../api";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
-import RigSyncPageLink from
-  "../../components/RigSyncPageLink";
 import UpdateForm from
   "../../components/forms/reserveCanopy/UpdateForm";
 import RigSyncDelete from "../../components/RigSyncDelete";
-
-const returnLink = {
-  to: '/reserve-canopies',
-  title: 'Return to reserve canopies',
-  isReturn: true,
-};
+import { returnToReserveCanopiesLink } from "../../components/links/links";
+import RigSyncTitle from "../../components/RigSyncTitle";
 
 const ReserveCanopy = () => {
   const { reserveCanopyId } = useParams();
@@ -53,16 +42,16 @@ const ReserveCanopy = () => {
         <RigSyncEntityLoadError
           error={error}
           entityName="reserve canopy"
-          link={returnLink}
+          link={returnToReserveCanopiesLink}
         />
       }
 
       {!error &&
         <>
-          <Container disableGutters >
-            <Typography variant="h1" color="primary">Reserve canopy</Typography>
-            <RigSyncPageLink link={returnLink} />
-          </Container>
+          <RigSyncTitle
+            title="Reserve canopy"
+            link={returnToReserveCanopiesLink}
+          />
 
           {isLoading &&
             <CircularProgress />
@@ -76,7 +65,7 @@ const ReserveCanopy = () => {
                   (options?: AxiosRequestConfig) =>
                     reserveCanopyDelete(response.id, options)
                 }
-                successRedirect={returnLink.to}
+                successRedirect={returnToReserveCanopiesLink.to}
               />
             </>
           }

@@ -1,20 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { AxiosRequestConfig } from 'axios';
-import {
-  Container,
-  Stack,
-  Typography,
-} from '@mui/material';
-
+import { Container, Stack } from '@mui/material';
 import { type AadResponse, aADList } from '../../api';
 import CreateForm from '../../components/forms/aad/CreateForm';
-import RigSyncAddRow from
-  '../../components/RigSyncAddRow';
+import RigSyncAddRow from '../../components/RigSyncAddRow';
 import RigSyncTable from '../../components/RigSyncTable';
 import useListApi from '../../hooks/useListApi';
 import usePagination from '../../hooks/usePagination';
 import useSuccessTimer from '../../hooks/useSuccess';
+import RigSyncTitle from '../../components/RigSyncTitle';
+import { returnHomeLink } from '../../components/links/links';
 
 const AADs = () => {
   const pagination = usePagination();
@@ -61,7 +57,7 @@ const AADs = () => {
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1" color="primary">AADs</Typography>
+      <RigSyncTitle title="AADs" link={returnHomeLink} />
 
       <Container disableGutters sx={{ width: "100%" }}>
         <RigSyncTable

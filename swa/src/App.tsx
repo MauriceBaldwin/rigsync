@@ -13,6 +13,7 @@ import MainCanopy from './pages/main-canopies/[mainCanopyId].tsx';
 import Profile from './pages/profile/index.tsx';
 import ReserveCanopies from './pages/reserve-canopies/index.tsx';
 import ReserveCanopy from './pages/reserve-canopies/[reserveCanopyId].tsx';
+import Rig from './pages/rigs/[rigId].tsx';
 import NotFound from './pages/errors/NotFound.tsx';
 
 import '@fontsource/roboto/300.css';
@@ -46,6 +47,7 @@ const App = () => {
                 <Route index element={<ReserveCanopies />} />
                 <Route path=":reserveCanopyId" element={<ReserveCanopy />} />
               </Route>
+              <Route path="rigs/:rigId" element={<Rig />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import {
-  Container,
-  Stack,
-  Typography,
-} from '@mui/material';
-
+import { Container, Stack } from '@mui/material';
 import { type ReserveCanopyResponse, reserveCanopyList } from '../../api';
 import RigSyncTable from '../../components/RigSyncTable';
 import RigSyncAddRow from '../../components/RigSyncAddRow';
@@ -14,6 +9,8 @@ import usePagination from '../../hooks/usePagination';
 import { useNavigate } from 'react-router';
 import CreateForm from '../../components/forms/reserveCanopy/CreateForm';
 import useSuccessTimer from '../../hooks/useSuccess';
+import RigSyncTitle from '../../components/RigSyncTitle';
+import { returnHomeLink } from '../../components/links/links';
 
 const ReserveCanopies = () => {
   const pagination = usePagination();
@@ -60,7 +57,7 @@ const ReserveCanopies = () => {
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1" color="primary">Reserve canopies</Typography>
+      <RigSyncTitle title="Reserve canopies" link={returnHomeLink} />
 
       <Container disableGutters sx={{ width: "100%" }}>
         <RigSyncTable

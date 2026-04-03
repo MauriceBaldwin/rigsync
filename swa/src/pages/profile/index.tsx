@@ -7,13 +7,15 @@ import {
 } from '@mui/material';
 import RigSyncAuthContext from '../../context/RigSyncAuthContext';
 import RigSyncLogoutButton from '../../components/auth/RigSyncLogoutButton';
+import RigSyncTitle from '../../components/RigSyncTitle';
+import { returnHomeLink } from '../../components/links/links';
 
 const Profile = () => {
   const authContext = useContext(RigSyncAuthContext);
 
   return (
     <Stack spacing={4} alignItems="baseline">
-      <Typography variant="h1" color="primary">My profile</Typography>
+      <RigSyncTitle title="My profile" link={returnHomeLink} />
 
       <List>
         <ListItem>

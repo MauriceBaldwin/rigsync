@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { AxiosRequestConfig } from "axios";
-import {
-  CircularProgress,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import useApi from "../../hooks/useApi";
 import {
   mainCanopyDelete,
@@ -15,15 +10,10 @@ import {
 } from "../../api";
 import RigSyncEntityLoadError from
   "../../components/errors/RigSyncEntityLoadError";
-import RigSyncPageLink from "../../components/RigSyncPageLink";
 import UpdateForm from "../../components/forms/mainCanopy/UpdateForm";
 import RigSyncDelete from "../../components/RigSyncDelete";
-
-const returnLink = {
-  to: '/main-canopies',
-  title: 'Return to main canopies',
-  isReturn: true,
-};
+import { returnToMainCanopiesLink } from "../../components/links/links";
+import RigSyncTitle from "../../components/RigSyncTitle";
 
 const MainCanopy = () => {
   const { mainCanopyId } = useParams();
@@ -50,16 +40,13 @@ const MainCanopy = () => {
         <RigSyncEntityLoadError
           error={error}
           entityName="main canopy"
-          link={returnLink}
+          link={returnToMainCanopiesLink}
         />
       }
 
       {!error &&
         <>
-          <Container disableGutters >
-            <Typography variant="h1" color="primary">Main canopy</Typography>
-            <RigSyncPageLink link={returnLink} />
-          </Container>
+          <RigSyncTitle title="Main canopy" link={returnToMainCanopiesLink} />
 
           {isLoading &&
             <CircularProgress />
@@ -73,7 +60,7 @@ const MainCanopy = () => {
                   (options?: AxiosRequestConfig) =>
                     mainCanopyDelete(response.id, options)
                 }
-                successRedirect={returnLink.to}
+                successRedirect={returnToMainCanopiesLink.to}
               />
             </>
           }
