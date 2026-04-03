@@ -16,6 +16,7 @@ interface RigSyncSelectFromApiProps<T, K extends string | number> {
   setValue: (value: K) => void;
   getKey: (item: T) => K;
   renderOption: (item: T) => React.ReactNode;
+  isOptionDisabled?: (item: T) => boolean;
   listRequest: (
     params: { page: number; limit: number },
     options?: AxiosRequestConfig,
@@ -31,6 +32,7 @@ const RigSyncSelectFromApi = <T, K extends string | number>({
   listRequest,
   getKey,
   renderOption,
+  isOptionDisabled,
   page = 1,
   limit = 10,
 }: RigSyncSelectFromApiProps<T, K>) => {
@@ -71,7 +73,11 @@ const RigSyncSelectFromApi = <T, K extends string | number>({
             label={label}
           >
             {response.items.map((item) => (
-              <MenuItem key={getKey(item)} value={getKey(item)}>
+              <MenuItem
+                key={getKey(item)}
+                value={getKey(item)}
+                disabled={isOptionDisabled ? isOptionDisabled(item) : false}
+              >
                 {renderOption(item)}
               </MenuItem>
             ))}

@@ -62,6 +62,7 @@ const UpdateForm = ({ rig }: Props) => {
           spacing={1}
         >
           <FormFields
+            rigId={rig.id}
             name={internalName}
             mainCanopyId={internalMainCanopyId}
             reserveCanopyId={internalReserveCanopyId}

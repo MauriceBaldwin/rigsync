@@ -12,6 +12,7 @@ import {
 } from "../../../api";
 
 interface RigFormFieldsProps {
+  rigId?: string | null
   name: string;
   mainCanopyId: string;
   reserveCanopyId: string;
@@ -24,7 +25,20 @@ interface RigFormFieldsProps {
   setContainerId: (containerId: string) => void;
 }
 
+const isOptionDisabled = (
+  item:
+    | MainCanopyResponse
+    | ReserveCanopyResponse
+    | AadResponse
+    | ContainerResponse,
+  rigId?: string | null,
+) => {
+  // disabled if the item has a rig that isn't the current rig
+  return !!item.rig && (item.rig.id !== rigId);
+};
+
 const FormFields = ({
+  rigId,
   name,
   mainCanopyId,
   reserveCanopyId,
@@ -54,6 +68,7 @@ const FormFields = ({
         listRequest={mainCanopyList}
         getKey={(main) => main.id}
         renderOption={(main) => `${main.model} ${main.size.toString()}`}
+        isOptionDisabled={(main) => isOptionDisabled(main, rigId)}
       />
 
       <RigSyncSelectFromApi<ReserveCanopyResponse, string>
@@ -63,6 +78,7 @@ const FormFields = ({
         listRequest={reserveCanopyList}
         getKey={(reserve) => reserve.id}
         renderOption={(reserv) => `${reserv.model} ${reserv.size.toString()}`}
+        isOptionDisabled={(reserve) => isOptionDisabled(reserve, rigId)}
       />
 
       <RigSyncSelectFromApi<AadResponse, string>
@@ -72,6 +88,7 @@ const FormFields = ({
         listRequest={aADList}
         getKey={(aad: AadResponse) => aad.id}
         renderOption={(aad: AadResponse) => `${aad.manufacturer} ${aad.model}`}
+        isOptionDisabled={(aad) => isOptionDisabled(aad, rigId)}
       />
 
       <RigSyncSelectFromApi<ContainerResponse, string>
@@ -81,6 +98,7 @@ const FormFields = ({
         listRequest={containerList}
         getKey={(container: ContainerResponse) => container.id}
         renderOption={(container: ContainerResponse) => container.model}
+        isOptionDisabled={(container) => isOptionDisabled(container, rigId)}
       />
     </>
   );
