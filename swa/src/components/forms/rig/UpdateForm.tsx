@@ -2,22 +2,22 @@ import { AxiosRequestConfig } from "axios";
 import {
   Box,
   Button,
-  Grid,
   Stack,
   Typography,
 } from "@mui/material";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import { rigCreate, RigResponse } from "../../../api";
+import EditIcon from '@mui/icons-material/Edit';
+import { RigResponse, rigUpdate } from "../../../api";
 import useApi from "../../../hooks/useApi";
 import FormFields from "./FormFields";
+import RigSyncSuccess from "../../RigSyncSuccess";
 import useInternalRigFormFields from
   "../../../hooks/internalFormFields/useInternalRigFormFields";
 
-interface CreateRigFormProps {
-  onCreate?: (item: RigResponse) => void;
+interface Props {
+  rig: RigResponse;
 }
 
-const CreateForm = ({ onCreate }: CreateRigFormProps) => {
+const UpdateForm = ({ rig }: Props) => {
   const {
     internalName,
     internalMainCanopyId,
@@ -29,31 +29,38 @@ const CreateForm = ({ onCreate }: CreateRigFormProps) => {
     setInternalReserveCanopyId,
     setInternalAadId,
     setInternalContainerId,
-  } = useInternalRigFormFields();
+  } = useInternalRigFormFields(rig);
 
-  const { isLoading, error, makeRequest } = useApi<RigResponse>();
+  const { isLoading, error, showSuccess, makeRequest } = useApi<RigResponse>();
 
-  const createRig = () => {
+  const updateRig = () => {
     makeRequest(
-      (options?: AxiosRequestConfig) =>
-        rigCreate(
-          {
-            name: internalName,
-            mainCanopyId: internalMainCanopyId,
-            reserveCanopyId: internalReserveCanopyId,
-            aadId: internalAadId,
-            containerId: internalContainerId,
-          },
-          options,
-        ),
-      onCreate,
-    );
+      (options?: AxiosRequestConfig) => rigUpdate(
+        rig.id,
+        {
+          name: internalName,
+          mainCanopyId: internalMainCanopyId,
+          reserveCanopyId: internalReserveCanopyId,
+          aadId: internalAadId,
+          containerId: internalContainerId,
+        },
+        options,
+      ));
   };
 
   return (
-    <Box component="form" autoComplete="off" action={createRig}>
-      <Stack alignItems="center">
-        <Grid>
+    <Box
+      component="form"
+      autoComplete="off"
+      action={updateRig}
+      width="100%"
+    >
+      <Stack alignItems="center" spacing={1}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "stretch", sm: "center" }}
+          spacing={1}
+        >
           <FormFields
             name={internalName}
             mainCanopyId={internalMainCanopyId}
@@ -66,25 +73,30 @@ const CreateForm = ({ onCreate }: CreateRigFormProps) => {
             setAadId={setInternalAadId}
             setContainerId={setInternalContainerId}
           />
-        </Grid>
-
+        </Stack>
         <Button
           type="submit"
           variant="contained"
           loading={isLoading}
-          startIcon={<AddBoxIcon />}
+          startIcon={<EditIcon />}
         >
-          Create
+          Update
         </Button>
 
-        {error && (
+
+        {error &&
           <Typography variant="body1" color="error">
             Error: {error}
           </Typography>
-        )}
+        }
+
+        {showSuccess &&
+          <RigSyncSuccess message="Main canopy updated" />
+        }
       </Stack>
     </Box>
+
   );
 };
 
-export default CreateForm;
+export default UpdateForm;

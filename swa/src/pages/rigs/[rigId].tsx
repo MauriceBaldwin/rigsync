@@ -9,6 +9,7 @@ import RigSyncEntityLoadError from
 import RigSyncDelete from "../../components/RigSyncDelete";
 import { returnHomeLink } from "../../components/links/links";
 import RigSyncTitle from "../../components/RigSyncTitle";
+import UpdateForm from "../../components/forms/rig/UpdateForm";
 
 const Rig = () => {
   const { rigId } = useParams();
@@ -50,7 +51,7 @@ const Rig = () => {
 
           {response &&
             <>
-              {/* <UpdateForm reserveCanopy={response} /> */}
+              <UpdateForm rig={response} />
 
               <RigSyncDelete
                 deleteRequest={
