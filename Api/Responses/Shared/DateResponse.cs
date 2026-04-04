@@ -24,17 +24,20 @@ public record DateResponse
   /// Gets the year of the date.
   /// </summary>
   [Required]
+  [Range(1, 9999)]
   public int Year { get; init; }
 
   /// <summary>
   /// Gets the month of the date.
   /// </summary>
   [Required]
+  [Range(1, 12)]
   public int Month { get; init; }
 
   /// <summary>
   /// Gets the day of the date.
   /// </summary>
   [Required]
+  [Range(1, 31)]
   public int Day { get; init; }
 }

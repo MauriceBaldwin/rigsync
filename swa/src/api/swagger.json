@@ -1226,14 +1226,20 @@
       "properties": {
         "year": {
           "format": "int32",
+          "maximum": 9999,
+          "minimum": 1,
           "type": "integer"
         },
         "month": {
           "format": "int32",
+          "maximum": 12,
+          "minimum": 1,
           "type": "integer"
         },
         "day": {
           "format": "int32",
+          "maximum": 31,
+          "minimum": 1,
           "type": "integer"
         }
       }
@@ -1248,14 +1254,20 @@
       "properties": {
         "year": {
           "format": "int32",
+          "maximum": 9999,
+          "minimum": 1,
           "type": "integer"
         },
         "month": {
           "format": "int32",
+          "maximum": 12,
+          "minimum": 1,
           "type": "integer"
         },
         "day": {
           "format": "int32",
+          "maximum": 31,
+          "minimum": 1,
           "type": "integer"
         }
       }

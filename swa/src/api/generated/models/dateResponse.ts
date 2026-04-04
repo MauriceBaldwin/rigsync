@@ -7,7 +7,19 @@
  */
 
 export interface DateResponse {
+  /**
+   * @minimum 1
+   * @maximum 9999
+   */
   year: number;
+  /**
+   * @minimum 1
+   * @maximum 12
+   */
   month: number;
+  /**
+   * @minimum 1
+   * @maximum 31
+   */
   day: number;
 }
