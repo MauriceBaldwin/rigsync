@@ -3,6 +3,7 @@
 namespace Api.Requests;
 
 using System.ComponentModel.DataAnnotations;
+using Api.Requests.Shared;
 
 /// <summary>
 /// Create body for a rig.
@@ -42,7 +43,7 @@ public class CreateRigRequest
   /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { init; get; }
+  public DateRequest? NextReserveRepackDue { init; get; }
 }
 
 /// <summary>
@@ -58,7 +59,7 @@ public class UpdateRigRequest
   /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { init; get; }
+  public DateRequest? NextReserveRepackDue { init; get; }
 
   /// <summary>
   /// Gets the ID of the rig's main canopy.

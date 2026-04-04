@@ -1173,7 +1173,7 @@
           "type": "string"
         },
         "nextReserveRepackDue": {
-          "$ref": "#/definitions/dateOnly"
+          "$ref": "#/definitions/dateRequest"
         }
       }
     },
@@ -1211,6 +1211,50 @@
           "type": "integer"
         },
         "dayNumber": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "dateRequest": {
+      "required": [
+        "year",
+        "month",
+        "day"
+      ],
+      "type": "object",
+      "properties": {
+        "year": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "month": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "day": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "dateResponse": {
+      "required": [
+        "year",
+        "month",
+        "day"
+      ],
+      "type": "object",
+      "properties": {
+        "year": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "month": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "day": {
           "format": "int32",
           "type": "integer"
         }
@@ -1372,7 +1416,7 @@
       "type": "object",
       "properties": {
         "nextReserveRepackDue": {
-          "$ref": "#/definitions/dateOnly"
+          "$ref": "#/definitions/dateResponse"
         },
         "mainCanopy": {
           "$ref": "#/definitions/mainCanopyResponse"
@@ -1520,7 +1564,7 @@
           "type": "string"
         },
         "nextReserveRepackDue": {
-          "$ref": "#/definitions/dateOnly"
+          "$ref": "#/definitions/dateRequest"
         },
         "mainCanopyId": {
           "format": "uuid",

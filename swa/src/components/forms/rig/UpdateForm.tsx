@@ -12,6 +12,8 @@ import FormFields from "./FormFields";
 import RigSyncSuccess from "../../RigSyncSuccess";
 import useInternalRigFormFields from
   "../../../hooks/internalFormFields/useInternalRigFormFields";
+import { DatePicker } from "@mui/x-date-pickers";
+import { dayJsToDateRequest } from "../../../api/utils";
 
 interface Props {
   rig: RigResponse;
@@ -24,11 +26,13 @@ const UpdateForm = ({ rig }: Props) => {
     internalReserveCanopyId,
     internalAadId,
     internalContainerId,
+    internalNextReserveRepackDue,
     setInternalName,
     setInternalMainCanopyId,
     setInternalReserveCanopyId,
     setInternalAadId,
     setInternalContainerId,
+    setInternalNextReserveRepackDue,
   } = useInternalRigFormFields(rig);
 
   const { isLoading, error, showSuccess, makeRequest } = useApi<RigResponse>();
@@ -43,6 +47,9 @@ const UpdateForm = ({ rig }: Props) => {
           reserveCanopyId: internalReserveCanopyId,
           aadId: internalAadId,
           containerId: internalContainerId,
+          nextReserveRepackDue: dayJsToDateRequest(
+            internalNextReserveRepackDue,
+          ),
         },
         options,
       ));
@@ -73,6 +80,11 @@ const UpdateForm = ({ rig }: Props) => {
             setReserveCanopyId={setInternalReserveCanopyId}
             setAadId={setInternalAadId}
             setContainerId={setInternalContainerId}
+          />
+          <DatePicker
+            label="Reserve repack due date"
+            value={internalNextReserveRepackDue}
+            onChange={setInternalNextReserveRepackDue}
           />
         </Stack>
         <Button

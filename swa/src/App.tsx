@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import RigSyncAuthProvider from './components/RigSyncAuthProvider.tsx';
 import PageLayout from './layouts/PageLayout.tsx';
@@ -16,6 +18,7 @@ import ReserveCanopy from './pages/reserve-canopies/[reserveCanopyId].tsx';
 import Rig from './pages/rigs/[rigId].tsx';
 import NotFound from './pages/errors/NotFound.tsx';
 
+import 'dayjs/locale/en-gb';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -25,34 +28,37 @@ const App = () => {
   return (
     < BrowserRouter >
       <RigSyncAuthProvider>
-        <Routes>
-          <Route element={<PageLayout />} >
-            <Route index element={<Home />} />
+        {/* MUI date picker https://mui.com/x/react-date-pickers/quickstart/ */}
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
+          <Routes>
+            <Route element={<PageLayout />} >
+              <Route index element={<Home />} />
 
-            <Route element={<RequireAuthLayout />} >
-              <Route path="aads">
-                <Route index element={<AADs />} />
-                <Route path=":aadId" element={<AAD />} />
+              <Route element={<RequireAuthLayout />} >
+                <Route path="aads">
+                  <Route index element={<AADs />} />
+                  <Route path=":aadId" element={<AAD />} />
+                </Route>
+                <Route path="containers">
+                  <Route index element={<Containers />} />
+                  <Route path=":containerId" element={<Container />} />
+                </Route>
+                <Route path="main-canopies">
+                  <Route index element={<MainCanopies />} />
+                  <Route path=":mainCanopyId" element={<MainCanopy />} />
+                </Route>
+                <Route path="profile" element={<Profile />} />
+                <Route path="reserve-canopies">
+                  <Route index element={<ReserveCanopies />} />
+                  <Route path=":reserveCanopyId" element={<ReserveCanopy />} />
+                </Route>
+                <Route path="rigs/:rigId" element={<Rig />} />
               </Route>
-              <Route path="containers">
-                <Route index element={<Containers />} />
-                <Route path=":containerId" element={<Container />} />
-              </Route>
-              <Route path="main-canopies">
-                <Route index element={<MainCanopies />} />
-                <Route path=":mainCanopyId" element={<MainCanopy />} />
-              </Route>
-              <Route path="profile" element={<Profile />} />
-              <Route path="reserve-canopies">
-                <Route index element={<ReserveCanopies />} />
-                <Route path=":reserveCanopyId" element={<ReserveCanopy />} />
-              </Route>
-              <Route path="rigs/:rigId" element={<Rig />} />
+
+              <Route path="*" element={<NotFound />} />
             </Route>
-
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+          </Routes>
+        </LocalizationProvider>
       </RigSyncAuthProvider>
     </BrowserRouter >
   );

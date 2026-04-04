@@ -145,7 +145,7 @@ public static class Rig
 
     if (toUpdate.NextReserveRepackDue != null)
     {
-      rig.NextReserveRepackDue = toUpdate.NextReserveRepackDue;
+      rig.NextReserveRepackDue = toUpdate.NextReserveRepackDue?.ToDateOnly();
     }
 
     if (toUpdate.MainCanopyId.HasValue)

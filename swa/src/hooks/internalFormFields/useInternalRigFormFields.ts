@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RigResponse } from "../../api";
+import { dateResponseToDayJs } from "../../api/utils";
 
 const useInternalRigFormFields = (rig?: RigResponse) => {
   const [internalName, setInternalName] = useState(rig?.name ?? "");
@@ -24,17 +25,24 @@ const useInternalRigFormFields = (rig?: RigResponse) => {
     setInternalContainerId,
   ] = useState(rig?.container.id ?? "");
 
+  const [
+    internalNextReserveRepackDue,
+    setInternalNextReserveRepackDue,
+  ] = useState(dateResponseToDayJs(rig?.nextReserveRepackDue));
+
   return {
     internalName,
     internalMainCanopyId,
     internalReserveCanopyId,
     internalAadId,
     internalContainerId,
+    internalNextReserveRepackDue,
     setInternalName,
     setInternalMainCanopyId,
     setInternalReserveCanopyId,
     setInternalAadId,
     setInternalContainerId,
+    setInternalNextReserveRepackDue,
   };
 };
 

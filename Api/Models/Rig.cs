@@ -26,7 +26,7 @@ public class Rig(
     : this(
       Guid.NewGuid(),
       createRequest.Name,
-      createRequest.NextReserveRepackDue,
+      createRequest.NextReserveRepackDue?.ToDateOnly(),
       createRequest.MainCanopyId,
       createRequest.ReserveCanopyId,
       createRequest.ContainerId,

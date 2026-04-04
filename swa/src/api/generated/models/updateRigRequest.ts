@@ -5,11 +5,11 @@
  * This is the OpenAPI Document on Azure Functions
  * OpenAPI spec version: 1.0.0
  */
-import type { DateOnly } from './dateOnly';
+import type { DateRequest } from './dateRequest';
 
 export interface UpdateRigRequest {
   name?: string;
-  nextReserveRepackDue?: DateOnly;
+  nextReserveRepackDue?: DateRequest;
   mainCanopyId?: string;
   reserveCanopyId?: string;
   containerId?: string;

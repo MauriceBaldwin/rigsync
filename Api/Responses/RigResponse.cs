@@ -15,7 +15,10 @@ public class RigResponse(Rig rig)
   /// <summary>
   /// Gets the date that the reserve repack expires.
   /// </summary>
-  public DateOnly? NextReserveRepackDue { get; } = rig.NextReserveRepackDue;
+  public DateResponse? NextReserveRepackDue { get; } =
+    rig.NextReserveRepackDue.HasValue
+      ? new DateResponse(rig.NextReserveRepackDue.Value)
+      : null;
 
   /// <summary>
   /// Gets the rig's main canopy.

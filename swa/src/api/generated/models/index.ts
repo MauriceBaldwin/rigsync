@@ -19,6 +19,8 @@ export * from './createReserveCanopyRequest';
 export * from './createRigRequest';
 export * from './dateOnly';
 export * from './dateOnlyDayOfWeek';
+export * from './dateRequest';
+export * from './dateResponse';
 export * from './mainCanopiesResponse';
 export * from './mainCanopyListParams';
 export * from './mainCanopyResponse';

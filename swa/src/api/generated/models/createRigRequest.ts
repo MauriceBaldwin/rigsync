@@ -5,7 +5,7 @@
  * This is the OpenAPI Document on Azure Functions
  * OpenAPI spec version: 1.0.0
  */
-import type { DateOnly } from './dateOnly';
+import type { DateRequest } from './dateRequest';
 
 export interface CreateRigRequest {
   /** @minLength 1 */
@@ -18,5 +18,5 @@ export interface CreateRigRequest {
   containerId: string;
   /** @minLength 1 */
   aadId: string;
-  nextReserveRepackDue?: DateOnly;
+  nextReserveRepackDue?: DateRequest;
 }

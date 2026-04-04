@@ -5,14 +5,14 @@
  * This is the OpenAPI Document on Azure Functions
  * OpenAPI spec version: 1.0.0
  */
-import type { DateOnly } from './dateOnly';
+import type { DateResponse } from './dateResponse';
 import type { MainCanopyResponse } from './mainCanopyResponse';
 import type { ReserveCanopyResponse } from './reserveCanopyResponse';
 import type { ContainerResponse } from './containerResponse';
 import type { AadResponse } from './aadResponse';
 
 export interface RigResponse {
-  nextReserveRepackDue?: DateOnly;
+  nextReserveRepackDue?: DateResponse;
   mainCanopy: MainCanopyResponse;
   reserveCanopy: ReserveCanopyResponse;
   container: ContainerResponse;
