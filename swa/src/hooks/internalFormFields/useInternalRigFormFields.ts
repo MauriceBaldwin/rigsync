@@ -28,7 +28,7 @@ const useInternalRigFormFields = (rig?: RigResponse) => {
   const [
     internalNextReserveRepackDue,
     setInternalNextReserveRepackDue,
-  ] = useState(dateResponseToDayJs(rig?.nextReserveRepackDue));
+  ] = useState(dateResponseToDayJs(rig?.nextReserveRepackDue) ?? null);
 
   return {
     internalName,
