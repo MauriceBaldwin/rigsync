@@ -6,11 +6,17 @@ import {
   CardActionArea,
   List,
   Stack,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 import { RigResponse } from "../api";
 import RigSyncListItemDateColoured from "./RigSyncListItemDateColoured";
+import {
+  formatAad,
+  formatContainer,
+  formatMainCanopy,
+  formatReserveCanopy,
+  withDescription,
+} from "./utils/formatters";
+import RigSyncListItemString from "./RigSyncListItemString";
 
 interface RigSyncRigCardProps {
   rig: RigResponse
@@ -29,42 +35,31 @@ const RigSyncRigCard = ({ rig }: RigSyncRigCardProps) => (
 
         <List sx={{ width: '100%' }}>
           <Stack direction="row" alignItems="center" justifyContent="end">
-            <ListItem disablePadding>
-              <ListItemText
-                primary={
-                  rig.mainCanopy.model + ' ' + rig.mainCanopy.size.toString()
-                }
-                secondary="Main canopy"
-              />
-            </ListItem>
+            <RigSyncListItemString
+              value={formatMainCanopy(rig.mainCanopy)}
+              secondaryValue={withDescription('', rig.mainCanopy)}
+              label="Main canopy"
+            />
 
-            <ListItem disablePadding>
-              <ListItemText
-                primary={
-                  rig.reserveCanopy.model + ' ' +
-                  rig.reserveCanopy.size.toString()
-                }
-                secondary="Reserve canopy"
-              />
-            </ListItem>
+            <RigSyncListItemString
+              value={formatReserveCanopy(rig.reserveCanopy)}
+              secondaryValue={withDescription('', rig.reserveCanopy)}
+              label="Reserve canopy"
+            />
           </Stack>
 
           <Stack direction="row" alignItems="center" justifyContent="end">
-            <ListItem disablePadding>
-              <ListItemText
-                primary={rig.aad.manufacturer + ' ' + rig.aad.model}
-                secondary="AAD"
-              />
-            </ListItem>
+            <RigSyncListItemString
+              value={formatAad(rig.aad)}
+              secondaryValue={withDescription('', rig.aad)}
+              label="AAD"
+            />
 
-            <ListItem disablePadding>
-              <ListItemText
-                primary={
-                  rig.container.manufacturer + ' ' + rig.container.model
-                }
-                secondary="Container"
-              />
-            </ListItem>
+            <RigSyncListItemString
+              value={formatContainer(rig.container)}
+              secondaryValue={withDescription('', rig.container)}
+              label="Container"
+            />
           </Stack>
 
           <RigSyncListItemDateColoured

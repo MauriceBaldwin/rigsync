@@ -1,6 +1,12 @@
 import { TextField } from "@mui/material";
 import RigSyncSelectFromApi from "../../RigSyncSelectFromApi";
 import {
+  formatAadWithDescription,
+  formatContainerWithDescription,
+  formatMainCanopyWithDescription,
+  formatReserveCanopyWithDescription,
+} from "../../utils/formatters";
+import {
   mainCanopyList,
   MainCanopyResponse,
   reserveCanopyList,
@@ -67,7 +73,7 @@ const FormFields = ({
         setValue={setMainCanopyId}
         listRequest={mainCanopyList}
         getKey={(main) => main.id}
-        renderOption={(main) => `${main.model} ${main.size.toString()}`}
+        renderOption={(main) => formatMainCanopyWithDescription(main)}
         isOptionDisabled={(main) => isOptionDisabled(main, rigId)}
       />
 
@@ -77,7 +83,7 @@ const FormFields = ({
         setValue={setReserveCanopyId}
         listRequest={reserveCanopyList}
         getKey={(reserve) => reserve.id}
-        renderOption={(reserv) => `${reserv.model} ${reserv.size.toString()}`}
+        renderOption={(reserve) => formatReserveCanopyWithDescription(reserve)}
         isOptionDisabled={(reserve) => isOptionDisabled(reserve, rigId)}
       />
 
@@ -87,7 +93,7 @@ const FormFields = ({
         setValue={setAadId}
         listRequest={aADList}
         getKey={(aad: AadResponse) => aad.id}
-        renderOption={(aad: AadResponse) => `${aad.manufacturer} ${aad.model}`}
+        renderOption={(aad: AadResponse) => formatAadWithDescription(aad)}
         isOptionDisabled={(aad) => isOptionDisabled(aad, rigId)}
       />
 
@@ -97,7 +103,10 @@ const FormFields = ({
         setValue={setContainerId}
         listRequest={containerList}
         getKey={(container: ContainerResponse) => container.id}
-        renderOption={(container: ContainerResponse) => container.model}
+        renderOption={
+          (container: ContainerResponse) =>
+            formatContainerWithDescription(container)
+        }
         isOptionDisabled={(container) => isOptionDisabled(container, rigId)}
       />
     </>
